@@ -5,20 +5,17 @@ import Input from "./Input";
 import Button from "./Button";
 
 const Header = styled.header`
+  display: flex;
+  justify-content: space-between;
   background-color: ${(props) => props.theme.firstColor};
   width: 80%;
   height: 120px;
 `;
 
-const HeaderValue = styled.div`
-  margin: 25px 25px;
+const NoIconBox = styled.div`
+  width: 30%;
   display: flex;
-  align-items: center;
-`;
-
-const HeaderContentUl = styled.ul`
-  list-style: none;
-  display: block;
+  margin-left: 5%;
 `;
 
 const LoginToggle = styled.div`
@@ -30,30 +27,36 @@ const LoginToggle = styled.div`
   right: 220px;
 `;
 
+const HeaderContentUl = styled.ul`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+`;
+
 const HeaderContentli = styled.li`
-  padding: 30px 60px;
   text-align: center;
   font-weight: 500;
   color: #000;
   font-size: 14px;
-  display: inline-block;
+
   margin-right: 10px;
 `;
 
-const BellPlace = styled.div`
-  position: absolute;
-  right: 420px;
+const IconParent = styled.div`
+  display: flex;
+  width: 20%;
+  justify-content: space-around;
+  align-items: center;
+  margin-right: 5%;
 `;
 
-const SearchPlace = styled.div`
-  position: absolute;
-  right: 320px;
-`;
+const BellPlace = styled.div``;
 
-const MenuPlace = styled.div`
-  position: absolute;
-  right: 220px;
-`;
+const SearchPlace = styled.div``;
+
+const MenuPlace = styled.div``;
 
 const LoginUserBox = styled.div`
   width: 100%;
@@ -79,31 +82,34 @@ const TextUnderLine = styled.div`
   border-bottom: 1px solid black;
 `;
 
-const onMenu = keyframes`
-    from{
-        width:0px;
-        height:0px;
-    }
-    to{
-        width:280px;
-        heigth:500px;
-    }
-`;
+const SearchPostBox = styled.div``;
 
-const offMenu = keyframes`
-    from{
-        width:280px;
-        heigth:500px;
-    }
-    to{
-        width:0px;
-        height:0px;
-    }
-`;
+// const onMenu = keyframes`
+//     from{
+//         width:0px;
+//         height:0px;
+//     }
+//     to{
+//         width:280px;
+//         heigth:500px;
+//     }
+// `;
+
+// const offMenu = keyframes`
+//     from{
+//         width:280px;
+//         heigth:500px;
+//     }
+//     to{
+//         width:0px;
+//         height:0px;
+//     }
+// `;
 
 export default () => {
   const [value, setValue] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [searchValue, setSearchValue] = useState(false);
 
   //처음 keyFrame의 오류를 방지하는 역할
   const [locked, setLocked] = useState(false);
@@ -122,18 +128,18 @@ export default () => {
 
   return (
     <Header>
-      <HeaderValue>
-        <Logo />
+      <NoIconBox>
         <HeaderContentUl>
+          <Logo />
           <HeaderContentli>랭킹</HeaderContentli>
           <HeaderContentli>작품</HeaderContentli>
         </HeaderContentUl>
-        <SearchPlace>
+      </NoIconBox>
+      <IconParent>
+        <SearchPlace onClick={() => setSearchValue(!searchValue)}>
           <Search />
         </SearchPlace>
-        <MenuPlace onClick={() => setValue(!value)}>
-          <Menu />
-        </MenuPlace>
+
         {value ? (
           <LoginToggle>
             <LoginUserBox>
@@ -179,7 +185,10 @@ export default () => {
         <BellPlace>
           <Bell />
         </BellPlace>
-      </HeaderValue>
+        <MenuPlace onClick={() => setValue(!value)}>
+          <Menu />
+        </MenuPlace>
+      </IconParent>
     </Header>
   );
 };
