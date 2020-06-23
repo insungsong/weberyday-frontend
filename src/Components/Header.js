@@ -1,5 +1,5 @@
-import React, { useState, Component } from "react";
-import styled, { keyframes } from "styled-components";
+import React, { useState } from "react";
+import styled from "styled-components";
 import { Logo, Search, Bell, Menu } from "./Icons";
 import Input from "./Input";
 import Button from "./Button";
@@ -60,7 +60,7 @@ const MenuPlace = styled.div``;
 
 const LoginUserBox = styled.div`
   width: 100%;
-  height: 400px;
+  height: 600px;
   background-color: #95a5a6;
 `;
 
@@ -83,18 +83,14 @@ const TextUnderLine = styled.div`
 `;
 
 const SearchPostBox = styled.div`
-  background: red;
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  display: flex;
+  align-items: center;
 `;
 
-export default (pushKey) => {
+export default ({ searchPoint, MenuPoint }) => {
   const [value, setValue] = useState(false);
   const [checked, setChecked] = useState(false);
-  console.log(pushKey);
-
-  //처음 keyFrame의 오류를 방지하는 역할
-  const [locked, setLocked] = useState(false);
 
   return (
     <Header>
@@ -106,22 +102,27 @@ export default (pushKey) => {
         </HeaderContentUl>
       </NoIconBox>
       <IconParent>
-        {pushKey.pushKey ? (
-          <SearchPostBox />
+        {searchPoint ? (
+          <SearchPostBox id="SearchPostBox">
+            <Input
+              id="SearchPostBox"
+              focus={true}
+              placeholder="🔎작품/제작팀명을 검색해주세요."
+            />
+          </SearchPostBox>
         ) : (
           <>
             <SearchPlace>
               <Search />
             </SearchPlace>
-
-            {value ? (
-              <LoginToggle>
-                <LoginUserBox>
-                  <LoginBoxSize>
+            {MenuPoint ? (
+              <LoginToggle id="MenuBox">
+                <LoginUserBox id="MenuBox">
+                  <LoginBoxSize id="MenuBox">
                     <h3>로그인</h3>
                   </LoginBoxSize>
                   <InputSize>
-                    <Input placeholder="아이디를 입력해주세요" />
+                    <Input focus={true} placeholder="아이디를 입력해주세요" />
                   </InputSize>
                   <InputSize>
                     <Input placeholder="비밀번호를 입력해주세요" />
