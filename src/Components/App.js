@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ThemeProvider } from "styled-components";
 import Theme from "../Styles/Theme";
 import GlobalStyles from "../Styles/GlobalStyles";
@@ -10,20 +10,36 @@ import Body from "./Body";
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+`;
+
+const BigContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  background: red;
 `;
 
 export default () => {
+  const [onSearch, setOnSearch] = useState(false);
   return (
     <ThemeProvider theme={Theme}>
       <GlobalStyles />
-      <Container>
-        <Header />
-      </Container>
-      <Container>
-        <Body />
-      </Container>
-      <Footer />
+      <BigContainer
+        onClick={(e) => {
+          console.log(e.target.getAttribute);
+          console.log(e.target);
+          if (e.target.className.baseVal === "aa") {
+            setOnSearch(true);
+          } else {
+            setOnSearch(false);
+          }
+        }}
+      >
+        <Container>
+          <Header pushKey={onSearch} />
+          <Body />
+        </Container>
+        <Footer />
+      </BigContainer>
     </ThemeProvider>
   );
 };

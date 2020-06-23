@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Component } from "react";
 import styled, { keyframes } from "styled-components";
 import { Logo, Search, Bell, Menu } from "./Icons";
 import Input from "./Input";
@@ -82,49 +82,19 @@ const TextUnderLine = styled.div`
   border-bottom: 1px solid black;
 `;
 
-const SearchPostBox = styled.div``;
+const SearchPostBox = styled.div`
+  background: red;
+  width: 100%;
+  height: 100%;
+`;
 
-// const onMenu = keyframes`
-//     from{
-//         width:0px;
-//         height:0px;
-//     }
-//     to{
-//         width:280px;
-//         heigth:500px;
-//     }
-// `;
-
-// const offMenu = keyframes`
-//     from{
-//         width:280px;
-//         heigth:500px;
-//     }
-//     to{
-//         width:0px;
-//         height:0px;
-//     }
-// `;
-
-export default () => {
+export default (pushKey) => {
   const [value, setValue] = useState(false);
   const [checked, setChecked] = useState(false);
-  const [searchValue, setSearchValue] = useState(false);
+  console.log(pushKey);
 
   //처음 keyFrame의 오류를 방지하는 역할
   const [locked, setLocked] = useState(false);
-
-  // let LoginToggle = styled.div`
-  //   position: absolute;
-
-  //   width: ${value ? "280px" : 0};
-  //   height: ${value ? "500px" : 0};
-  //   background-color: #95a5a6;
-  //   animation-name: ${value ? onMenu : offMenu};
-  //   animation-duration: 0.5s;
-  //   top: 80px;
-  //   right: 220px;
-  // `;
 
   return (
     <Header>
@@ -136,58 +106,64 @@ export default () => {
         </HeaderContentUl>
       </NoIconBox>
       <IconParent>
-        <SearchPlace onClick={() => setSearchValue(!searchValue)}>
-          <Search />
-        </SearchPlace>
-
-        {value ? (
-          <LoginToggle>
-            <LoginUserBox>
-              <LoginBoxSize>
-                <h3>로그인</h3>
-              </LoginBoxSize>
-              <InputSize>
-                <Input placeholder="아이디를 입력해주세요" />
-              </InputSize>
-              <InputSize>
-                <Input placeholder="비밀번호를 입력해주세요" />
-              </InputSize>
-              <InputSize>
-                <input
-                  type="checkBox"
-                  checked={checked}
-                  onClick={() => setChecked(!checked)}
-                />
-                <h3>로그인 상태 유지</h3>
-              </InputSize>
-              <InputSize>
-                <Button text={"이메일로 로그인 하기"} />
-              </InputSize>
-              <InputSize>
-                <TextFlex>
-                  <TextUnderLine>
-                    <h4>이메일로 회원가입</h4>
-                  </TextUnderLine>
-                  <h4 style={{ paddingLeft: "50px" }}>비밀번호 찾기</h4>
-                </TextFlex>
-              </InputSize>
-              <InputSize>
-                <h3>
-                  고객문의가 필요하시다면, [고객지원]페이지로 로그인에 문제가
-                  있다면, weberydayofficial@gmail.com으로 문의 주시기바랍니다
-                </h3>
-              </InputSize>
-            </LoginUserBox>
-          </LoginToggle>
+        {pushKey.pushKey ? (
+          <SearchPostBox />
         ) : (
-          ""
+          <>
+            <SearchPlace>
+              <Search />
+            </SearchPlace>
+
+            {value ? (
+              <LoginToggle>
+                <LoginUserBox>
+                  <LoginBoxSize>
+                    <h3>로그인</h3>
+                  </LoginBoxSize>
+                  <InputSize>
+                    <Input placeholder="아이디를 입력해주세요" />
+                  </InputSize>
+                  <InputSize>
+                    <Input placeholder="비밀번호를 입력해주세요" />
+                  </InputSize>
+                  <InputSize>
+                    <input
+                      type="checkBox"
+                      onClick={() => setChecked(!checked)}
+                    />
+                    <h3>로그인 상태 유지</h3>
+                  </InputSize>
+                  <InputSize>
+                    <Button text={"이메일로 로그인 하기"} />
+                  </InputSize>
+                  <InputSize>
+                    <TextFlex>
+                      <TextUnderLine>
+                        <h4>이메일로 회원가입</h4>
+                      </TextUnderLine>
+                      <h4 style={{ paddingLeft: "50px" }}>비밀번호 찾기</h4>
+                    </TextFlex>
+                  </InputSize>
+                  <InputSize>
+                    <h3>
+                      고객문의가 필요하시다면, [고객지원]페이지로 로그인에
+                      문제가 있다면, weberydayofficial@gmail.com으로 문의
+                      주시기바랍니다
+                    </h3>
+                  </InputSize>
+                </LoginUserBox>
+              </LoginToggle>
+            ) : (
+              ""
+            )}
+            <BellPlace>
+              <Bell />
+            </BellPlace>
+            <MenuPlace onClick={() => setValue(!value)}>
+              <Menu />
+            </MenuPlace>
+          </>
         )}
-        <BellPlace>
-          <Bell />
-        </BellPlace>
-        <MenuPlace onClick={() => setValue(!value)}>
-          <Menu />
-        </MenuPlace>
       </IconParent>
     </Header>
   );
