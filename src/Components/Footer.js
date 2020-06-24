@@ -1,17 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import { FakeBrandLogo } from "./Icons";
+import { WeberydayTextLogo } from "./Icons";
 
 const Container = styled.div`
   background-color: #fafbfc;
   width: 100%;
-  height: 270px;
+  height: 200px;
   display: flex;
   justify-content: center;
 `;
 
 const Footer = styled.footer`
   display: flex;
+  justify-content: space-around;
   align-items: center;
   width: 80%;
   font-weight: 600;
@@ -40,7 +41,7 @@ const Copyright = styled.span`
 export default () => (
   <Container>
     <Footer>
-      <FakeBrandLogo />
+      <WeberydayTextLogo />
       <List>
         <ListItem>
           <Link href="#">회사 소개</Link>
