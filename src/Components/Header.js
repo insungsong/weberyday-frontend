@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Logo, Search, Bell, Menu } from "./Icons";
+import { Logo, Search, Bell, Menu, FacebookIcon, KakaoIcon } from "./Icons";
 import Input from "./Input";
 import Button from "./Button";
 
@@ -153,6 +153,8 @@ export default ({ searchPoint, menuPoint }) => {
                   </Atag>
                   <Atag>비밀번호 찾기</Atag>
                 </Connect>
+                <FacebookIcon />
+                <KakaoIcon />
                 <LoginText style={{ padding: "0px 20px", marginTop: "20px" }}>
                   고객문의가 필요하시다면,
                   <Atag>[고객지원]</Atag>페이지로 로그인에 문제가 있다면,
