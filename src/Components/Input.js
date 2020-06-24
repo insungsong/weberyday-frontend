@@ -12,8 +12,8 @@ const Container = styled.input`
   padding: 0px 15px;
 `;
 
-const Input = ({ placeholder, id, focus = false }) => (
-  <Container id={id} placeholder={placeholder} autoFocus={focus} />
+const Input = ({ placeholder, id, focus = false, type = "" }) => (
+  <Container id={id} placeholder={placeholder} autoFocus={focus} type />
 );
 
 export default Input;

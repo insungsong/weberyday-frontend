@@ -19,6 +19,8 @@ const NoIconBox = styled.div`
 `;
 
 const LoginToggle = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 280px;
   height: 500px;
   background-color: #95a5a6;
@@ -58,28 +60,9 @@ const SearchPlace = styled.div``;
 
 const MenuPlace = styled.div``;
 
-const LoginUserBox = styled.div`
-  width: 100%;
-  height: 600px;
-  background-color: #95a5a6;
-`;
-
-const LoginBoxSize = styled.div`
-  padding: 30px 30px;
-`;
-
-const InputSize = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 15px 20px;
-`;
-
-const TextFlex = styled.div`
-  display: flex;
-`;
-
-const TextUnderLine = styled.div`
-  border-bottom: 1px solid black;
+const Text = styled.p`
+  font-size: 20px;
+  margin: 10px;
 `;
 
 const SearchPostBox = styled.div`
@@ -87,6 +70,8 @@ const SearchPostBox = styled.div`
   display: flex;
   align-items: center;
 `;
+
+const MenuInput = styled.input``;
 
 export default ({ searchPoint, MenuPoint }) => {
   const [value, setValue] = useState(false);
@@ -117,42 +102,25 @@ export default ({ searchPoint, MenuPoint }) => {
             </SearchPlace>
             {MenuPoint ? (
               <LoginToggle id="MenuBox">
-                <LoginUserBox id="MenuBox">
-                  <LoginBoxSize id="MenuBox">
-                    <h3>로그인</h3>
-                  </LoginBoxSize>
-                  <InputSize>
-                    <Input focus={true} placeholder="아이디를 입력해주세요" />
-                  </InputSize>
-                  <InputSize>
-                    <Input placeholder="비밀번호를 입력해주세요" />
-                  </InputSize>
-                  <InputSize>
-                    <input
-                      type="checkBox"
-                      onClick={() => setChecked(!checked)}
-                    />
-                    <h3>로그인 상태 유지</h3>
-                  </InputSize>
-                  <InputSize>
-                    <Button text={"이메일로 로그인 하기"} />
-                  </InputSize>
-                  <InputSize>
-                    <TextFlex>
-                      <TextUnderLine>
-                        <h4>이메일로 회원가입</h4>
-                      </TextUnderLine>
-                      <h4 style={{ paddingLeft: "50px" }}>비밀번호 찾기</h4>
-                    </TextFlex>
-                  </InputSize>
-                  <InputSize>
-                    <h3>
-                      고객문의가 필요하시다면, [고객지원]페이지로 로그인에
-                      문제가 있다면, weberydayofficial@gmail.com으로 문의
-                      주시기바랍니다
-                    </h3>
-                  </InputSize>
-                </LoginUserBox>
+                <Text>로그인</Text>
+
+                <Input focus={true} placeholder="아이디를 입력해주세요" />
+
+                <Input placeholder="비밀번호를 입력해주세요" />
+
+                <input type="checkBox" onClick={() => setChecked(!checked)} />
+                <h3>로그인 상태 유지</h3>
+
+                <Button text={"이메일로 로그인 하기"} />
+
+                <h4>이메일로 회원가입</h4>
+
+                <h4 style={{ paddingLeft: "50px" }}>비밀번호 찾기</h4>
+
+                <h3>
+                  고객문의가 필요하시다면, [고객지원]페이지로 로그인에 문제가
+                  있다면, weberydayofficial@gmail.com으로 문의 주시기바랍니다
+                </h3>
               </LoginToggle>
             ) : (
               ""

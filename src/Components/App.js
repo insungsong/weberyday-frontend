@@ -26,6 +26,7 @@ export default () => {
       <GlobalStyles />
       <BigContainer
         onClick={(e) => {
+          console.log(e.target.parentElement.id);
           if (
             e.target.className.baseVal === "Search" ||
             e.target.id === "SearchPostBox"
@@ -34,7 +35,8 @@ export default () => {
             setMenuPoint(false);
           } else if (
             e.target.className.baseVal === "Menu" ||
-            e.currentTarget.id === "MenuBox"
+            e.target.id === "MenuBox" ||
+            e.target.parentElement.id === "MenuBox"
           ) {
             setMenuPoint(true);
             setSearchPoint(false);
