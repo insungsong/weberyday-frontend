@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FakeBrandLogo } from "./Icons";
 
 const Container = styled.div`
-  background-color: ${(props) => props.theme.firstColor};
+  background-color: #fafbfc;
   width: 100%;
   height: 270px;
   display: flex;
