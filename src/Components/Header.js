@@ -7,7 +7,7 @@ import Button from "./Button";
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
-  background-color: ${(props) => props.theme.firstColor};
+  background-color: #ffffff;
   width: 80%;
   height: 120px;
 `;
@@ -18,13 +18,19 @@ const NoIconBox = styled.div`
   margin-left: 5%;
 `;
 
-const LoginToggle = styled.div`
-  width: 280px;
-  height: 500px;
-  background-color: #95a5a6;
+const LoginForm = styled.form`
+  width: 300px;
+  height: 800px;
+  background-color: #ecf0f1;
   position: absolute;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   top: 80px;
-  right: 220px;
+  right: 280px;
+  border: solid 1px #f7f8f9;
+  border-radius: 5px;
+  padding-top: 30px;
 `;
 
 const HeaderContentUl = styled.ul`
@@ -40,7 +46,6 @@ const HeaderContentli = styled.li`
   font-weight: 500;
   color: #000;
   font-size: 14px;
-
   margin-right: 10px;
 `;
 
@@ -58,37 +63,51 @@ const SearchPlace = styled.div``;
 
 const MenuPlace = styled.div``;
 
-const LoginUserBox = styled.div`
-  width: 100%;
-  height: 600px;
-  background-color: #95a5a6;
-`;
-
-const LoginBoxSize = styled.div`
-  padding: 30px 30px;
-`;
-
-const InputSize = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 15px 20px;
-`;
-
-const TextFlex = styled.div`
-  display: flex;
-`;
-
-const TextUnderLine = styled.div`
-  border-bottom: 1px solid black;
-`;
-
 const SearchPostBox = styled.div`
   width: 80%;
   display: flex;
   align-items: center;
 `;
 
-export default ({ searchPoint, MenuPoint }) => {
+const Text = styled.p`
+  font-size: 20px;
+  margin: 20px;
+`;
+
+const LoginText = styled.p`
+  font-size: 15px;
+`;
+
+const MenuInput = styled.input`
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: solid 1px #eef1f4;
+`;
+
+const Atag = styled.a``;
+
+const Connect = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin: 18px 0px;
+`;
+
+const LoginKeep = styled.div`
+  display: flex;
+  width: 100%;
+  margin-left: 10%;
+  justify-items: flex-start;
+`;
+
+const SocialLoginForm = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export default ({ searchPoint, menuPoint }) => {
   const [value, setValue] = useState(false);
   const [checked, setChecked] = useState(false);
 
@@ -104,7 +123,8 @@ export default ({ searchPoint, MenuPoint }) => {
       <IconParent>
         {searchPoint ? (
           <SearchPostBox id="SearchPostBox">
-            <Input
+            <MenuInput
+              style={{ width: "100%" }}
               id="SearchPostBox"
               focus={true}
               placeholder="🔎작품/제작팀명을 검색해주세요."
@@ -115,45 +135,30 @@ export default ({ searchPoint, MenuPoint }) => {
             <SearchPlace>
               <Search />
             </SearchPlace>
-            {MenuPoint ? (
-              <LoginToggle id="MenuBox">
-                <LoginUserBox id="MenuBox">
-                  <LoginBoxSize id="MenuBox">
-                    <h3>로그인</h3>
-                  </LoginBoxSize>
-                  <InputSize>
-                    <Input focus={true} placeholder="아이디를 입력해주세요" />
-                  </InputSize>
-                  <InputSize>
-                    <Input placeholder="비밀번호를 입력해주세요" />
-                  </InputSize>
-                  <InputSize>
-                    <input
-                      type="checkBox"
-                      onClick={() => setChecked(!checked)}
-                    />
-                    <h3>로그인 상태 유지</h3>
-                  </InputSize>
-                  <InputSize>
-                    <Button text={"이메일로 로그인 하기"} />
-                  </InputSize>
-                  <InputSize>
-                    <TextFlex>
-                      <TextUnderLine>
-                        <h4>이메일로 회원가입</h4>
-                      </TextUnderLine>
-                      <h4 style={{ paddingLeft: "50px" }}>비밀번호 찾기</h4>
-                    </TextFlex>
-                  </InputSize>
-                  <InputSize>
-                    <h3>
-                      고객문의가 필요하시다면, [고객지원]페이지로 로그인에
-                      문제가 있다면, weberydayofficial@gmail.com으로 문의
-                      주시기바랍니다
-                    </h3>
-                  </InputSize>
-                </LoginUserBox>
-              </LoginToggle>
+            {menuPoint ? (
+              <LoginForm id="MenuBox">
+                <Text>이메일로 로그인/가입</Text>
+                <MenuInput focus={true} placeholder="아이디를 입력해주세요" />
+                <MenuInput placeholder="비밀번호를 입력해주세요" />
+                <LoginKeep>
+                  <input type="checkBox" onClick={() => setChecked(!checked)} />
+                  <LoginText style={{ marginLeft: 10 }}>
+                    로그인 상태 유지
+                  </LoginText>
+                </LoginKeep>
+                <Button text={"이메일로 로그인 하기"} />
+                <Connect>
+                  <Atag style={{ borderBottom: "solid 1px" }}>
+                    이메일로 회원가입
+                  </Atag>
+                  <Atag>비밀번호 찾기</Atag>
+                </Connect>
+                <LoginText style={{ padding: "0px 20px", marginTop: "20px" }}>
+                  고객문의가 필요하시다면,
+                  <Atag>[고객지원]</Atag>페이지로 로그인에 문제가 있다면,
+                  weberydayofficial@gmail.com으로 문의 주시기바랍니다
+                </LoginText>
+              </LoginForm>
             ) : (
               ""
             )}

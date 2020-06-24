@@ -19,7 +19,7 @@ const Container = styled.div`
 
 export default () => {
   const [searchPoint, setSearchPoint] = useState(false);
-  const [MenuPoint, setMenuPoint] = useState(false);
+  const [menuPoint, setMenuPoint] = useState(false);
 
   return (
     <ThemeProvider theme={Theme}>
@@ -33,8 +33,14 @@ export default () => {
             setSearchPoint(true);
             setMenuPoint(false);
           } else if (
+            menuPoint === true &&
+            e.target.className.baseVal === "Menu"
+          ) {
+            setMenuPoint(false);
+          } else if (
             e.target.className.baseVal === "Menu" ||
-            e.currentTarget.id === "MenuBox"
+            e.target.id === "MenuBox" ||
+            e.target.parentElement.id === "MenuBox"
           ) {
             setMenuPoint(true);
             setSearchPoint(false);
@@ -45,7 +51,7 @@ export default () => {
         }}
       >
         <Container>
-          <Header MenuPoint={MenuPoint} searchPoint={searchPoint} />
+          <Header menuPoint={menuPoint} searchPoint={searchPoint} />
           <Body />
         </Container>
         <Footer />

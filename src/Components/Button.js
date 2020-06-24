@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 const Container = styled.button`
-  width: 100%;
+  width: 90%;
   height: 50px;
+  margin-top: 18px;
   margin-bottom: 12px;
 `;
 
