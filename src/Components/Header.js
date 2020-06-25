@@ -152,7 +152,7 @@ export default ({ searchPoint, menuPoint }) => {
                   <Text>이메일로 로그인/가입</Text>
                   <MenuInput focus={true} placeholder="아이디를 입력해주세요" />
                   <MenuInput placeholder="비밀번호를 입력해주세요" />
-                  <LoginKeep>
+                  <LoginKeep id="MenuBox">
                     <input
                       type="checkBox"
                       onClick={() => setChecked(!checked)}

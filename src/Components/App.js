@@ -26,6 +26,7 @@ export default () => {
       <GlobalStyles />
       <BigContainer
         onClick={(e) => {
+          console.log(e.target.parentElement.id);
           if (
             e.target.className.baseVal === "Search" ||
             e.target.id === "SearchPostBox"
