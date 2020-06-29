@@ -6,6 +6,6 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-const Body = ({}) => <Container />;
+const Body = () => <Container />;
 
 export default Body;

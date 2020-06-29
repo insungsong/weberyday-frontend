@@ -23,9 +23,9 @@ export default ({ isLoggedIn }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (action === "logIn") {
-      if (email.value == "") {
+      if (email.value === "") {
         toast.error("이메일 입력해주세요🧑‍💻");
-      } else if (password.value == "") {
+      } else if (password.value === "") {
         toast.error("비밀번호를 입력해주세요👩‍💻");
       }
       if (email.value !== "" && password.value !== "") {
@@ -35,7 +35,7 @@ export default ({ isLoggedIn }) => {
             data: { signIn: token }
           } = await loginMuation();
 
-          if (token == "" || token == undefined) {
+          if (token === "" || token === undefined) {
             toast.error("가입하지 않은 이메일이거나, 잘못된 비밀번호입니다 🥺");
           }
 
