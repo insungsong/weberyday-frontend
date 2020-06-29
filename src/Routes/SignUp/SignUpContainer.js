@@ -44,7 +44,7 @@ export default () => {
       birthday: birthdayInfo.birthday,
       rank: "user",
       nEvent: false,
-      agreePrivacy: agreePrivacy.value
+      agreePrivacy: !gender.disabled
     }
   });
 
@@ -55,14 +55,20 @@ export default () => {
           data: { requestSecret }
         } = await reqeustSecretMutation();
 
+        console.log("apple", requestSecret);
+
         if (requestSecret) {
           toast.success("해당 이메일로 시크릿코드를 전달해드렸습니다 ✅");
           setAction("signUpForm");
+          return true;
         } else {
           toast.error("해당 이메일로 시크릿코드 전달을 실패하였습니다. 😅");
+          return false;
         }
       } catch (e) {
+        toast.error("이미 가입한 이메일입니다. 😭");
         console.log(e);
+        return false;
       }
     }
     if (action === "signUpForm") {

@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Input from "../../Components/Input";
 import CheckInput from "../../Components/CheckInput";
+import { Eraser } from "../../Components/Icons";
+import InputCheckBox from "../../Components/InputCheckBox";
 
 const SignUpBox = styled.div`
   display: flex;
@@ -47,16 +49,12 @@ const InputLine = styled.div`
   margin: 18px 0;
 `;
 
-const InputCheckBox = styled.input.attrs({
-  type: "checkBox"
-})``;
-
 const CheckBoxLabel = styled.label`
   display: flex;
 `;
 
 const TextBox = styled.div`
-  display: inline-block;
+  display: flex;
   width: 90%;
 `;
 
@@ -78,7 +76,7 @@ const CheckButton = styled.button`
   background-color: #3498db;
   border: 1px solid ${(props) => props.theme.lightGreyColor};
   &:disabled {
-    background-color: ${(props) => props.theme.lightGreyColor};
+    background-color: ${(props) => props.theme.greyColor};
   }
   :nth-child(1) {
     color: black;
@@ -98,23 +96,43 @@ const LoginGender = styled.fieldset``;
 const LoginGenderOption = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 35%;
+  width: 100%;
 `;
 
 const LabelOption = styled.label`
   display: flex;
+  width: 100%;
+  margin: 10px 0 20px 0;
 `;
 
 const SignUpBirthday = styled.fieldset``;
 
-const SignUpBirthdayOption = styled.div``;
-
-const Birthday = styled.select`
-  width: 80px;
+const SignUpBirthdayOption = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
-const SignUpAgreeCheck = styled.fieldset``;
+const Birthday = styled.select`
+  width: 120px; /* 원하는 너비설정 */
+  height: 40px;
+  padding: 0.8em 0.5em; /* 여백으로 높이 설정 */
+  font-family: inherit; /* 폰트 상속 */
+  border: 1px solid #999;
+  border-radius: 0px; /* iOS 둥근모서리 제거 */
+  font-size: 14px;
+  -webkit-appearance: none; /* 네이티브 외형 감추기 */
+  -moz-appearance: none;
+  appearance: none;
+`;
 
+const SignUpAgreeCheck = styled.div`
+  display: flex;
+  margin-top: 25px;
+`;
+
+const InputCheck = styled.input.attrs({
+  type: "checkBox"
+})``;
 //1.check 2.emailCheck 3.signUpForm
 export default ({
   onSubmit,
@@ -126,7 +144,7 @@ export default ({
   secretCode,
   secretCodeIsExist
 }) => {
-  const [state, setState] = useState("signUpForm");
+  const [state, setState] = useState("check");
   const [checkDisable, setCheckDisable] = useState(true);
   const [sendSecret, setSendSecret] = useState(false);
 
@@ -137,6 +155,11 @@ export default ({
   const agreePolicy = document.getElementById("agree-Policy");
   const agreePp = document.getElementById("agree-pp");
   const agreeMarketEmail = document.getElementById("agree-market-email");
+
+  const femailInput = document.getElementById("femailInput");
+  const mailInput = document.getElementById("mailInput");
+
+  const agreeInfo = document.getElementById("argeeInfo");
 
   //체크박스가 체크가 되었는지의 여부를 확인하는 fun
   const mustBoxCheck = () => {
@@ -219,7 +242,7 @@ export default ({
           <MainBox>
             <InputLine>
               <CheckBoxLabel>
-                <InputCheckBox
+                <InputCheck
                   id="allCheck"
                   className="all-Check"
                   onClick={(e) => {
@@ -236,7 +259,7 @@ export default ({
             <hr />
             <InputLine>
               <CheckBoxLabel>
-                <InputCheckBox
+                <InputCheck
                   onClick={(e) => {
                     if (allRigthButton.checked === true) {
                       allRigthButton.checked = false;
@@ -263,7 +286,7 @@ export default ({
             </InputLine>
             <InputLine>
               <CheckBoxLabel>
-                <InputCheckBox
+                <InputCheck
                   id="agree-pp"
                   name="agree-pp"
                   className="checked must"
@@ -291,7 +314,7 @@ export default ({
             </InputLine>
             <InputLine>
               <CheckBoxLabel>
-                <InputCheckBox
+                <InputCheck
                   id="agree-market-email"
                   name="agree-market-email"
                   className="checked"
@@ -315,7 +338,7 @@ export default ({
             <hr />
             <InputLine>
               <CheckBoxLabel>
-                <InputCheckBox
+                <InputCheck
                   id="adult"
                   name="adult"
                   className="must"
@@ -383,9 +406,9 @@ export default ({
             ) : (
               <CheckButton
                 disabled={emailIsTrue}
-                onClick={() => {
-                  onSubmit();
-                  setSendSecret(true);
+                onClick={async () => {
+                  const isTrue = await onSubmit();
+                  setSendSecret(isTrue);
                 }}
               >
                 이메일 발송
@@ -473,36 +496,55 @@ export default ({
                 <LoginGenderOption>
                   <LabelOption>
                     <CheckInput
-                      id="wo"
+                      {...gender}
+                      id="femailInput"
                       name="gender"
                       value="femail"
-                      {...gender}
                     />
-                    <i style={{ width: "100%" }}>여성</i>
+                    <Text style={{ marginLeft: "10px" }}>여성</Text>
                   </LabelOption>
                   <LabelOption>
                     <CheckInput
-                      id="ma"
-                      checked="false"
+                      {...gender}
+                      id="mailInput"
                       name="gender"
                       value="mail"
-                      {...gender}
                     />
-                    <i>남성</i>
+                    <Text style={{ marginLeft: "10px" }}>남성</Text>
+                  </LabelOption>
+                  <LabelOption
+                    onClick={async () => {
+                      mailInput.checked = false;
+                      femailInput.checked = false;
+                      await gender.setDisabled(true);
+                    }}
+                  >
+                    <Eraser />
                   </LabelOption>
                 </LoginGenderOption>
               </LoginGender>
               <SignUpBirthday>
-                <legend>생년월일</legend>
+                <legend style={{ marginBottom: "10px" }}>생년월일</legend>
                 <SignUpBirthdayOption {...birthdayInfo}>
                   <Birthday id="year" title="년" />
                   <Birthday id="month" title="월" />
                   <Birthday id="day" title="일" />
                 </SignUpBirthdayOption>
                 <SignUpAgreeCheck>
-                  <InputCheckBox {...agreePrivacy} />
-                  <Text>개인정보 수집 및 이용동의</Text>
-                  <Text>상세보기</Text>
+                  <InputCheckBox
+                    disabled={gender.disabled}
+                    checked={!gender.disabled}
+                    id="argeeInfo"
+                  />
+                  <TextBox
+                    style={{
+                      justifyContent: "space-between",
+                      marginLeft: "8px"
+                    }}
+                  >
+                    <Text>개인정보 수집 및 이용동의</Text>
+                    <Text>상세보기</Text>
+                  </TextBox>
                 </SignUpAgreeCheck>
               </SignUpBirthday>
             </SignUpOption>
@@ -515,7 +557,7 @@ export default ({
                 disabled={secondCheckDisable}
                 onClick={() => {
                   onSubmit();
-                  setState("lalala");
+                  setState("welcomePage");
                 }}
               >
                 이메일로 회원가입
@@ -524,7 +566,7 @@ export default ({
           </CertificationForm>
         </>
       )}
-      {state === "lalala" && <Input />}
+      {state === "welcomePage" && ""}
     </SignUpBox>
   );
 };
