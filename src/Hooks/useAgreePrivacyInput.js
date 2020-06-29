@@ -4,12 +4,13 @@ export default (defaultValue) => {
   const [value, setValue] = useState(defaultValue);
 
   const onChange = (e) => {
-    e.preventDefault();
+    console.log(e.target.checked);
     const {
-      target: { value }
+      target: { checked }
     } = e;
-
-    setValue(value);
+    setValue(checked);
+    console.log(checked);
   };
-  return { value, onChange, setValue };
+
+  return { value, setValue, onChange };
 };
