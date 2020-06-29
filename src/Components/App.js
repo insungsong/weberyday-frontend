@@ -11,7 +11,6 @@ import { gql } from "apollo-boost";
 import { useQuery } from "react-apollo-hooks";
 import { BrowserRouter } from "react-router-dom";
 import Routes from "./Routes";
-import Body from "./Body";
 
 const QUERY = gql`
   {
@@ -44,7 +43,6 @@ export default () => {
       <GlobalStyles />
       <BigContainer
         onClick={(e) => {
-          console.log(e.target.parentElement.id);
           if (
             e.target.className.baseVal === "Search" ||
             e.target.id === "SearchPostBox"
