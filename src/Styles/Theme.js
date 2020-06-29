@@ -1,4 +1,5 @@
 export default {
   firstColor: "#CCF5FA",
-  lightGreyColor: "#bdc3c7"
+  greyColor: "#bdc3c7",
+  lightGreyColor: "#FAFBFC"
 };
