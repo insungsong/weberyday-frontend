@@ -5,7 +5,19 @@ import GlobalStyles from "../Styles/GlobalStyles";
 import Header from "./Header";
 import styled from "styled-components";
 import Footer from "./Footer";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { gql } from "apollo-boost";
+import { useQuery } from "react-apollo-hooks";
+import { BrowserRouter } from "react-router-dom";
+import Routes from "./Routes";
 import Body from "./Body";
+
+const QUERY = gql`
+  {
+    isLoggedIn @client
+  }
+`;
 
 const BigContainer = styled.div`
   width: 100%;
@@ -15,9 +27,15 @@ const BigContainer = styled.div`
 const Container = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
 export default () => {
+  const {
+    data: { isLoggedIn }
+  } = useQuery(QUERY);
+
   const [searchPoint, setSearchPoint] = useState(false);
   const [menuPoint, setMenuPoint] = useState(false);
 
@@ -52,9 +70,16 @@ export default () => {
         }}
       >
         <Container>
-          <Header menuPoint={menuPoint} searchPoint={searchPoint} />
-          <Body />
+          <BrowserRouter>
+            <Header
+              isLoggedIn={isLoggedIn}
+              menuPoint={menuPoint}
+              searchPoint={searchPoint}
+            />
+            <Routes />
+          </BrowserRouter>
         </Container>
+        <ToastContainer position={toast.POSITION.TOP_CENTER} />
         <Footer />
       </BigContainer>
     </ThemeProvider>
