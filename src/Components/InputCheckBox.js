@@ -11,7 +11,8 @@ const InputCheckBox = ({
   setValue,
   onChange,
   disabled,
-  checked
+  checked,
+  onClick
 }) => {
   return (
     <Container
@@ -20,6 +21,7 @@ const InputCheckBox = ({
       setValue={setValue}
       disabled={disabled}
       onChange={onChange}
+      onClick={onClick}
       checked={checked}
     />
   );
