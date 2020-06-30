@@ -17,7 +17,6 @@ export const CREATE_ACCOUNT = gql`
     $email: String!
     $password: String!
     $inflow: String!
-    $ageRange: String
     $birthday: String
     $certification: Boolean
     $nickname: String
@@ -31,7 +30,6 @@ export const CREATE_ACCOUNT = gql`
       email: $email
       password: $password
       inflow: $inflow
-      ageRange: $ageRange
       birthday: $birthday
       certification: $certification
       nickname: $nickname

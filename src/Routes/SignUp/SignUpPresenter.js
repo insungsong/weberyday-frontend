@@ -144,7 +144,7 @@ export default ({
   secretCode,
   secretCodeIsExist
 }) => {
-  const [state, setState] = useState("check");
+  const [state, setState] = useState("signUpForm");
   const [checkDisable, setCheckDisable] = useState(true);
   const [sendSecret, setSendSecret] = useState(false);
 
@@ -233,7 +233,17 @@ export default ({
   } else {
     secondCheckDisable = true;
   }
-
+  if (!gender.disabled) {
+    console.log(agreePrivacy.value + ": agreePrivacy");
+    agreePrivacy.value = true;
+    document.getElementById("argeeInfo").checked = true;
+    console.log(!gender.disabled + "   asasas");
+  } else {
+    console.log(agreePrivacy.value);
+    agreePrivacy.value = false;
+    console.log(!gender.disabled + "    asasas");
+    //document.getElementById("argeeInfo").checked = false;
+  }
   return (
     <SignUpBox>
       {state === "check" && (
@@ -531,11 +541,7 @@ export default ({
                   <Birthday id="day" title="일" />
                 </SignUpBirthdayOption>
                 <SignUpAgreeCheck>
-                  <InputCheckBox
-                    disabled={gender.disabled}
-                    checked={!gender.disabled}
-                    id="argeeInfo"
-                  />
+                  <InputCheckBox id="argeeInfo" {...agreePrivacy} />
                   <TextBox
                     style={{
                       justifyContent: "space-between",

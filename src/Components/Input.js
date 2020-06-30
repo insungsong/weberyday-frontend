@@ -8,11 +8,6 @@ const Container = styled.input`
   border: solid 1px #eef1f4;
 `;
 
-<<<<<<< HEAD
-const Input = ({ placeholder, id, focus = false, type = "" }) => (
-  <Container id={id} placeholder={placeholder} autoFocus={focus} type />
-);
-=======
 const NumberInputContainer = styled.input.attrs({ type: "number" })`
   ::-webkit-outer-spin-button,
   ::-webkit-inner-spin-button {
@@ -80,6 +75,5 @@ const Input = ({
     </>
   );
 };
->>>>>>> Song
 
 export default Input;
