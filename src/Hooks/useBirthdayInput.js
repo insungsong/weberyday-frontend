@@ -41,5 +41,14 @@ export default (defaultValue) => {
 
   birthday = year + month + day;
 
-  return { year, setYear, month, setMonth, day, setDay, birthday, onChange };
+  return {
+    year,
+    setYear,
+    month,
+    setMonth,
+    day,
+    setDay,
+    birthday,
+    onChange
+  };
 };
