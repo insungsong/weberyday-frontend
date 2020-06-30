@@ -5,6 +5,7 @@ import Input from "../../Components/Input";
 import CheckInput from "../../Components/CheckInput";
 import { Eraser } from "../../Components/Icons";
 import InputCheckBox from "../../Components/InputCheckBox";
+import { toast } from "react-toastify";
 
 const SignUpBox = styled.div`
   display: flex;
@@ -144,17 +145,9 @@ export default ({
   secretCode,
   secretCodeIsExist
 }) => {
-  const [state, setState] = useState("signUpForm");
+  const [state, setState] = useState("check");
   const [checkDisable, setCheckDisable] = useState(true);
   const [sendSecret, setSendSecret] = useState(false);
-
-  let year = false;
-  let month = false;
-  let day = false;
-  let allLength = false;
-
-  console.log(year, month, day, allLength);
-
   //체크박스를 가져오는 코드
   var mustCheckedBox = document.querySelectorAll(".must");
 
@@ -166,15 +159,6 @@ export default ({
   const femailInput = document.getElementById("femailInput");
   const mailInput = document.getElementById("mailInput");
 
-  var birthdayNumberLength = birthdayInfo.birthday.length;
-
-  if (year && month && day) {
-    allLength = true;
-  }
-  if (allLength) {
-    gender.setDisabled(true);
-    agreeInfo.setValue(false);
-  }
   //체크박스가 체크가 되었는지의 여부를 확인하는 fun
   const mustBoxCheck = () => {
     var arr = [];
@@ -276,9 +260,6 @@ export default ({
               <CheckBoxLabel>
                 <InputCheck
                   onClick={(e) => {
-                    console.log(allRigthButton.checked);
-                    console.log(agreePp.checked);
-                    console.log(agreeMarketEmail.checked);
                     if (allRigthButton.checked === true) {
                       allRigthButton.checked = false;
                     } else if (
@@ -550,27 +531,48 @@ export default ({
                   <Birthday
                     id="year"
                     title="년"
-                    onChange={(e) => {
-                      if (e.target.value !== "0") {
-                        year = e.target.value;
+                    onChange={async (e) => {
+                      await gender.setDisabled(false);
+                      await agreeInfo.setValue(true);
+                      await birthdayInfo.setBirthday(birthdayInfo.fakeBirthday);
+                      if (birthdayInfo.birthday === "") {
+                        await birthdayInfo.setBirthday(
+                          birthdayInfo.fakeBirthday
+                        );
                       }
                     }}
                   />
                   <Birthday
                     id="month"
                     title="월"
-                    onChange={(e) => {
-                      if (e.target.value !== "0") {
-                        month = true;
+                    onChange={async (e) => {
+                      await gender.setDisabled(false);
+                      await agreeInfo.setValue(true);
+                      await birthdayInfo.setBirthday(birthdayInfo.fakeBirthday);
+                      if (
+                        birthdayInfo.birthday === "" ||
+                        birthdayInfo.birthday.length <= 4
+                      ) {
+                        await birthdayInfo.setBirthday(
+                          birthdayInfo.fakeBirthday
+                        );
                       }
                     }}
                   />
                   <Birthday
                     id="day"
                     title="일"
-                    onChange={(e) => {
-                      if (e.target.value !== "0") {
-                        day = true;
+                    onChange={async (e) => {
+                      await gender.setDisabled(false);
+                      await agreeInfo.setValue(true);
+                      await birthdayInfo.setBirthday(birthdayInfo.fakeBirthday);
+                      if (
+                        birthdayInfo.birthday === "" ||
+                        birthdayInfo.birthday.length <= 6
+                      ) {
+                        await birthdayInfo.setBirthday(
+                          birthdayInfo.fakeBirthday
+                        );
                       }
                     }}
                   />
@@ -581,6 +583,12 @@ export default ({
                     checked={agreeInfo.value}
                     disabled={gender.disabled}
                     id="agreeInfo"
+                    onClick={async (e) => {
+                      mailInput.checked = false;
+                      femailInput.checked = false;
+                      await birthdayInfo.deleteBirthday();
+                      await gender.setDisabled(true);
+                    }}
                   />
                   <TextBox
                     style={{
@@ -601,7 +609,21 @@ export default ({
             ) : (
               <CheckButton
                 disabled={secondCheckDisable}
-                onClick={() => {
+                onClick={async () => {
+                  if (
+                    birthdayInfo.birthday === "" ||
+                    birthdayInfo.birthday === "0" ||
+                    birthdayInfo.birthday === "00" ||
+                    birthdayInfo.birthday === "000"
+                  ) {
+                    toast.success(
+                      "생년월일 기입란을 정확히 채우시거나 비워주십쇼😎"
+                    );
+                  } else if (birthdayInfo.birthday.length !== 8) {
+                    toast.error(
+                      "생년월일 기입란을 정확히 채우시거나 비워주십쇼😎"
+                    );
+                  }
                   onSubmit();
                   setState("welcomePage");
                 }}

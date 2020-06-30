@@ -57,8 +57,6 @@ export default () => {
           data: { requestSecret }
         } = await reqeustSecretMutation();
 
-        console.log("apple", requestSecret);
-
         if (requestSecret) {
           toast.success("해당 이메일로 시크릿코드를 전달해드렸습니다 ✅");
           setAction("signUpForm");
@@ -99,8 +97,6 @@ export default () => {
         const {
           data: { createAccount }
         } = await createAccountMutation();
-
-        console.log(createAccount);
 
         if (createAccount) {
           toast.success("🎉 회원가입이 완료되었습니다 🎉");

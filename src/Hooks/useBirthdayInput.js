@@ -4,6 +4,7 @@ export default (defaultValue) => {
   var [year, setYear] = useState(defaultValue);
   var [month, setMonth] = useState(defaultValue);
   var [day, setDay] = useState(defaultValue);
+  var [birthday, setBirthday] = useState(defaultValue);
 
   const onChange = (e) => {
     if (e.target.id === "year") {
@@ -28,18 +29,22 @@ export default (defaultValue) => {
 
   var parseIntMonth = parseInt(month);
   var parseIntDay = parseInt(day);
-  var birthday = "";
+  var fakeBirthday = "";
 
-  if (parseIntMonth <= 9) {
+  const deleteBirthday = () => {
+    setBirthday("");
+  };
+
+  if (parseIntMonth <= 9 && parseIntMonth !== 0) {
     month = "0" + month;
-    birthday = year + month + day;
+    fakeBirthday = year + month + day;
   }
-  if (parseIntDay <= 9) {
+  if (parseIntDay <= 9 && parseIntMonth !== 0) {
     day = "0" + day;
-    birthday = year + month + day;
+    fakeBirthday = year + month + day;
   }
 
-  birthday = year + month + day;
+  fakeBirthday = year + month + day;
 
   return {
     year,
@@ -48,7 +53,10 @@ export default (defaultValue) => {
     setMonth,
     day,
     setDay,
+    fakeBirthday,
     birthday,
+    setBirthday,
+    deleteBirthday,
     onChange
   };
 };

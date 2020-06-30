@@ -4,7 +4,6 @@ export default (defaultValue) => {
   const [value, setValue] = useState(defaultValue);
 
   const onChange = (e) => {
-    console.log(e.target.checked);
     const {
       target: { checked }
     } = e;
