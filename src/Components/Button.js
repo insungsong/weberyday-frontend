@@ -8,6 +8,10 @@ const Container = styled.button`
   margin-bottom: 12px;
 `;
 
-const Button = ({ text }) => <Container>{text}</Container>;
+const Button = ({ onClick, text, style }) => (
+  <Container onClick={onClick} style={style}>
+    {text}
+  </Container>
+);
 
 export default Button;

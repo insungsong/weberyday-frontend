@@ -30,14 +30,21 @@ export default (defaultValue) => {
   var parseIntDay = parseInt(day);
   var birthday = "";
 
-  if (parseIntMonth <= 9) {
+  if (parseIntMonth <= 9 && parseIntMonth !== 0) {
     month = "0" + month;
     birthday = year + month + day;
   }
-  if (parseIntDay <= 9) {
+  if (parseIntDay <= 9 && parseIntMonth !== 0) {
     day = "0" + day;
     birthday = year + month + day;
   }
+
+  const deleteBirthday = () => {
+    birthday = "";
+    setYear("");
+    setMonth("");
+    setDay("");
+  };
 
   birthday = year + month + day;
 
@@ -49,6 +56,7 @@ export default (defaultValue) => {
     day,
     setDay,
     birthday,
+    deleteBirthday,
     onChange
   };
 };
