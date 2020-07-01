@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import useRadioInput from "../../Hooks/useRadioInput";
 import useBirthdayInput from "../../Hooks/useBirthdayInput";
 import useAgreePrivacyInput from "../../Hooks/useAgreePrivacyInput";
+import useAgreeInfoInput from "../../Hooks/useAgreeInfoInput";
 
 export default () => {
   const [action, setAction] = useState("certification");
@@ -19,6 +20,7 @@ export default () => {
   const password = useInput("");
   const gender = useRadioInput("");
   const birthdayInfo = useBirthdayInput("");
+  const agreeInfo = useAgreeInfoInput(false);
   const agreePrivacy = useAgreePrivacyInput(false);
 
   const [reqeustSecretMutation] = useMutation(REQUEST_SECRET, {
@@ -122,6 +124,7 @@ export default () => {
       password={password}
       gender={gender}
       birthdayInfo={birthdayInfo}
+      agreeInfo={agreeInfo}
       agreePrivacy={agreePrivacy}
       onSubmit={onSubmit}
     />

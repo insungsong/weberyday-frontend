@@ -69,12 +69,13 @@ export default ({
   setAction,
   onSubmit,
   email,
-  password
+  password,
+  style
 }) => {
   const [checked, setChecked] = useState(false);
 
   return (
-    <LoginBox>
+    <LoginBox style={style}>
       {!isLoggedIn ? (
         <>
           <LoginForm id="MenuBox" onSubmit={onSubmit}>

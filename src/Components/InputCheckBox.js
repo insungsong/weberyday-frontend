@@ -21,6 +21,7 @@ const InputCheckBox = ({
       setValue={setValue}
       disabled={disabled}
       onChange={onChange}
+      onClick={onClick}
       checked={checked}
       onClick={onClick}
     />

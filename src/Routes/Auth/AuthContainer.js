@@ -5,7 +5,7 @@ import { useMutation } from "react-apollo-hooks";
 import { LOG_IN, LOCAL_LOG_IN } from "./AuthQuery";
 import AuthPresenter from "./AuthPresenter";
 
-export default ({ isLoggedIn }) => {
+export default ({ isLoggedIn, style }) => {
   const [action, setAction] = useState("logIn");
   const email = useInput("");
   const password = useInput("");
@@ -54,6 +54,7 @@ export default ({ isLoggedIn }) => {
   return (
     <AuthPresenter
       isLoggedIn={isLoggedIn}
+      style={style}
       email={email}
       password={password}
       onSubmit={onSubmit}

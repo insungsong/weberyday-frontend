@@ -139,12 +139,12 @@ export default ({
   emailCertification,
   password,
   gender,
+  agreeInfo,
   birthdayInfo,
-  agreePrivacy,
   secretCode,
   secretCodeIsExist
 }) => {
-  const [state, setState] = useState("signUpForm");
+  const [state, setState] = useState("welcomePage");
   const [checkDisable, setCheckDisable] = useState(true);
   const [sendSecret, setSendSecret] = useState(false);
 
@@ -159,7 +159,7 @@ export default ({
   const femailInput = document.getElementById("femailInput");
   const mailInput = document.getElementById("mailInput");
 
-  const agreeInfo = document.getElementById("argeeInfo");
+  var birthdayNumberLength = birthdayInfo.birthday.length;
 
   //체크박스가 체크가 되었는지의 여부를 확인하는 fun
   const mustBoxCheck = () => {
@@ -228,22 +228,13 @@ export default ({
   //이메일로 회원가입 버튼을 disable => false 를 해주기위함
   //TO DO: 이부분을 지금은 하나라도 입력하면 disabled가 false가 되도록하지만 실제 완성할때는, 정규식으로 비밀번호를 거른것이 true라면 disabled할 수 있도록 해야함
   var secondCheckDisable = true;
+
   if (password.value !== "") {
     secondCheckDisable = false;
   } else {
     secondCheckDisable = true;
   }
-  if (!gender.disabled) {
-    console.log(agreePrivacy.value + ": agreePrivacy");
-    agreePrivacy.value = true;
-    document.getElementById("argeeInfo").checked = true;
-    console.log(!gender.disabled + "   asasas");
-  } else {
-    console.log(agreePrivacy.value);
-    agreePrivacy.value = false;
-    console.log(!gender.disabled + "    asasas");
-    //document.getElementById("argeeInfo").checked = false;
-  }
+
   return (
     <SignUpBox>
       {state === "check" && (
@@ -510,6 +501,7 @@ export default ({
                       id="femailInput"
                       name="gender"
                       value="femail"
+                      onClick={async () => await agreeInfo.setValue(true)}
                     />
                     <Text style={{ marginLeft: "10px" }}>여성</Text>
                   </LabelOption>
@@ -519,6 +511,7 @@ export default ({
                       id="mailInput"
                       name="gender"
                       value="mail"
+                      onClick={async () => await agreeInfo.setValue(true)}
                     />
                     <Text style={{ marginLeft: "10px" }}>남성</Text>
                   </LabelOption>
@@ -527,6 +520,7 @@ export default ({
                       mailInput.checked = false;
                       femailInput.checked = false;
                       await gender.setDisabled(true);
+                      await agreeInfo.setValue(false);
                     }}
                   >
                     <Eraser />
@@ -541,7 +535,16 @@ export default ({
                   <Birthday id="day" title="일" />
                 </SignUpBirthdayOption>
                 <SignUpAgreeCheck>
-                  <InputCheckBox id="argeeInfo" {...agreePrivacy} />
+                  <InputCheckBox
+                    {...agreeInfo}
+                    checked={agreeInfo.value}
+                    disabled={gender.disabled}
+                    id="agreeInfo"
+                    onClick={() => {
+                      document.getElementById("year").value = "0";
+                      console.log("ㄴㄴ");
+                    }}
+                  />
                   <TextBox
                     style={{
                       justifyContent: "space-between",
@@ -572,7 +575,11 @@ export default ({
           </CertificationForm>
         </>
       )}
-      {state === "welcomePage" && ""}
+      {state === "welcomePage" && (
+        <SigupFilterBox>
+          <Title>가입을 축하드립니다!</Title>
+        </SigupFilterBox>
+      )}
     </SignUpBox>
   );
 };
