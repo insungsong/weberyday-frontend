@@ -41,16 +41,16 @@ const LoginText = styled.p`
 `;
 
 const LoginBox = styled.div`
-  width: 300px;
-  height: 700px;
-  background-color: #ecf0f1;
-  position: absolute;
   display: flex;
+  position: absolute;
   align-items: center;
   flex-direction: column;
+  background-color: #ecf0f1;
+  border: solid 1px #f7f8f9;
+  width: 300px;
+  height: 700px;
   top: 80px;
   right: 280px;
-  border: solid 1px #f7f8f9;
   border-radius: 5px;
   padding-top: 30px;
 `;
@@ -69,32 +69,50 @@ export default ({
   setAction,
   onSubmit,
   email,
-  password
+  password,
+  style
 }) => {
   const [checked, setChecked] = useState(false);
+  const [saveEmail, setSaveEmail] = useState();
+
+  let arrTokenValue = localStorage.getItem("token");
+  let userEmail;
+  let userEmailIsTrue = false;
+
+  if (arrTokenValue) {
+    userEmail = arrTokenValue.split(",");
+    if (userEmail[1]) {
+      userEmailIsTrue = true;
+    }
+  }
 
   return (
-    <LoginBox>
+    <LoginBox style={style}>
       {!isLoggedIn ? (
         <>
           <LoginForm id="MenuBox" onSubmit={onSubmit}>
             <Text>이메일로 로그인/가입</Text>
             <Input
+              {...email}
               focus={true}
               type="email"
               placeholder="이메일을 입력해주세요"
-              {...email}
             />
             <Input
+              {...password}
               type="password"
               placeholder="비밀번호를 입력해주세요"
-              {...password}
             />
             <LoginKeep id="MenuBox">
               <input type="checkBox" onClick={() => setChecked(!checked)} />
               <LoginText style={{ marginLeft: 10 }}>로그인 상태 유지</LoginText>
             </LoginKeep>
-            <Button text={"이메일로 로그인 하기"} />
+            <Button
+              text={"이메일로 로그인 하기"}
+              onClick={async () => {
+                setSaveEmail(email.value);
+              }}
+            />
             <Connect>
               <Link to="/signUp">이메일로 회원가입</Link>
               <Link to="/password">비밀번호 찾기</Link>
@@ -120,7 +138,20 @@ export default ({
           </LoginText>
         </>
       ) : (
-        <div>{localStorage.getItem("token")}</div>
+        <>
+          {userEmailIsTrue ? (
+            <>
+              <Text>{userEmail[1]}</Text>
+              <Text>1</Text>
+              <Text>1</Text>
+            </>
+          ) : (
+            <>
+              <LoginText>{saveEmail}</LoginText>
+              <Text>1</Text>
+            </>
+          )}
+        </>
       )}
     </LoginBox>
   );
