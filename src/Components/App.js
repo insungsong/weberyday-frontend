@@ -34,7 +34,6 @@ export default () => {
   const {
     data: { isLoggedIn }
   } = useQuery(QUERY);
-
   const [searchPoint, setSearchPoint] = useState(false);
   const [menuPoint, setMenuPoint] = useState(false);
 

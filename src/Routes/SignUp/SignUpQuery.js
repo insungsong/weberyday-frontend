@@ -19,13 +19,13 @@ export const CREATE_ACCOUNT = gql`
     $inflow: String!
     $ageRange: String
     $birthday: String
-    $certification: Boolean
+    $certification: Boolean!
     $nickname: String
     $gender: String
     $nEvent: Boolean!
     $status: String
     $rank: String!
-    $agreePrivacy: Boolean
+    $agreePrivacy: Boolean!
   ) {
     createAccount(
       email: $email

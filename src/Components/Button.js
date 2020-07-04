@@ -8,8 +8,8 @@ const Container = styled.button`
   margin-bottom: 12px;
 `;
 
-const Button = ({ onClick, text, style }) => (
-  <Container onClick={onClick} style={style}>
+const Button = ({ onClick, text, style, id }) => (
+  <Container id={id} onClick={onClick} style={style}>
     {text}
   </Container>
 );

@@ -524,10 +524,19 @@ export default ({
                   </LabelOption>
                   <LabelOption
                     onClick={async () => {
+                      if (
+                        year.value !== "0" ||
+                        month.value !== "0" ||
+                        day.value !== "0"
+                      ) {
+                        agreeInfo.setValue(true);
+                      } else {
+                        await gender.setDisabled(true);
+                        await agreeInfo.setValue(false);
+                      }
                       mailInput.checked = false;
                       femailInput.checked = false;
-                      await gender.setDisabled(true);
-                      await agreeInfo.setValue(false);
+                      gender.setGet("");
                     }}
                   >
                     <Eraser />
@@ -543,6 +552,15 @@ export default ({
                     onChange={async (e) => {
                       await gender.setDisabled(false);
                       await agreeInfo.setValue(true);
+                      if (
+                        year.value == "0" &&
+                        month.value == "0" &&
+                        day.value == "0" &&
+                        gender.get === ""
+                      ) {
+                        await gender.setDisabled(true);
+                        await agreeInfo.setValue(false);
+                      }
                     }}
                   />
                   <Birthday
@@ -551,6 +569,15 @@ export default ({
                     onChange={async (e) => {
                       await gender.setDisabled(false);
                       await agreeInfo.setValue(true);
+                      if (
+                        year.value == "0" &&
+                        month.value == "0" &&
+                        day.value == "0" &&
+                        gender.get === ""
+                      ) {
+                        await gender.setDisabled(true);
+                        await agreeInfo.setValue(false);
+                      }
                     }}
                   />
                   <Birthday
@@ -559,6 +586,15 @@ export default ({
                     onChange={async (e) => {
                       await gender.setDisabled(false);
                       await agreeInfo.setValue(true);
+                      if (
+                        year.value == "0" &&
+                        month.value == "0" &&
+                        day.value == "0" &&
+                        gender.get === ""
+                      ) {
+                        await gender.setDisabled(true);
+                        await agreeInfo.setValue(false);
+                      }
                     }}
                   />
                 </SignUpBirthdayOption>
