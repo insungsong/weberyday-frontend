@@ -5,6 +5,8 @@ import Input from "../../Components/Input";
 import CheckInput from "../../Components/CheckInput";
 import { Eraser } from "../../Components/Icons";
 import InputCheckBox from "../../Components/InputCheckBox";
+import { toast } from "react-toastify";
+import Button from "../../Components/Button";
 
 const SignUpBox = styled.div`
   display: flex;
@@ -141,13 +143,13 @@ export default ({
   gender,
   agreeInfo,
   birthdayInfo,
+  nEvent,
   secretCode,
   secretCodeIsExist
 }) => {
-  const [state, setState] = useState("welcomePage");
+  const [state, setState] = useState("check");
   const [checkDisable, setCheckDisable] = useState(true);
   const [sendSecret, setSendSecret] = useState(false);
-
   //체크박스를 가져오는 코드
   var mustCheckedBox = document.querySelectorAll(".must");
 
@@ -159,7 +161,9 @@ export default ({
   const femailInput = document.getElementById("femailInput");
   const mailInput = document.getElementById("mailInput");
 
-  var birthdayNumberLength = birthdayInfo.birthday.length;
+  const year = document.getElementById("year");
+  const month = document.getElementById("month");
+  const day = document.getElementById("day");
 
   //체크박스가 체크가 되었는지의 여부를 확인하는 fun
   const mustBoxCheck = () => {
@@ -225,6 +229,7 @@ export default ({
     }
   }, [state]);
 
+  useEffect(() => {}, [birthdayInfo.fakeBirthday]);
   //이메일로 회원가입 버튼을 disable => false 를 해주기위함
   //TO DO: 이부분을 지금은 하나라도 입력하면 disabled가 false가 되도록하지만 실제 완성할때는, 정규식으로 비밀번호를 거른것이 true라면 disabled할 수 있도록 해야함
   var secondCheckDisable = true;
@@ -244,6 +249,7 @@ export default ({
             <InputLine>
               <CheckBoxLabel>
                 <InputCheck
+                  {...nEvent}
                   id="allCheck"
                   className="all-Check"
                   onClick={(e) => {
@@ -316,6 +322,7 @@ export default ({
             <InputLine>
               <CheckBoxLabel>
                 <InputCheck
+                  {...nEvent}
                   id="agree-market-email"
                   name="agree-market-email"
                   className="checked"
@@ -517,10 +524,19 @@ export default ({
                   </LabelOption>
                   <LabelOption
                     onClick={async () => {
+                      if (
+                        year.value !== "0" ||
+                        month.value !== "0" ||
+                        day.value !== "0"
+                      ) {
+                        agreeInfo.setValue(true);
+                      } else {
+                        await gender.setDisabled(true);
+                        await agreeInfo.setValue(false);
+                      }
                       mailInput.checked = false;
                       femailInput.checked = false;
-                      await gender.setDisabled(true);
-                      await agreeInfo.setValue(false);
+                      gender.setGet("");
                     }}
                   >
                     <Eraser />
@@ -530,9 +546,57 @@ export default ({
               <SignUpBirthday>
                 <legend style={{ marginBottom: "10px" }}>생년월일</legend>
                 <SignUpBirthdayOption {...birthdayInfo}>
-                  <Birthday id="year" title="년" />
-                  <Birthday id="month" title="월" />
-                  <Birthday id="day" title="일" />
+                  <Birthday
+                    id="year"
+                    title="년"
+                    onChange={async (e) => {
+                      await gender.setDisabled(false);
+                      await agreeInfo.setValue(true);
+                      if (
+                        year.value == "0" &&
+                        month.value == "0" &&
+                        day.value == "0" &&
+                        gender.get === ""
+                      ) {
+                        await gender.setDisabled(true);
+                        await agreeInfo.setValue(false);
+                      }
+                    }}
+                  />
+                  <Birthday
+                    id="month"
+                    title="월"
+                    onChange={async (e) => {
+                      await gender.setDisabled(false);
+                      await agreeInfo.setValue(true);
+                      if (
+                        year.value == "0" &&
+                        month.value == "0" &&
+                        day.value == "0" &&
+                        gender.get === ""
+                      ) {
+                        await gender.setDisabled(true);
+                        await agreeInfo.setValue(false);
+                      }
+                    }}
+                  />
+                  <Birthday
+                    id="day"
+                    title="일"
+                    onChange={async (e) => {
+                      await gender.setDisabled(false);
+                      await agreeInfo.setValue(true);
+                      if (
+                        year.value == "0" &&
+                        month.value == "0" &&
+                        day.value == "0" &&
+                        gender.get === ""
+                      ) {
+                        await gender.setDisabled(true);
+                        await agreeInfo.setValue(false);
+                      }
+                    }}
+                  />
                 </SignUpBirthdayOption>
                 <SignUpAgreeCheck>
                   <InputCheckBox
@@ -540,9 +604,14 @@ export default ({
                     checked={agreeInfo.value}
                     disabled={gender.disabled}
                     id="agreeInfo"
-                    onClick={() => {
-                      document.getElementById("year").value = "0";
-                      console.log("ㄴㄴ");
+                    onClick={async (e) => {
+                      mailInput.checked = false;
+                      femailInput.checked = false;
+                      year.value = "0";
+                      month.value = "0";
+                      day.value = "0";
+                      await birthdayInfo.deleteBirthday();
+                      await gender.setDisabled(true);
                     }}
                   />
                   <TextBox
@@ -564,7 +633,19 @@ export default ({
             ) : (
               <CheckButton
                 disabled={secondCheckDisable}
-                onClick={() => {
+                onClick={async () => {
+                  if (
+                    birthdayInfo.birthday === "" ||
+                    birthdayInfo.birthday === "0" ||
+                    birthdayInfo.birthday === "00" ||
+                    birthdayInfo.birthday === "000"
+                  ) {
+                  } else if (birthdayInfo.birthday.length !== 8) {
+                    toast.error(
+                      "생년월일 기입란을 정확히 채우시거나 비워주십쇼 😎"
+                    );
+                    return;
+                  }
                   onSubmit();
                   setState("welcomePage");
                 }}
@@ -577,7 +658,43 @@ export default ({
       )}
       {state === "welcomePage" && (
         <SigupFilterBox>
-          <Title>가입을 축하드립니다!</Title>
+          <Title>회원가입완료</Title>
+          <MainBox
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+              marginTop: "50px"
+            }}
+          >
+            <img src="../Images/weberydayTextLogo.png" width="200px" />
+            <TextBox
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+                marginTop: "60px"
+              }}
+            >
+              <Text>회원가입을 축하합니다.</Text>
+              <br />
+              <Text>어디서든 매일매일 웨브리데이를 즐겨보세요</Text>
+            </TextBox>
+            <Link to="/">
+              <Button
+                text={"확인"}
+                style={{
+                  width: "140px",
+                  backgroundColor: "#4996C4",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "5px",
+                  fontSize: "1.2em"
+                }}
+              />
+            </Link>
+          </MainBox>
         </SigupFilterBox>
       )}
     </SignUpBox>

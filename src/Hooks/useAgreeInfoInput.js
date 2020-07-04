@@ -2,9 +2,12 @@ import { useState } from "react";
 
 export default (defaultValue) => {
   const [value, setValue] = useState(defaultValue);
+  const [disabled, setDisabled] = useState(true);
 
   const onChange = (e) => {
-    console.log(e.target.checked);
+    if (e.target.checked === false) {
+      setDisabled(true);
+    }
     const {
       target: { checked }
     } = e;
@@ -12,5 +15,5 @@ export default (defaultValue) => {
     setValue(checked);
   };
 
-  return { value, setValue, onChange };
+  return { value, setValue, onChange, disabled, setDisabled };
 };

@@ -90,7 +90,7 @@ export default ({ isLoggedIn, searchPoint, menuPoint }) => {
             {menuPoint ? (
               <Auth isLoggedIn={isLoggedIn} />
             ) : (
-              <Auth style={{ display: "none" }} isLoggedIn={isLoggedIn} />
+              <Auth isLoggedIn={isLoggedIn} style={{ display: "none" }} />
             )}
             {isLoggedIn ? (
               <BellPlace>

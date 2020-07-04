@@ -41,16 +41,16 @@ const LoginText = styled.p`
 `;
 
 const LoginBox = styled.div`
-  width: 300px;
-  height: 700px;
-  background-color: #ecf0f1;
-  position: absolute;
   display: flex;
+  position: absolute;
   align-items: center;
   flex-direction: column;
+  background-color: #ecf0f1;
+  border: solid 1px #f7f8f9;
+  width: 300px;
+  height: 700px;
   top: 80px;
   right: 280px;
-  border: solid 1px #f7f8f9;
   border-radius: 5px;
   padding-top: 30px;
 `;
@@ -70,10 +70,16 @@ export default ({
   onSubmit,
   email,
   password,
-  style
+  style,
+  userInfo,
+  userCertification
 }) => {
-  const [checked, setChecked] = useState(false);
+  let certification = false;
+  if (userCertification !== undefined) {
+    //certification = userCertification.findUserInfo.certification;
+  }
 
+  const [checked, setChecked] = useState(false);
   return (
     <LoginBox style={style}>
       {!isLoggedIn ? (
@@ -81,15 +87,15 @@ export default ({
           <LoginForm id="MenuBox" onSubmit={onSubmit}>
             <Text>이메일로 로그인/가입</Text>
             <Input
+              {...email}
               focus={true}
               type="email"
               placeholder="이메일을 입력해주세요"
-              {...email}
             />
             <Input
+              {...password}
               type="password"
               placeholder="비밀번호를 입력해주세요"
-              {...password}
             />
             <LoginKeep id="MenuBox">
               <input type="checkBox" onClick={() => setChecked(!checked)} />
@@ -121,7 +127,21 @@ export default ({
           </LoginText>
         </>
       ) : (
-        <div>{localStorage.getItem("token")}</div>
+        <>
+          <LoginText>{localStorage.userEmailToken}</LoginText>
+          <Link to="/me">
+            <Text>내정보</Text>
+          </Link>
+          {certification ? (
+            <Link to="/myPostList">
+              <Text>내작품</Text>
+            </Link>
+          ) : (
+            <Link to="/certification">
+              <Text>내작품</Text>
+            </Link>
+          )}
+        </>
       )}
     </LoginBox>
   );

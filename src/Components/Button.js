@@ -6,8 +6,16 @@ const Container = styled.button`
   height: 50px;
   margin-top: 18px;
   margin-bottom: 12px;
+
+  &:disabled {
+    background-color: ${(props) => props.theme.greyColor};
+  }
 `;
 
-const Button = ({ text }) => <Container>{text}</Container>;
+const Button = ({ onClick, text, style, disabled }) => (
+  <Container onClick={onClick} style={style} disabled={disabled}>
+    {text}
+  </Container>
+);
 
 export default Button;

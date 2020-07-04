@@ -11,6 +11,7 @@ import { gql } from "apollo-boost";
 import { useQuery } from "react-apollo-hooks";
 import { BrowserRouter } from "react-router-dom";
 import Routes from "./Routes";
+import Client from "../Apollo/Client";
 
 const QUERY = gql`
   {
@@ -34,7 +35,6 @@ export default () => {
   const {
     data: { isLoggedIn }
   } = useQuery(QUERY);
-
   const [searchPoint, setSearchPoint] = useState(false);
   const [menuPoint, setMenuPoint] = useState(false);
 

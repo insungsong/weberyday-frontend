@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import useInput from "../../Hooks/useInput";
 import { toast } from "react-toastify";
-import { useMutation } from "react-apollo-hooks";
+import { useMutation, useQuery } from "react-apollo-hooks";
 import { LOG_IN, LOCAL_LOG_IN } from "./AuthQuery";
 import AuthPresenter from "./AuthPresenter";
+import { FIND_USER_INFO } from "../User/Me/MeQuery";
 
 export default ({ isLoggedIn, style }) => {
   const [action, setAction] = useState("logIn");
+  const [userInfo, setUserInfo] = useState("");
   const email = useInput("");
   const password = useInput("");
 
@@ -17,6 +19,11 @@ export default ({ isLoggedIn, style }) => {
 
   //weberyday로그인 하고나서 토큰 값 회원 브라우저에 저장하기
   const [localLogInMutation] = useMutation(LOCAL_LOG_IN);
+
+  const { data, loading, error } = useQuery(FIND_USER_INFO);
+  if (loading === false) {
+    console.log(data);
+  }
 
   //TO DO
   //1. 로그인 유지상태 만들기
@@ -37,10 +44,12 @@ export default ({ isLoggedIn, style }) => {
 
           if (token === "" || token === undefined) {
             toast.error("가입하지 않은 이메일이거나, 잘못된 비밀번호입니다 🥺");
+            return;
           }
 
           if (token !== "" || token !== undefined) {
-            localLogInMutation({ variables: { token } });
+            await localLogInMutation({ variables: { token } });
+            localStorage.setItem("userEmailToken", email.value);
             setAction("logInUser");
           }
         } catch (e) {
@@ -60,6 +69,9 @@ export default ({ isLoggedIn, style }) => {
       onSubmit={onSubmit}
       action={action}
       setAction={setAction}
+      userInfo={userInfo}
+      userCertification={data}
+      style={style}
     />
   );
 };

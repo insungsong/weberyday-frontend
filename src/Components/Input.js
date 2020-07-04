@@ -27,6 +27,15 @@ const DescriptionContainer = styled.input`
   margin-bottom: 12px;
 `;
 
+const MeInputContainer = styled.input`
+  width: 90%;
+  padding: 10px;
+  border: solid 1px #eef1f4;
+  margin-bottom: 12px;
+  display: block;
+  margin-top: 10px;
+`;
+
 const Input = ({
   id,
   placeholder,
@@ -63,6 +72,18 @@ const Input = ({
       )}
       {selectInput === "description" && (
         <DescriptionContainer
+          id={id}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          type={type}
+          autoFocus={focus}
+          readOnly={readOnly}
+        />
+      )}
+
+      {selectInput === "meInput" && (
+        <MeInputContainer
           id={id}
           value={value}
           onChange={onChange}
