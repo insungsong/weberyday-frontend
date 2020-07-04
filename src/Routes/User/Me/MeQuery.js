@@ -38,6 +38,7 @@ export const FIND_USER_INFO = gql`
       birthday
       gender
       nEvent
+      certification
       agreePrivacy
     }
   }

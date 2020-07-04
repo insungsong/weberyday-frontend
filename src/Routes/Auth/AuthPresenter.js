@@ -71,10 +71,15 @@ export default ({
   email,
   password,
   style,
-  userInfo
+  userInfo,
+  userCertification
 }) => {
-  const [checked, setChecked] = useState(false);
+  let certification = false;
+  if (userCertification !== undefined) {
+    certification = userCertification.findUserInfo.certification;
+  }
 
+  const [checked, setChecked] = useState(false);
   return (
     <LoginBox style={style}>
       {!isLoggedIn ? (
@@ -127,6 +132,15 @@ export default ({
           <Link to="/me">
             <Text>내정보</Text>
           </Link>
+          {certification ? (
+            <Link to="/myPostList">
+              <Text>내작품</Text>
+            </Link>
+          ) : (
+            <Link to="/certification">
+              <Text>내작품</Text>
+            </Link>
+          )}
         </>
       )}
     </LoginBox>

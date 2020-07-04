@@ -27,7 +27,6 @@ export default () => {
     loading: userInfoLoading,
     error: userInfoError
   } = useQuery(FIND_USER_INFO);
-  console.log("ㅙㅙㅙㅙ", userInfo);
 
   if (
     currentPassword.value !== "" &&
@@ -88,7 +87,9 @@ export default () => {
       newPasswordConfirm={newPasswordConfirm}
       onSubmit={onSubmit}
       setState={setState}
-      userInfo={userInfo !== undefined ? userInfo : null}
+      userInfo={userInfo}
+      userInfoLoading={userInfoLoading}
+      userInfoError={userInfoError}
       onPasswordDisabled={onPasswordDisabled}
     />
   );

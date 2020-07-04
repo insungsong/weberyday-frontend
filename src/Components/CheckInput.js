@@ -9,7 +9,7 @@ const Container = styled.input.attrs({
   margin: 0;
 `;
 
-const CheckInput = ({ id, name, value, onClick, onChange }) => {
+const CheckInput = ({ id, name, value, onClick, onChange, checked, style }) => {
   return (
     <Container
       id={id}
@@ -17,6 +17,8 @@ const CheckInput = ({ id, name, value, onClick, onChange }) => {
       value={value}
       onClick={onClick}
       onChange={onChange}
+      checked={checked}
+      style={style}
     />
   );
 };

@@ -206,7 +206,7 @@ export default ({
   const monthValue = document.getElementById("month");
   const dayValue = document.getElementById("day");
 
-  if (userInfo !== null) {
+  if (userInfo !== undefined) {
     let birthday = userInfo.findUserInfo.birthday;
     year = birthday.slice(0, 4);
     month = parseInt(birthday.slice(4, 6));
