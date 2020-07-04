@@ -8,7 +8,7 @@ import useRadioInput from "../../Hooks/useRadioInput";
 import useBirthdayInput from "../../Hooks/useBirthdayInput";
 import useAgreePrivacyInput from "../../Hooks/useAgreePrivacyInput";
 import useAgreeInfoInput from "../../Hooks/useAgreeInfoInput";
-import { LOG_IN, LOCAL_LOG_IN, SIGN_UP_LOGIN } from "../Auth/AuthQuery";
+import { LOG_IN, LOCAL_LOG_IN } from "../Auth/AuthQuery";
 
 export default () => {
   const [action, setAction] = useState("certification");
@@ -52,10 +52,12 @@ export default () => {
     }
   });
 
-  const [sigupLoginMuation] = useMutation(SIGN_UP_LOGIN, {
-    variables: { email: email.value, password: password.value }
+  const [sigInMutation] = useMutation(LOG_IN, {
+    variables: {
+      email: email.value,
+      password: password.value
+    }
   });
-
   //weberyday로그인 하고나서 토큰 값 회원 브라우저에 저장하기
   const [localLogInMutation] = useMutation(LOCAL_LOG_IN);
 
@@ -110,17 +112,19 @@ export default () => {
         if (createAccount) {
           toast.success("🎉 회원가입이 완료되었습니다 🎉");
           const {
-            data: { signUpLogin: token }
-          } = await sigupLoginMuation();
+            data: { signIn: token }
+          } = await sigInMutation();
 
           if (token === "" || token === undefined) {
             toast.error(
               "서비스가 원활하지 않습니다. 로그인기능으로 로그인 부탁드립니다.😂"
             );
+            return false;
           }
 
           if (token !== "" || token !== undefined) {
             localLogInMutation({ variables: { token } });
+            localStorage.setItem("userEmailToken", email.value);
           }
           return true;
         } else {

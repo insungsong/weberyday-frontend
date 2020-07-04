@@ -11,6 +11,7 @@ import { gql } from "apollo-boost";
 import { useQuery } from "react-apollo-hooks";
 import { BrowserRouter } from "react-router-dom";
 import Routes from "./Routes";
+import Client from "../Apollo/Client";
 
 const QUERY = gql`
   {

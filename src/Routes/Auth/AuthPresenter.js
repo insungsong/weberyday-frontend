@@ -70,22 +70,16 @@ export default ({
   onSubmit,
   email,
   password,
-  style
+  style,
+  userInfo,
+  userCertification
 }) => {
-  const [checked, setChecked] = useState(false);
-  const [saveEmail, setSaveEmail] = useState();
-
-  let arrTokenValue = localStorage.getItem("token");
-  let userEmail;
-  let userEmailIsTrue = false;
-
-  if (arrTokenValue) {
-    userEmail = arrTokenValue.split(",");
-    if (userEmail[1]) {
-      userEmailIsTrue = true;
-    }
+  let certification = false;
+  if (userCertification !== undefined) {
+    certification = userCertification.findUserInfo.certification;
   }
 
+  const [checked, setChecked] = useState(false);
   return (
     <LoginBox style={style}>
       {!isLoggedIn ? (
@@ -107,12 +101,7 @@ export default ({
               <input type="checkBox" onClick={() => setChecked(!checked)} />
               <LoginText style={{ marginLeft: 10 }}>로그인 상태 유지</LoginText>
             </LoginKeep>
-            <Button
-              text={"이메일로 로그인 하기"}
-              onClick={async () => {
-                setSaveEmail(email.value);
-              }}
-            />
+            <Button text={"이메일로 로그인 하기"} />
             <Connect>
               <Link to="/signUp">이메일로 회원가입</Link>
               <Link to="/password">비밀번호 찾기</Link>
@@ -139,17 +128,18 @@ export default ({
         </>
       ) : (
         <>
-          {userEmailIsTrue ? (
-            <>
-              <Text>{userEmail[1]}</Text>
-              <Text>1</Text>
-              <Text>1</Text>
-            </>
+          <LoginText>{localStorage.userEmailToken}</LoginText>
+          <Link to="/me">
+            <Text>내정보</Text>
+          </Link>
+          {certification ? (
+            <Link to="/myPostList">
+              <Text>내작품</Text>
+            </Link>
           ) : (
-            <>
-              <LoginText>{saveEmail}</LoginText>
-              <Text>1</Text>
-            </>
+            <Link to="/certification">
+              <Text>내작품</Text>
+            </Link>
           )}
         </>
       )}
