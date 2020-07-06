@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Logo, Search, Bell, Menu } from "./Icons";
 import Auth from "../Routes/Auth";
+import { Link } from "react-router-dom";
 
 const Header = styled.header`
   display: flex;
@@ -67,7 +68,9 @@ export default ({ isLoggedIn, searchPoint, menuPoint }) => {
     <Header>
       <NoIconBox>
         <HeaderContentUl>
-          <Logo />
+          <Link to="/">
+            <Logo />
+          </Link>
           <HeaderContentli>랭킹</HeaderContentli>
           <HeaderContentli>작품</HeaderContentli>
         </HeaderContentUl>

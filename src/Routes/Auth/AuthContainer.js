@@ -21,9 +21,6 @@ export default ({ isLoggedIn, style }) => {
   const [localLogInMutation] = useMutation(LOCAL_LOG_IN);
 
   const { data, loading, error } = useQuery(FIND_USER_INFO);
-  if (loading === false) {
-    console.log(data);
-  }
 
   //TO DO
   //1. 로그인 유지상태 만들기
@@ -69,6 +66,7 @@ export default ({ isLoggedIn, style }) => {
       action={action}
       setAction={setAction}
       userInfo={userInfo}
+      userCertificationLoading={loading}
       userCertification={data}
       style={style}
     />

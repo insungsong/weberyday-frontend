@@ -72,10 +72,16 @@ export default ({
   password,
   style,
   userInfo,
-  userCertification
+  userCertification,
+  userCertificationLoading
 }) => {
   let certification = false;
-  if (userCertification !== undefined) {
+
+  if (
+    (userCertification &&
+      userCertification.findUserInfo &&
+      userCertification.findUserInfo.certification) !== undefined
+  ) {
     certification = userCertification.findUserInfo.certification;
   }
 

@@ -28,6 +28,13 @@ export default () => {
     error: userInfoError
   } = useQuery(FIND_USER_INFO);
 
+  //로그인하고 난후 개인정보수정에서 생년월일/성별을 들어갔을때 아직 로드가 되지 않아서 정보가 안나오는 경우를 방지하기 위함
+  if (localStorage.getItem("token") !== null && userInfo !== undefined) {
+    if (Object.keys(userInfo).length === 0) {
+      window.location.reload();
+    }
+  }
+
   if (
     currentPassword.value !== "" &&
     newPassword.value !== "" &&
@@ -60,6 +67,10 @@ export default () => {
             currentPassword.setValue("");
             newPassword.setValue("");
             newPasswordConfirm.setValue("");
+
+            //비밀번호를 수정한 후에 예를 들어 현재 비밀번호가 123이였는데 12로 비밀번호를 수정한후 다시 비밀번호를 수정하려고 하면 12와 123둘중 하나를
+            //현재 비밀번호에 입력해도 user데이터를 가져와 버리는 상황을 방지하기 위함
+            window.location.reload();
             return true;
           } else {
             toast.error(
@@ -76,6 +87,11 @@ export default () => {
     if (state === "birthdayChange") {
       if (userInfo !== undefined) {
         console.log(userInfo);
+      }
+    }
+    if (state === "nEventChange") {
+      if (userInfo !== undefined) {
+        console.log("Asdddddd", userInfo);
       }
     }
   };

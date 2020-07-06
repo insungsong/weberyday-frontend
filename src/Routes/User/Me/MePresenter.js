@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Input from "../../../Components/Input";
 import CheckInput from "../../../Components/CheckInput";
@@ -144,11 +144,9 @@ export default ({
   currentPassword,
   newPassword,
   newPasswordConfirm,
-  onSubmit,
   setState,
   onPasswordDisabled,
-  userInfo,
-  checked
+  userInfo
 }) => {
   useEffect(() => {
     var today = new Date();
@@ -206,19 +204,71 @@ export default ({
   const monthValue = document.getElementById("month");
   const dayValue = document.getElementById("day");
 
-  if (userInfo !== undefined) {
-    let birthday = userInfo.findUserInfo.birthday;
+  const nEventTrueInfo = document.getElementById("nEventTrue");
+  const nEventFalseInfo = document.getElementById("nEventFalse");
+
+  let birthday = "";
+  if (
+    (userInfo && userInfo.findUserInfo && userInfo.findUserInfo.birthday) !==
+    undefined
+  ) {
+    birthday = userInfo.findUserInfo.birthday;
+
     year = birthday.slice(0, 4);
+    //yearValue.value = year;
+
     month = parseInt(birthday.slice(4, 6));
+    //monthValue.value = String(month);
+
     day = parseInt(birthday.slice(6, 8));
+    //dayValue.value = String(day);
 
     let gender = userInfo.findUserInfo.gender;
-    document.getElementById(gender).checked = true;
+    if (document.getElementById(gender)) {
+      document.getElementById(gender).checked = true;
+    }
 
-    agreePrivacy = userInfo.findUserInfo.agreePrivacy;
-    agreeInfo.checked = agreePrivacy;
+    if (
+      (userInfo &&
+        userInfo.findUserInfo &&
+        userInfo.findUserInfo.agreePrivacy) !== undefined
+    ) {
+      agreePrivacy = userInfo.findUserInfo.agreePrivacy;
+      if ((agreeInfo && agreeInfo.checked) !== null) {
+        agreeInfo.checked = agreePrivacy;
+      }
+    }
   }
 
+  //개인정보 안에서 알림 수신/비수신에 관한 코드
+  let nEventIsTrue = false;
+  if (
+    userInfo &&
+    userInfo.findUserInfo &&
+    userInfo.findUserInfo.nEvent !== undefined
+  ) {
+    nEventIsTrue = userInfo.findUserInfo.nEvent;
+    if (
+      (nEventTrueInfo &&
+        nEventFalseInfo &&
+        nEventTrueInfo.checked &&
+        nEventFalseInfo.checked) !== null &&
+      nEventIsTrue
+    ) {
+      nEventTrueInfo.checked = true;
+    }
+    if (
+      (nEventTrueInfo &&
+        nEventFalseInfo &&
+        nEventTrueInfo.checked &&
+        nEventFalseInfo.checked) !== null &&
+      !nEventIsTrue
+    ) {
+      nEventFalseInfo.checked = true;
+    }
+  }
+
+  let newBirthday = "";
   return (
     <Container>
       <Title>내 정보</Title>
@@ -290,10 +340,10 @@ export default ({
                       id="year"
                       title="년"
                       onChange={async (e) => {
+                        year = e.target.value;
                         agreeInfo.checked = true;
                         agreeInfo.disabled = false;
                       }}
-                      value={String(year)}
                     />
                     <Birthday
                       id="month"
@@ -302,17 +352,16 @@ export default ({
                         agreeInfo.checked = true;
                         agreeInfo.disabled = false;
                       }}
-                      value={String(month)}
                     />
                     <Birthday
                       id="day"
                       title="일"
-                      value={String(day)}
                       onChange={async (e) => {
                         agreeInfo.checked = true;
                         agreeInfo.disabled = false;
                       }}
                     />
+                    <input name="birthdate" type="hidden" onChange={() => {}} />
                   </SignUpBirthdayOption>
                 </SignUpBirthday>
                 <LoginGender>
@@ -361,7 +410,6 @@ export default ({
                 </LoginGender>
                 <SignUpAgreeCheck>
                   <InputCheckBox
-                    onChange={(e) => console.log(e)}
                     onClick={(e) => {
                       if (e.target.checked === false) {
                         e.target.disabled = true;
@@ -412,11 +460,19 @@ export default ({
                 }}
               >
                 <LabelOption>
-                  <CheckInput id="femailInput" name="gender" value="femail" />
+                  <CheckInput
+                    id="nEventTrue"
+                    name="nEvent"
+                    value="nEventTrue"
+                  />
                   <Text style={{ marginLeft: "10px" }}>수신</Text>
                 </LabelOption>
                 <LabelOption>
-                  <CheckInput id="mailInput" name="gender" value="mail" />
+                  <CheckInput
+                    id="nEventFalse"
+                    name="nEvent"
+                    value="nEventTrue"
+                  />
                   <Text style={{ marginLeft: "10px" }}>비수신</Text>
                 </LabelOption>
               </LoginGenderOption>
@@ -425,7 +481,13 @@ export default ({
               <CancelButton onClick={() => (passwordCheckBox.open = false)}>
                 취소
               </CancelButton>
-              <SaveButton>저장</SaveButton>
+              <SaveButton
+                onClick={async (e) => {
+                  await setState("nEventChange");
+                }}
+              >
+                저장
+              </SaveButton>
             </ButtonBox>
           </ChangeBox>
         </LineBox>
