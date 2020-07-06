@@ -6,7 +6,6 @@ export default (defaultValue) => {
     const {
       target: { value }
     } = e;
-
     setValue(value);
   };
   return { value, onChange, setValue };

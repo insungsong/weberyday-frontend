@@ -76,7 +76,7 @@ export default ({
 }) => {
   let certification = false;
   if (userCertification !== undefined) {
-    //certification = userCertification.findUserInfo.certification;
+    certification = userCertification.findUserInfo.certification;
   }
 
   const [checked, setChecked] = useState(false);
