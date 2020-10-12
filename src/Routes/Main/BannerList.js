@@ -110,7 +110,7 @@ export default ({ bannerData, present, setPresent }) => {
                     }}
                     className="slideValue"
                     key={banner + index}
-                    src={bannerData.allBanner[index].image}
+                    src={bannerData.allBanner[1].image}
                   />
                 </BannerImagePack>
               );
