@@ -11,6 +11,7 @@ const Container = styled.div`
 
 const BannerSlideBox = styled.div`
   width: 95%;
+  overflow: hidden;
 `;
 
 const BannerImageBox = styled.div`
