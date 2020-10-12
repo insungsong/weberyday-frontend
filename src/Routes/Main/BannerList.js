@@ -102,10 +102,13 @@ export default ({ bannerData, present, setPresent }) => {
               return (
                 <BannerImagePack key={index}>
                   <BannerImage
+                    id={index * 100}
                     //해당 배너를 클릭시 배너가 가지고 있는 url로 이동
                     onClick={() => {
                       window.location.href = `${banner.url}`;
                     }}
+                    className="slideValue"
+                    key={banner + index}
                     src={banner.image}
                   />
                 </BannerImagePack>
