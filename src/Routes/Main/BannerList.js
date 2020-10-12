@@ -97,6 +97,7 @@ export default ({ bannerData, present, setPresent }) => {
           {/* 액자처럼 사이즈를 정해놓고 해당 범위만 보여주고 뒤에선 이미지를 옆으로 이동시키면서 슬라이드 형식으로 만든것 */}
           <BannerImageBox id="imgBox">
             {bannerData.allBanner.map((banner, index) => {
+              console.log(banner);
               value++;
               return (
                 //이미지를 쭉 늘어놓는곳
