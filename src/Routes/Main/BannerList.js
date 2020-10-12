@@ -11,7 +11,6 @@ const Container = styled.div`
 
 const BannerSlideBox = styled.div`
   width: 95%;
-  overflow: hidden;
 `;
 
 const BannerImageBox = styled.div`
@@ -103,6 +102,12 @@ export default ({ bannerData, present, setPresent }) => {
                 <BannerImagePack key={index}>
                   <BannerImage
                     id={index * 100}
+                    //해당 배너를 클릭시 배너가 가지고 있는 url로 이동
+                    onClick={() => {
+                      window.location.href = `${bannerData.allBanner[index].url}`;
+                    }}
+                    className="slideValue"
+                    key={banner + index}
                     src={bannerData.allBanner[index].image}
                   />
                 </BannerImagePack>
