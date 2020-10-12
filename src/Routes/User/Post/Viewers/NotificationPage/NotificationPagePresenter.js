@@ -6,7 +6,6 @@ import {
   NextArrow,
   Bell
 } from "../../../../../Components/Icons";
-import { Redirect } from "react-router-dom";
 
 const Container = styled.div`
   width: 80%;

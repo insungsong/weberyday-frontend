@@ -6,7 +6,6 @@ import { FIND_CATEGORY } from "./PostUploadQuery";
 import useRadioInput from "../../../../../Hooks/useRadioInput";
 import useRadioBroadcast from "../../../../../Hooks/useRadioBroadcast";
 import useInputDuplicateCheck from "../../../../../Hooks/useInputDuplicateCheck";
-import { SEARCH_EPISODE } from "../EpisodeUpdate/EpisodeUpdateQuery";
 
 export default () => {
   const postTitle = useInput("");
