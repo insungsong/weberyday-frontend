@@ -4,6 +4,8 @@ import Input from "../../../Components/Input";
 import CheckInput from "../../../Components/CheckInput";
 import { Eraser } from "../../../Components/Icons";
 import InputCheckBox from "../../../Components/InputCheckBox";
+import { useQuery } from "react-apollo-hooks";
+import { INFOW_FIND_USER } from "../../Main/MainQuery";
 
 const Container = styled.div`
   width: 50%;
@@ -94,7 +96,7 @@ const SignUpBirthdayOption = styled.div`
   margin: 10px 0 20px 0;
 `;
 
-const LoginGender = styled.fieldset``;
+const LoginGender = styled.div``;
 
 const LoginGenderOption = styled.div`
   display: flex;
@@ -146,8 +148,33 @@ export default ({
   newPasswordConfirm,
   setState,
   onPasswordDisabled,
-  userInfo
+  userInfo,
+  userInfoError,
+  gender,
+  nEvent,
+  birthdayInfo,
+  agreePrivacyInfo,
+  setSignOutReason,
+  signOutMutation
 }) => {
+  //해당 유저 쿠키가 있는지 없는지 알기 위해
+  if (!localStorage.getItem("userEmailToken")) {
+    window.location.href = "/";
+  }
+
+  const [inflow, setInflow] = useState("");
+  const [notRender, setNotRender] = useState(false);
+  const { data, loading, error } = useQuery(INFOW_FIND_USER, {
+    variables: {
+      email: localStorage.getItem("userEmailToken")
+    }
+  });
+
+  if (data && data.inflowFindUser !== undefined && !notRender) {
+    setInflow(data.inflowFindUser.inflow);
+    setNotRender(true);
+  }
+
   useEffect(() => {
     var today = new Date();
     var previousYear = 1919;
@@ -184,12 +211,23 @@ export default ({
         strDay += "<option value=" + i + ">" + i + "</option>";
       }
     }
-    document.getElementById("year").innerHTML = strYear;
-    document.getElementById("month").innerHTML = strMonth;
-    document.getElementById("day").innerHTML = strDay;
-  }, []);
+
+    if (
+      inflow === "weberyday" &&
+      document.getElementById("year") &&
+      document.getElementById("month") &&
+      document.getElementById("day") !== undefined
+    ) {
+      document.getElementById("year").innerHTML = strYear;
+      document.getElementById("month").innerHTML = strMonth;
+      document.getElementById("day").innerHTML = strDay;
+    }
+  }, [data]);
 
   const passwordCheckBox = document.getElementById("passwordCheckBox");
+  const birthdayCheckBox = document.getElementById("birthdayCheckBox");
+  const eventCheckBox = document.getElementById("eventCheckBox");
+  const signOutCheckBox = document.getElementById("signOutCheckBox");
 
   let year = "0";
   let month = "0";
@@ -208,6 +246,7 @@ export default ({
   const nEventFalseInfo = document.getElementById("nEventFalse");
 
   let birthday = "";
+
   if (
     (userInfo && userInfo.findUserInfo && userInfo.findUserInfo.birthday) !==
     undefined
@@ -215,17 +254,41 @@ export default ({
     birthday = userInfo.findUserInfo.birthday;
 
     year = birthday.slice(0, 4);
-    //yearValue.value = year;
+    if (birthdayInfo.year !== "") {
+      if ((yearValue && yearValue.value) !== null) {
+        yearValue.value = birthdayInfo.year;
+      }
+    } else if (yearValue !== null && yearValue.value !== null) {
+      yearValue.value = year;
+    }
 
     month = parseInt(birthday.slice(4, 6));
-    //monthValue.value = String(month);
+    if (birthdayInfo.month !== "") {
+      if ((monthValue && monthValue.value) !== null) {
+        monthValue.value = Number(birthdayInfo.month);
+      }
+    } else if (monthValue !== null && monthValue.value !== null) {
+      monthValue.value = month;
+    }
 
     day = parseInt(birthday.slice(6, 8));
-    //dayValue.value = String(day);
+    if (birthdayInfo.day !== "") {
+      if ((dayValue && dayValue.value) !== null) {
+        dayValue.value = Number(birthdayInfo.day);
+      }
+    } else if (dayValue !== null && dayValue.value !== null) {
+      dayValue.value = day;
+    }
 
-    let gender = userInfo.findUserInfo.gender;
-    if (document.getElementById(gender)) {
-      document.getElementById(gender).checked = true;
+    let genderValue = userInfo.findUserInfo.gender;
+    let genderRadio = gender.get;
+    if (genderRadio === null) {
+    } else if (genderRadio.length !== 1) {
+      if (document.getElementById(genderRadio) !== null) {
+        document.getElementById(genderRadio).checked = true;
+      }
+    } else if (document.getElementById(genderValue) !== null) {
+      document.getElementById(genderValue).checked = true;
     }
 
     if (
@@ -234,41 +297,24 @@ export default ({
         userInfo.findUserInfo.agreePrivacy) !== undefined
     ) {
       agreePrivacy = userInfo.findUserInfo.agreePrivacy;
-      if ((agreeInfo && agreeInfo.checked) !== null) {
+
+      if (agreePrivacyInfo.value !== "") {
+        agreeInfo.checked = agreePrivacyInfo.value;
+      } else if ((agreeInfo && agreeInfo.checked) !== null) {
         agreeInfo.checked = agreePrivacy;
       }
     }
   }
 
   //개인정보 안에서 알림 수신/비수신에 관한 코드
-  let nEventIsTrue = false;
-  if (
-    userInfo &&
-    userInfo.findUserInfo &&
-    userInfo.findUserInfo.nEvent !== undefined
-  ) {
-    nEventIsTrue = userInfo.findUserInfo.nEvent;
-    if (
-      (nEventTrueInfo &&
-        nEventFalseInfo &&
-        nEventTrueInfo.checked &&
-        nEventFalseInfo.checked) !== null &&
-      nEventIsTrue
-    ) {
+  if (nEventTrueInfo && nEventTrueInfo.checked !== null) {
+    if (nEvent.value === true) {
       nEventTrueInfo.checked = true;
-    }
-    if (
-      (nEventTrueInfo &&
-        nEventFalseInfo &&
-        nEventTrueInfo.checked &&
-        nEventFalseInfo.checked) !== null &&
-      !nEventIsTrue
-    ) {
+    } else {
       nEventFalseInfo.checked = true;
     }
   }
 
-  let newBirthday = "";
   return (
     <Container>
       <Title>내 정보</Title>
@@ -276,217 +322,349 @@ export default ({
       <MeInfoBox>
         <LineBox>
           <TextBox>
-            <Text style={{ paddingRight: "40px" }}>이메일</Text>
+            <Text style={{ paddingLeft: "7px" }}>이메일</Text>
             <Text>{localStorage.getItem("userEmailToken")}</Text>
           </TextBox>
         </LineBox>
-        <LineBox>
-          <ChangeBox id="passwordCheckBox">
-            <summary style={{ fontSize: "1.2em" }}>비밀번호 수정</summary>
-            <Package>
-              <MiniChangeBox>
-                <Text>현재 비밀번호</Text>
-                <Input
-                  {...currentPassword}
-                  placeholder="영문,숫자 및 특수문자 포함 8자 이상"
-                  type="password"
-                  selectInput="meInput"
-                />
-              </MiniChangeBox>
-              <MiniChangeBox>
-                <Text>새 비밀번호</Text>
-                <Input
-                  {...newPassword}
-                  placeholder="영문,숫자 및 특수문자 포함 8자 이상"
-                  type="password"
-                  selectInput="meInput"
-                />
-              </MiniChangeBox>
-              <MiniChangeBox>
-                <Text>새 비밀번호 재입력</Text>
-                <Input
-                  {...newPasswordConfirm}
-                  placeholder="영문,숫자 및 특수문자 포함 8자 이상"
-                  type="password"
-                  selectInput="meInput"
-                />
-              </MiniChangeBox>
-              <ButtonBox>
-                <CancelButton onClick={() => (passwordCheckBox.open = false)}>
-                  취소
-                </CancelButton>
+        {inflow === "weberyday" ? (
+          <>
+            <LineBox>
+              <ChangeBox id="passwordCheckBox">
+                <summary style={{ fontSize: "1.2em" }}>비밀번호 수정</summary>
+                <Package>
+                  <MiniChangeBox>
+                    <Text>현재 비밀번호</Text>
+                    <Input
+                      {...currentPassword}
+                      placeholder="영문,숫자 및 특수문자 포함 8자 이상"
+                      type="password"
+                      selectInput="meInput"
+                    />
+                  </MiniChangeBox>
+                  <MiniChangeBox>
+                    <Text>새 비밀번호</Text>
+                    <Input
+                      {...newPassword}
+                      placeholder="영문,숫자 및 특수문자 포함 8자 이상"
+                      type="password"
+                      selectInput="meInput"
+                    />
+                  </MiniChangeBox>
+                  <MiniChangeBox>
+                    <Text>새 비밀번호 재입력</Text>
+                    <Input
+                      {...newPasswordConfirm}
+                      placeholder="영문,숫자 및 특수문자 포함 8자 이상"
+                      type="password"
+                      selectInput="meInput"
+                    />
+                  </MiniChangeBox>
+                  <ButtonBox>
+                    <CancelButton
+                      onClick={() => (passwordCheckBox.open = false)}
+                    >
+                      취소
+                    </CancelButton>
 
-                <SaveButton
-                  disabled={onPasswordDisabled}
-                  onClick={async (e) => {
-                    await setState("passwordChange");
-                  }}
-                >
-                  저장
-                </SaveButton>
-              </ButtonBox>
-            </Package>
-          </ChangeBox>
-        </LineBox>
-        <LineBox>
-          <ChangeBox id="birthdayCheckBox">
-            <summary style={{ fontSize: "1.2em" }}>생년월일/성별</summary>
-            <Package>
-              <MiniChangeBox>
-                <SignUpBirthday>
-                  <legend>생년월일</legend>
-                  <SignUpBirthdayOption>
-                    <Birthday
-                      id="year"
-                      title="년"
-                      onChange={async (e) => {
-                        year = e.target.value;
-                        agreeInfo.checked = true;
-                        agreeInfo.disabled = false;
-                      }}
-                    />
-                    <Birthday
-                      id="month"
-                      title="월"
-                      onChange={async (e) => {
-                        agreeInfo.checked = true;
-                        agreeInfo.disabled = false;
-                      }}
-                    />
-                    <Birthday
-                      id="day"
-                      title="일"
-                      onChange={async (e) => {
-                        agreeInfo.checked = true;
-                        agreeInfo.disabled = false;
-                      }}
-                    />
-                    <input name="birthdate" type="hidden" onChange={() => {}} />
-                  </SignUpBirthdayOption>
-                </SignUpBirthday>
-                <LoginGender>
-                  <legend>성별</legend>
-                  <LoginGenderOption>
-                    <LabelOption>
-                      <CheckInput
-                        id="femail"
-                        name="gender"
-                        value="femail"
-                        onChange={async (e) => {
-                          agreeInfo.checked = true;
-                          agreeInfo.disabled = false;
-                        }}
-                      />
-                      <Text style={{ marginLeft: "10px" }}>여성</Text>
-                    </LabelOption>
-                    <LabelOption>
-                      <CheckInput
-                        id="mail"
-                        name="gender"
-                        value="mail"
-                        onChange={async (e) => {
-                          agreeInfo.checked = true;
-                          agreeInfo.disabled = false;
-                        }}
-                      />
-                      <Text style={{ marginLeft: "10px" }}>남성</Text>
-                    </LabelOption>
-                    <LabelOption
-                      onClick={async () => {
-                        if (
-                          yearValue.value !== "0" ||
-                          monthValue.value !== "0" ||
-                          dayValue.value !== "0"
-                        ) {
-                          agreeInfo.checked = true;
-                        }
-                        mailInput.checked = false;
-                        femailInput.checked = false;
+                    <SaveButton
+                      disabled={onPasswordDisabled}
+                      onClick={async (e) => {
+                        await setState("passwordChange");
                       }}
                     >
-                      <Eraser />
+                      저장
+                    </SaveButton>
+                  </ButtonBox>
+                </Package>
+              </ChangeBox>
+            </LineBox>
+            <LineBox>
+              <ChangeBox id="birthdayCheckBox">
+                <summary style={{ fontSize: "1.2em" }}>생년월일/성별</summary>
+                <Package>
+                  <MiniChangeBox>
+                    <SignUpBirthday>
+                      <legend>생년월일</legend>
+                      <SignUpBirthdayOption {...birthdayInfo}>
+                        <Birthday
+                          id="year"
+                          title="년"
+                          onChange={async (e) => {
+                            agreePrivacyInfo.setValue(true);
+                            agreeInfo.disabled = false;
+                            if (
+                              yearValue.value == "0" &&
+                              monthValue.value == "0" &&
+                              dayValue.value == "0" &&
+                              femailInput.checked === false &&
+                              mailInput.checked === false
+                            ) {
+                              agreePrivacyInfo.setValue(false);
+                              agreeInfo.disabled = true;
+                            }
+                          }}
+                        />
+                        <Birthday
+                          id="month"
+                          title="월"
+                          onChange={async (e) => {
+                            agreePrivacyInfo.setValue(true);
+                            agreeInfo.disabled = false;
+                            if (
+                              yearValue.value == "0" &&
+                              monthValue.value == "0" &&
+                              dayValue.value == "0" &&
+                              femailInput.checked === false &&
+                              mailInput.checked === false
+                            ) {
+                              agreePrivacyInfo.setValue(false);
+                              agreeInfo.disabled = true;
+                            }
+                          }}
+                        />
+                        <Birthday
+                          id="day"
+                          title="일"
+                          onChange={async (e) => {
+                            agreePrivacyInfo.setValue(true);
+                            agreeInfo.disabled = false;
+                            if (
+                              yearValue.value == "0" &&
+                              monthValue.value == "0" &&
+                              dayValue.value == "0" &&
+                              femailInput.checked === false &&
+                              mailInput.checked === false
+                            ) {
+                              agreePrivacyInfo.setValue(false);
+                              agreeInfo.disabled = true;
+                            }
+                          }}
+                        />
+                      </SignUpBirthdayOption>
+                    </SignUpBirthday>
+                    <LoginGender>
+                      <legend>성별</legend>
+                      <LoginGenderOption>
+                        <LabelOption>
+                          <CheckInput
+                            {...gender}
+                            id="femail"
+                            name="gender"
+                            value="femail"
+                            onClick={async (e) => {
+                              gender.setGet(e.target.value);
+                              agreePrivacyInfo.setValue(true);
+                              agreeInfo.disabled = false;
+                            }}
+                          />
+                          <Text style={{ marginLeft: "10px" }}>여성</Text>
+                        </LabelOption>
+                        <LabelOption>
+                          <CheckInput
+                            {...gender}
+                            id="mail"
+                            name="gender"
+                            value="mail"
+                            onClick={async (e) => {
+                              gender.setGet(e.target.value);
+                              agreePrivacyInfo.setValue(true);
+                              agreeInfo.disabled = false;
+                            }}
+                          />
+                          <Text style={{ marginLeft: "10px" }}>남성</Text>
+                        </LabelOption>
+                        <LabelOption
+                          onClick={async () => {
+                            if (
+                              yearValue.value !== "0" ||
+                              monthValue.value !== "0" ||
+                              dayValue.value !== "0"
+                            ) {
+                              agreePrivacyInfo.setValue(true);
+                            }
+                            if (
+                              yearValue.value === "0" &&
+                              monthValue.value === "0" &&
+                              dayValue.value === "0"
+                            ) {
+                              agreePrivacyInfo.setValue(false);
+                              agreeInfo.disabled = true;
+                            }
+                            await gender.setGet("null");
+                            mailInput.checked = false;
+                            femailInput.checked = false;
+                          }}
+                        >
+                          <Eraser />
+                        </LabelOption>
+                      </LoginGenderOption>
+                    </LoginGender>
+                    <SignUpAgreeCheck>
+                      <InputCheckBox
+                        {...agreePrivacyInfo}
+                        onClick={async (e) => {
+                          if (e.target.checked === false) {
+                            e.target.disabled = true;
+                            mailInput.checked = false;
+                            femailInput.checked = false;
+                            gender.setGet("null");
+                            await birthdayInfo.updateBirthday();
+                            yearValue.value = "0";
+                            monthValue.value = "0";
+                            dayValue.value = "0";
+                          }
+                        }}
+                        id="agreeInfo"
+                      />
+                      <TextBox
+                        style={{
+                          justifyContent: "space-between",
+                          marginLeft: "8px"
+                        }}
+                      >
+                        <Text>개인정보 수집 및 이용동의</Text>
+                        <Text>상세보기</Text>
+                      </TextBox>
+                    </SignUpAgreeCheck>
+                  </MiniChangeBox>
+                  <ButtonBox>
+                    <CancelButton
+                      onClick={() => (birthdayCheckBox.open = false)}
+                    >
+                      취소
+                    </CancelButton>
+                    <SaveButton
+                      onClick={async (e) => {
+                        await setState("birthdayChange");
+                      }}
+                    >
+                      저장
+                    </SaveButton>
+                  </ButtonBox>
+                </Package>
+              </ChangeBox>
+            </LineBox>
+            <LineBox>
+              <ChangeBox id="eventCheckBox">
+                <summary style={{ fontSize: "1.2em" }}>
+                  이벤트 정보 알림
+                </summary>
+                <LoginGender>
+                  <LoginGenderOption
+                    style={{
+                      width: "80%",
+                      display: "flex",
+                      justifyContent: "center"
+                    }}
+                  >
+                    <LabelOption>
+                      <CheckInput
+                        {...nEvent}
+                        onClick={async () => {
+                          await nEvent.setValue(true);
+                        }}
+                        id="nEventTrue"
+                        name="nEvent"
+                      />
+                      <Text style={{ marginLeft: "10px" }}>수신</Text>
+                    </LabelOption>
+                    <LabelOption>
+                      <CheckInput
+                        {...nEvent}
+                        onClick={async () => {
+                          await nEvent.setValue(false);
+                        }}
+                        id="nEventFalse"
+                        name="nEvent"
+                      />
+                      <Text style={{ marginLeft: "10px" }}>비수신</Text>
                     </LabelOption>
                   </LoginGenderOption>
                 </LoginGender>
-                <SignUpAgreeCheck>
-                  <InputCheckBox
-                    onClick={(e) => {
-                      if (e.target.checked === false) {
-                        e.target.disabled = true;
-                        mailInput.checked = false;
-                        femailInput.checked = false;
-                        yearValue.value = "0";
-                        monthValue.value = "0";
-                        dayValue.value = "0";
-                      }
-                    }}
-                    id="agreeInfo"
-                  />
-                  <TextBox
-                    style={{
-                      justifyContent: "space-between",
-                      marginLeft: "8px"
+                <ButtonBox>
+                  <CancelButton onClick={() => (eventCheckBox.open = false)}>
+                    취소
+                  </CancelButton>
+                  <SaveButton
+                    onClick={async (e) => {
+                      await setState("nEventChange");
                     }}
                   >
-                    <Text>개인정보 수집 및 이용동의</Text>
-                    <Text>상세보기</Text>
-                  </TextBox>
-                </SignUpAgreeCheck>
-              </MiniChangeBox>
-              <ButtonBox>
-                <CancelButton onClick={() => (passwordCheckBox.open = false)}>
-                  취소
-                </CancelButton>
-                <SaveButton
-                  onClick={async (e) => {
-                    await setState("birthdayChange");
-                  }}
-                >
-                  저장
-                </SaveButton>
-              </ButtonBox>
-            </Package>
-          </ChangeBox>
-        </LineBox>
-        <LineBox>
-          <ChangeBox id="birthdayCheckBox">
-            <summary style={{ fontSize: "1.2em" }}>이벤트 정보 알림</summary>
-            <LoginGender>
-              <LoginGenderOption
-                style={{
-                  width: "80%",
-                  display: "flex",
-                  justifyContent: "center"
+                    저장
+                  </SaveButton>
+                </ButtonBox>
+              </ChangeBox>
+            </LineBox>
+          </>
+        ) : (
+          ""
+        )}
+        <LineBox style={{ marginBottom: "300px" }}>
+          <ChangeBox id="signOutCheckBox">
+            <summary style={{ fontSize: "1.2em", marginBottom: "25px" }}>
+              회원을 탈퇴하시겠습니까?
+            </summary>
+            <LabelOption>
+              <CheckInput
+                onClick={async () => {
+                  setSignOutReason("이용이 불편하고 장애가 많음");
                 }}
-              >
-                <LabelOption>
-                  <CheckInput
-                    id="nEventTrue"
-                    name="nEvent"
-                    value="nEventTrue"
-                  />
-                  <Text style={{ marginLeft: "10px" }}>수신</Text>
-                </LabelOption>
-                <LabelOption>
-                  <CheckInput
-                    id="nEventFalse"
-                    name="nEvent"
-                    value="nEventTrue"
-                  />
-                  <Text style={{ marginLeft: "10px" }}>비수신</Text>
-                </LabelOption>
-              </LoginGenderOption>
-            </LoginGender>
+                id="signOut"
+                name="signOut"
+              />
+              <Text>이용이 불편하고 장애가 많음</Text>
+            </LabelOption>
+            <LabelOption>
+              <CheckInput
+                onClick={async () => {
+                  setSignOutReason("다른 사이트가 더 좋아서");
+                }}
+                id="signOut"
+                name="signOut"
+              />
+              <Text>다른 사이트가 더 좋아서</Text>
+            </LabelOption>
+            <LabelOption>
+              <CheckInput
+                onClick={async () => {
+                  setSignOutReason("사용빈도가 낮아서");
+                }}
+                id="signOut"
+                name="signOut"
+              />
+              <Text>사용빈도가 낮아서</Text>
+            </LabelOption>
+            <LabelOption>
+              <CheckInput
+                onClick={async () => {
+                  setSignOutReason("콘텐츠 불만");
+                }}
+                id="signOut"
+                name="signOut"
+              />
+              <Text>콘텐츠 불만</Text>
+            </LabelOption>
+            <LabelOption>
+              <CheckInput
+                onClick={async () => {
+                  setSignOutReason("기타");
+                }}
+                id="signOut"
+                name="signOut"
+              />
+              <Text>기타</Text>
+            </LabelOption>
             <ButtonBox>
-              <CancelButton onClick={() => (passwordCheckBox.open = false)}>
+              <CancelButton onClick={() => (signOutCheckBox.open = false)}>
                 취소
               </CancelButton>
               <SaveButton
                 onClick={async (e) => {
-                  await setState("nEventChange");
+                  await signOutMutation();
+                  window.location.href = "/signOutPage?success";
                 }}
               >
-                저장
+                탈퇴하기
               </SaveButton>
             </ButtonBox>
           </ChangeBox>

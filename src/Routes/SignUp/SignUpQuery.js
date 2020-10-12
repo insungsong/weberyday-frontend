@@ -1,5 +1,11 @@
 import { gql } from "apollo-boost";
 
+export const IS_EXIST_KEEP_USER = gql`
+  query isExistKeepUser($email: String!) {
+    isExistKeepUser(email: $email)
+  }
+`;
+
 export const REQUEST_SECRET = gql`
   mutation requestSecret($email: String!) {
     requestSecret(email: $email)

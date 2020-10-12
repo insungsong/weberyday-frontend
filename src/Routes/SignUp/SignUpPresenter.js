@@ -14,6 +14,7 @@ const SignUpBox = styled.div`
   flex-direction: column;
   align-items: center;
   width: 25%;
+  height: 40vh;
   margin: 10vh 0 16vh 0;
 `;
 
@@ -360,7 +361,12 @@ export default ({
               </CheckBoxLabel>
             </InputLine>
             <ButtonBox>
-              <CheckButton style={{ backgroundColor: "#ffffff", width: "48%" }}>
+              <CheckButton
+                onClick={() => {
+                  window.location.href = "/";
+                }}
+                style={{ backgroundColor: "#f4f4f4", width: "48%" }}
+              >
                 취소
               </CheckButton>
               <CheckButton
@@ -553,9 +559,9 @@ export default ({
                       await gender.setDisabled(false);
                       await agreeInfo.setValue(true);
                       if (
-                        year.value == "0" &&
-                        month.value == "0" &&
-                        day.value == "0" &&
+                        year.value === "0" &&
+                        month.value === "0" &&
+                        day.value === "0" &&
                         gender.get === ""
                       ) {
                         await gender.setDisabled(true);
@@ -570,9 +576,9 @@ export default ({
                       await gender.setDisabled(false);
                       await agreeInfo.setValue(true);
                       if (
-                        year.value == "0" &&
-                        month.value == "0" &&
-                        day.value == "0" &&
+                        year.value === "0" &&
+                        month.value === "0" &&
+                        day.value === "0" &&
                         gender.get === ""
                       ) {
                         await gender.setDisabled(true);
@@ -587,9 +593,9 @@ export default ({
                       await gender.setDisabled(false);
                       await agreeInfo.setValue(true);
                       if (
-                        year.value == "0" &&
-                        month.value == "0" &&
-                        day.value == "0" &&
+                        year.value === "0" &&
+                        month.value === "0" &&
+                        day.value === "0" &&
                         gender.get === ""
                       ) {
                         await gender.setDisabled(true);
@@ -627,12 +633,16 @@ export default ({
               </SignUpBirthday>
             </SignUpOption>
             {secondCheckDisable ? (
-              <CheckButton disabled={secondCheckDisable}>
+              <CheckButton
+                disabled={secondCheckDisable}
+                style={{ height: "10vh" }}
+              >
                 이메일로 회원가입
               </CheckButton>
             ) : (
               <CheckButton
                 disabled={secondCheckDisable}
+                style={{ height: "10vh" }}
                 onClick={async () => {
                   if (
                     birthdayInfo.birthday === "" ||

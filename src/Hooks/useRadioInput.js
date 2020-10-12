@@ -1,10 +1,9 @@
 import { useState } from "react";
 
 export default (defaultValue) => {
-  const [get, setGet] = useState(defaultValue);
+  const [get, setGet] = useState("0");
   const [disabled, setDisabled] = useState(true);
 
-  console.log(get);
   const onChange = (e) => {
     if (e.target.checked === true) {
       setDisabled(false);

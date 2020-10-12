@@ -46,6 +46,13 @@ export default (defaultValue) => {
     setDay("");
   };
 
+  const updateBirthday = () => {
+    birthday = "";
+    setYear("0");
+    setMonth("0");
+    setDay("0");
+  };
+
   birthday = year + month + day;
 
   return {
@@ -57,6 +64,7 @@ export default (defaultValue) => {
     setDay,
     birthday,
     deleteBirthday,
+    updateBirthday,
     onChange
   };
 };

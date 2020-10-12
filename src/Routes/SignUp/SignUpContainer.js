@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import SignUpPresenter from "./SignUpPresenter";
 import useInput from "../../Hooks/useInput";
-import { useMutation } from "react-apollo-hooks";
-import { REQUEST_SECRET, CONFIRM_SECRET, CREATE_ACCOUNT } from "./SignUpQuery";
+import { useMutation, useQuery } from "react-apollo-hooks";
+import {
+  REQUEST_SECRET,
+  CONFIRM_SECRET,
+  CREATE_ACCOUNT,
+  IS_EXIST_KEEP_USER
+} from "./SignUpQuery";
 import { toast } from "react-toastify";
 import useRadioInput from "../../Hooks/useRadioInput";
 import useBirthdayInput from "../../Hooks/useBirthdayInput";
@@ -24,6 +29,27 @@ export default () => {
   const agreeInfo = useAgreeInfoInput(false);
   const agreePrivacy = useAgreePrivacyInput(false);
   const nEvent = useAgreePrivacyInput(false);
+
+  //현재 유저가 로그인한 유저인지를 확인하기 위함
+  if (localStorage.getItem("userEmailToken")) {
+    window.location.href = "/";
+  }
+
+  const {
+    data: isExistKeepUserData,
+    loading: isExistKeepUserLoading,
+    error: isExistKeepUserError
+  } = useQuery(IS_EXIST_KEEP_USER, {
+    variables: { email: email.value }
+  });
+
+  let isExistKeepUser = false;
+  if (
+    isExistKeepUserData &&
+    isExistKeepUserData.isExistKeepUser !== undefined
+  ) {
+    isExistKeepUser = isExistKeepUserData.isExistKeepUser;
+  }
 
   const [reqeustSecretMutation] = useMutation(REQUEST_SECRET, {
     variables: {
@@ -68,17 +94,21 @@ export default () => {
           data: { requestSecret }
         } = await reqeustSecretMutation();
 
-        if (requestSecret) {
+        if (requestSecret && !isExistKeepUser) {
           toast.success("해당 이메일로 시크릿코드를 전달해드렸습니다 ✅");
           setAction("signUpForm");
           return true;
+        } else if (isExistKeepUser) {
+          toast.error(
+            "해당 이메일은 탈퇴를 진행했던 이메일 정보입니다 다른 이메일을 사용부탁드립니다 😥"
+          );
+          return false;
         } else {
           toast.error("해당 이메일로 시크릿코드 전달을 실패하였습니다. 😅");
           return false;
         }
       } catch (e) {
-        toast.error("이미 가입한 이메일입니다. 😭");
-        console.log(e);
+        toast.error("이미 가입한 이메일 또는 탈퇴한 계정 정보입니다 😭");
         return false;
       }
     }
@@ -111,21 +141,23 @@ export default () => {
 
         if (createAccount) {
           toast.success("🎉 회원가입이 완료되었습니다 🎉");
-          const {
-            data: { signIn: token }
-          } = await sigInMutation();
 
-          if (token === "" || token === undefined) {
-            toast.error(
-              "서비스가 원활하지 않습니다. 로그인기능으로 로그인 부탁드립니다.😂"
-            );
-            return false;
-          }
+          //이 문장만 실행하면 회원가입 하자마자 로그인을 시켜주지만, 이렇게 될 경우에 route에서 localStorage를 기준으로 /signUp을 들어올 수 있는 것이기떄문에
+          //해당 done!페이지가 망가지게되어 일단 주석처리함
+          // const {
+          //   data: { signIn: token }
+          // } = await sigInMutation();
+          // if (token !== "" || token !== undefined) {
+          //   localLogInMutation({ variables: { token } });
+          //   localStorage.setItem("userEmailToken", email.value);
+          // }
+          // if (token === "" || token === undefined) {
+          //   toast.error(
+          //     "서비스가 원활하지 않습니다. 로그인기능으로 로그인 부탁드립니다.😂"
+          //   );
+          //   return false;
+          // }
 
-          if (token !== "" || token !== undefined) {
-            localLogInMutation({ variables: { token } });
-            localStorage.setItem("userEmailToken", email.value);
-          }
           return true;
         } else {
           toast.error(

@@ -44,7 +44,8 @@ const Input = ({
   onChange,
   type = "text",
   readOnly,
-  selectInput = "container"
+  selectInput = "container",
+  onFocus
 }) => {
   return (
     <>
@@ -68,6 +69,7 @@ const Input = ({
           type={type}
           autoFocus={focus}
           readOnly={readOnly}
+          onFocus={onFocus}
         />
       )}
       {selectInput === "description" && (

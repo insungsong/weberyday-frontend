@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Button from "../../Components/Button";
-import { FacebookLogoImg, KakaoLogoImg } from "../../Components/Icons";
+import {
+  FacebookLogoImg,
+  KakaoLogoImg,
+  NaverLogoImg
+} from "../../Components/Icons";
 import Input from "../../Components/Input";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Connect = styled.div`
   width: 100%;
@@ -32,8 +37,18 @@ const SocialLoginBoxDesign = styled.button`
 const Atag = styled.a``;
 
 const Text = styled.p`
-  font-size: 20px;
-  margin: 20px;
+  color: white;
+  font-size: 17px;
+  margin: 20px 10px 10px 0;
+`;
+
+const LoginTextBox = styled.div`
+  background-color: #97c4d8;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px 10px;
 `;
 
 const LoginText = styled.p`
@@ -45,14 +60,14 @@ const LoginBox = styled.div`
   position: absolute;
   align-items: center;
   flex-direction: column;
-  background-color: #ecf0f1;
+  background-color: #a2cfe8;
   border: solid 1px #f7f8f9;
   width: 300px;
-  height: 700px;
+  height: 75vh;
   top: 80px;
-  right: 280px;
+  right: 32.5vh;
   border-radius: 5px;
-  padding-top: 30px;
+  z-index: 200;
 `;
 
 const LoginForm = styled.form`
@@ -61,6 +76,18 @@ const LoginForm = styled.form`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+const TextLinkBox = styled.div`
+  width: 100%;
+  align-items: none;
+`;
+
+const TextValueBorderLine = styled.div`
+  border-bottom: 1px solid #4996c4;
+  display: flex;
+  width: 90%;
+  margin-left: 10px;
 `;
 
 export default ({
@@ -73,8 +100,11 @@ export default ({
   style,
   userInfo,
   userCertification,
-  userCertificationLoading
+  userCertificationLoading,
+  setIsLogIn
 }) => {
+  const [value, setValue] = useState("");
+  const [checked, setChecked] = useState(false);
   let certification = false;
 
   if (
@@ -85,13 +115,12 @@ export default ({
     certification = userCertification.findUserInfo.certification;
   }
 
-  const [checked, setChecked] = useState(false);
   return (
     <LoginBox style={style}>
       {!isLoggedIn ? (
         <>
           <LoginForm id="MenuBox" onSubmit={onSubmit}>
-            <Text>이메일로 로그인/가입</Text>
+            <Text style={{ marginBottom: "30px" }}>이메일로 로그인/가입</Text>
             <Input
               {...email}
               focus={true}
@@ -101,53 +130,142 @@ export default ({
             <Input
               {...password}
               type="password"
+              style={{ color: "inherit", textDecoration: "inherit" }}
               placeholder="비밀번호를 입력해주세요"
             />
-            <LoginKeep id="MenuBox">
+            {/* <LoginKeep id="MenuBox">
               <input type="checkBox" onClick={() => setChecked(!checked)} />
-              <LoginText style={{ marginLeft: 10 }}>로그인 상태 유지</LoginText>
-            </LoginKeep>
-            <Button text={"이메일로 로그인 하기"} />
+              <LoginText style={{ marginLeft: 10, color: "white" }}>
+                로그인 상태 유지
+              </LoginText>
+            </LoginKeep> */}
+            <Button
+              style={{ marginTop: "0px" }}
+              onClick={() => {
+                setValue("change");
+                setIsLogIn("change");
+              }}
+              style={{
+                border: "none",
+                color: "white",
+                background: "#4996c4"
+              }}
+              text={"이메일로 로그인 하기"}
+            />
             <Connect>
-              <Link to="/signUp">이메일로 회원가입</Link>
-              <Link to="/password">비밀번호 찾기</Link>
+              <Link
+                to="/signUp"
+                style={{ color: "white", textDecoration: "inherit" }}
+              >
+                이메일로 회원가입
+              </Link>
+              <Link
+                to="/findPassword"
+                style={{ color: "white", textDecoration: "inherit" }}
+              >
+                비밀번호 찾기
+              </Link>
             </Connect>
             <Text>SNS 계정으로 로그인/가입</Text>
           </LoginForm>
-          <SocialLoginBoxDesign>
-            <KakaoLogoImg />
-            <LoginText style={{ marginLeft: "15px" }}>
-              카카오로 로그인
-            </LoginText>
-          </SocialLoginBoxDesign>
-          <SocialLoginBoxDesign>
-            <FacebookLogoImg />
-            <LoginText style={{ marginLeft: "15px" }}>
-              페이스북으로 로그인
-            </LoginText>
-          </SocialLoginBoxDesign>
-          <LoginText style={{ padding: "0px 20px", marginTop: "35px" }}>
+          <form action="http://localhost:5000/login/naver">
+            <SocialLoginBoxDesign
+              style={{ border: "none", background: "#00C73B" }}
+            >
+              <NaverLogoImg />
+              <LoginText
+                style={{
+                  marginLeft: "15px",
+                  color: "white",
+                  borderRadius: "3px"
+                }}
+              >
+                네이버 로그인
+              </LoginText>
+            </SocialLoginBoxDesign>
+          </form>
+          <form action="http://localhost:5000/login/kakao">
+            <SocialLoginBoxDesign
+              style={{
+                border: "none",
+                background: "#FFEB3B",
+                borderRadius: "3px"
+              }}
+            >
+              <KakaoLogoImg />
+              <LoginText style={{ marginLeft: "15px", color: "#3C1D1F" }}>
+                카카오로 로그인
+              </LoginText>
+            </SocialLoginBoxDesign>
+          </form>
+          <form action="https://875c6792d9ca.ngrok.io/auth/facebook">
+            <SocialLoginBoxDesign
+              style={{
+                border: "none",
+                background: "#2D88FF",
+                borderRadius: "3px"
+              }}
+            >
+              <FacebookLogoImg />
+              <LoginText style={{ marginLeft: "15px", color: "white" }}>
+                페이스북으로 로그인
+              </LoginText>
+            </SocialLoginBoxDesign>
+          </form>
+          <LoginText
+            style={{ padding: "0px 30px", marginTop: "40px", color: "white" }}
+          >
             고객문의가 필요하시다면,
             <Atag>[고객지원]</Atag>페이지로 로그인에 문제가 있다면,
             weberydayofficial@gmail.com으로 문의 주시기바랍니다
           </LoginText>
         </>
       ) : (
-        <>
-          <LoginText>{localStorage.userEmailToken}</LoginText>
-          <Link to="/me">
-            <Text>내정보</Text>
-          </Link>
+        <TextLinkBox>
+          <LoginTextBox>
+            <LoginText style={{ color: "white" }}>
+              {localStorage.userEmailToken}님
+            </LoginText>
+          </LoginTextBox>
+          <TextValueBorderLine>
+            <Link to="/me">
+              <Text>내정보</Text>
+            </Link>
+          </TextValueBorderLine>
+
           {certification ? (
-            <Link to="/myPostList">
-              <Text>내작품</Text>
-            </Link>
+            <TextValueBorderLine>
+              <Link to="/myPostList">
+                <Text>내작품</Text>
+              </Link>
+            </TextValueBorderLine>
           ) : (
-            <Link to="/certification">
-              <Text>내작품</Text>
-            </Link>
+            <TextValueBorderLine>
+              <Link to="/certification">
+                <Text>내작품</Text>
+              </Link>
+            </TextValueBorderLine>
           )}
-        </>
+          <TextValueBorderLine>
+            <Link to="/mySubscriptionBucket">
+              <Text>구독함</Text>
+            </Link>
+          </TextValueBorderLine>
+          <TextValueBorderLine style={{ cursor: "pointer" }}>
+            <Text
+              onClick={() => {
+                localStorage.removeItem("userEmailToken");
+                localStorage.removeItem("token");
+                toast.success("로그아웃 되었습니다 😁");
+                setTimeout(() => {
+                  window.location.reload();
+                }, [1500]);
+              }}
+            >
+              로그아웃
+            </Text>
+          </TextValueBorderLine>
+        </TextLinkBox>
       )}
     </LoginBox>
   );
