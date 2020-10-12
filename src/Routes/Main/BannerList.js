@@ -98,21 +98,19 @@ export default ({ bannerData, present, setPresent }) => {
           <BannerImageBox id="imgBox">
             {bannerData.allBanner.map((banner, index) => {
               console.log(banner);
-              value++;
+
               return (
                 //이미지를 쭉 늘어놓는곳
-                <BannerImagePack key={index}>
-                  <BannerImage
-                    id={index * 100}
-                    //해당 배너를 클릭시 배너가 가지고 있는 url로 이동
-                    onClick={() => {
-                      window.location.href = `${bannerData.allBanner[index].url}`;
-                    }}
-                    className="slideValue"
-                    key={banner + index}
-                    src={banner.image}
-                  />
-                </BannerImagePack>
+                <BannerImage
+                  id={index * 100}
+                  //해당 배너를 클릭시 배너가 가지고 있는 url로 이동
+                  onClick={() => {
+                    window.location.href = `${banner.url}`;
+                  }}
+                  className="slideValue"
+                  key={banner + index}
+                  src={banner.image}
+                />
               );
             })}
           </BannerImageBox>
