@@ -197,7 +197,7 @@ export default ({
   ) {
     isTrue = true;
   }
-  const actionUrl = `http://localhost:5000/UploadEpisode/${postId}`;
+  const actionUrl = `https://weberyday-fileupload-backend.herokuapp.com/UploadEpisode/${postId}`;
   return (
     <Container>
       {upload === "loading" ? (
@@ -216,7 +216,7 @@ export default ({
         <CountLength>{episodeTitle.value.length}/30</CountLength>
       </TitleBox>
       <PostUploadForm
-        action={jwtTokenIsUser() ? actionUrl : "http://localhost:5000/"}
+        action={jwtTokenIsUser() ? actionUrl : "https://weberyday-fileupload-backend.herokuapp.com/"}
         method="post"
         encType="multipart/form-data"
       >

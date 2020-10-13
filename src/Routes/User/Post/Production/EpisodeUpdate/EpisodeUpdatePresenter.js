@@ -237,8 +237,8 @@ export default ({
     isTrue = true;
   }
 
-  const actionUrl = `http://localhost:5000/updateEpisode/${episodeId}?s3ThumbnailId=${data.searchEpisode.s3ThumbnailId}&s3FileId=${data.searchEpisode.s3FileId}`;
-  const deleteEpisodeActionUrl = `http://localhost:5000/deleteEpisode/${episodeId}?s3ThumbnailId=${data.searchEpisode.s3ThumbnailId}&s3FileId=${data.searchEpisode.s3FileId}&postId=${postId}`;
+  const actionUrl = `https://weberyday-fileupload-backend.herokuapp.com/updateEpisode/${episodeId}?s3ThumbnailId=${data.searchEpisode.s3ThumbnailId}&s3FileId=${data.searchEpisode.s3FileId}`;
+  const deleteEpisodeActionUrl = `https://weberyday-fileupload-backend.herokuapp.com/deleteEpisode/${episodeId}?s3ThumbnailId=${data.searchEpisode.s3ThumbnailId}&s3FileId=${data.searchEpisode.s3FileId}&postId=${postId}`;
   return (
     <Container>
       {upload === "loading" ? (
@@ -254,7 +254,7 @@ export default ({
         <MainTitle>회차수정</MainTitle>
         <PostUploadForm
           action={
-            jwtTokenIsUser() ? deleteEpisodeActionUrl : "http://localhost:5000/"
+            jwtTokenIsUser() ? deleteEpisodeActionUrl : "https://weberyday-fileupload-backend.herokuapp.com/"
           }
           method="post"
         >
@@ -275,7 +275,7 @@ export default ({
         <CountLength>{episodeTitle.value.length}/30</CountLength>
       </TitleBox>
       <PostUploadForm
-        action={jwtTokenIsUser() ? actionUrl : "http://localhost:5000/"}
+        action={jwtTokenIsUser() ? actionUrl : "https://weberyday-fileupload-backend.herokuapp.com/"}
         method="post"
         encType="multipart/form-data"
       >

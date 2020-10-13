@@ -331,7 +331,7 @@ export default ({
     "일요일"
   ];
 
-  const actionUrl = `http://localhost:5000/myPostUpdate/${postId}?s3Thumbnail=${s3Thumbnail}&s3BackgroundImage=${s3BackgroundImage}`;
+  const actionUrl = `https://weberyday-fileupload-backend.herokuapp.com/myPostUpdate/${postId}?s3Thumbnail=${s3Thumbnail}&s3BackgroundImage=${s3BackgroundImage}`;
 
   const broadcastLive = document.getElementById("live");
   const broadcastEnd = document.getElementById("end");
@@ -373,8 +373,8 @@ export default ({
             <PostUploadForm
               action={
                 jwtTokenIsUser()
-                  ? `http://localhost:5000/myPostUpdate/${postId}?s3Thumbnail=${s3Thumbnail}&s3BackgroundImage=${s3BackgroundImage}`
-                  : "http://localhost:5000/"
+                  ? `https://weberyday-fileupload-backend.herokuapp.com/myPostUpdate/${postId}?s3Thumbnail=${s3Thumbnail}&s3BackgroundImage=${s3BackgroundImage}`
+                  : "https://weberyday-fileupload-backend.herokuapp.com/"
               }
               method="post"
               encType="multipart/form-data"
@@ -523,8 +523,8 @@ export default ({
                   method="post"
                   action={
                     jwtTokenIsUser()
-                      ? `http://localhost:5000/myPostDelete?s3Thumbnail=${s3Thumbnail}&s3BackgroundImage=${s3BackgroundImage}`
-                      : "http://localhost:5000/"
+                      ? `https://weberyday-fileupload-backend.herokuapp.com/myPostDelete?s3Thumbnail=${s3Thumbnail}&s3BackgroundImage=${s3BackgroundImage}`
+                      : "https://weberyday-fileupload-backend.herokuapp.com/"
                   }
                 >
                   <PostDeleteBtn

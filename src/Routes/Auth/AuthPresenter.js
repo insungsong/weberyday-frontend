@@ -168,7 +168,7 @@ export default ({
             </Connect>
             <Text>SNS 계정으로 로그인/가입</Text>
           </LoginForm>
-          <form action="http://localhost:5000/login/naver">
+          <form action="https://weberyday-fileupload-backend.herokuapp.com/login/naver">
             <SocialLoginBoxDesign
               style={{ border: "none", background: "#00C73B" }}
             >
@@ -184,7 +184,7 @@ export default ({
               </LoginText>
             </SocialLoginBoxDesign>
           </form>
-          <form action="http://localhost:5000/login/kakao">
+          <form action="https://weberyday-fileupload-backend.herokuapp.com/login/kakao">
             <SocialLoginBoxDesign
               style={{
                 border: "none",
