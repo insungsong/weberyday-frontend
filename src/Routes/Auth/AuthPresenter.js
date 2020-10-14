@@ -198,7 +198,7 @@ export default ({
               </LoginText>
             </SocialLoginBoxDesign>
           </form>
-          <form action="https://875c6792d9ca.ngrok.io/auth/facebook">
+          <form action="https://weberyday-fileupload-backend.herokuapp.com/auth/facebook">
             <SocialLoginBoxDesign
               style={{
                 border: "none",
