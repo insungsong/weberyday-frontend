@@ -174,6 +174,7 @@ export default withRouter((props) => {
   kakaoLoginFunc();
 
   //네이버 로그인
+  alert(getCookieValue("current_NaverUser"));
   const naverLoginFunc = async () => {
     if (getCookieValue("current_NaverUser")) {
       const currentNaverEmail = decodeURIComponent(
