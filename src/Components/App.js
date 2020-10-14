@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { gql } from "apollo-boost";
 import { useQuery } from "react-apollo-hooks";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 import Routes from "./Routes";
 import { FIND_USER_INFO } from "../Routes/User/Me/MeQuery";
 
@@ -117,7 +117,7 @@ export default () => {
         }}
       >
         <Container>
-          <BrowserRouter>
+          <Router>
             <Header
               isLoggedIn={isLoggedIn}
               setIsLogIn={setIsLogIn}
@@ -125,7 +125,7 @@ export default () => {
               searchPoint={searchPoint}
             />
             <Routes />
-          </BrowserRouter>
+          </Router>
         </Container>
         <ToastContainer position={toast.POSITION.TOP_CENTER} />
         <Footer />
