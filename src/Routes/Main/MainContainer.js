@@ -16,6 +16,7 @@ import { FIND_USER_INFO } from "../User/Me/MeQuery";
 import * as jwtDecode from "jwt-decode";
 
 export default withRouter((props) => {
+  console.log(document.cookie);
   const {
     data: bannerData,
     error: bannerError,
@@ -172,6 +173,7 @@ export default withRouter((props) => {
   };
 
   kakaoLoginFunc();
+
 
   //네이버 로그인
   const naverLoginFunc = async () => {
