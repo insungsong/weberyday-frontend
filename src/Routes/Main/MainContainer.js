@@ -147,7 +147,7 @@ export default withRouter((props) => {
       );
       let currentKaKaoCookieValue = currentKakaoEmail;
       try {
-        deleteAllCookies();
+        //deleteAllCookies();
         const {
           data: { kakaoEmailInTheUserInfomation }
         } = await KakaoEmailInTheUserInformationDBMutation({
@@ -163,7 +163,7 @@ export default withRouter((props) => {
         toast.success("카카오 로그인이 되었습니다. ✅");
         return true;
       } catch (e) {
-        deleteAllCookies();
+        //deleteAllCookies();
         toast.error(
           "해당 카카오 이메일은 weberyday에 등록된 이메일 또는 탈퇴 계정 이메일입니다 웨브리데이 로그인을 이용해주세요 😁"
         );
@@ -183,7 +183,7 @@ export default withRouter((props) => {
       );
       let currentNaverCookieValue = currentNaverEmail;
       try {
-        deleteAllCookies();
+        //deleteAllCookies();
         const {
           data: { naverEmailInTheUserInfomation }
         } = await naverEmailInTheUserInformationDBMutation({
@@ -199,7 +199,7 @@ export default withRouter((props) => {
         toast.success("네이버 로그인이 되었습니다. ✅");
         return true;
       } catch (e) {
-        deleteAllCookies();
+        //deleteAllCookies();
         toast.error(
           "해당 네이버 이메일은 weberyday에 등록된 이메일 또는 탈퇴 계정 이메일입니다 웨브리데이 로그인을 이용해주세요 😁"
         );
