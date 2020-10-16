@@ -16,7 +16,6 @@
     "graphql": "^15.1.0",
     "jwt-decode": "^2.2.0",
     "multer": "^1.4.2",
-    "network": "^0.5.0",
     "react": "^16.13.1",
     "react-apollo-hooks": "^0.5.0",
     "react-dom": "^16.13.1",
