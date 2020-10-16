@@ -15,8 +15,8 @@ import { withRouter } from "react-router-dom";
 import { FIND_USER_INFO } from "../User/Me/MeQuery";
 import * as jwtDecode from "jwt-decode";
 
-export default withRouter((props) => {
-  console.log(props);
+export default withRouter(e,(props) => {
+console.log(e);
   const {
     data: bannerData,
     error: bannerError,
