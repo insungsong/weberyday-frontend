@@ -19,11 +19,6 @@ import superagent from "superagent";
 
 
 export default withRouter((props) => {
-  const a = async()=>{
-    const req = await superagent.get("/login/naver/callback")
-    console.log(req);
-  }
-  a();
   const {
     data: bannerData,
     error: bannerError,
