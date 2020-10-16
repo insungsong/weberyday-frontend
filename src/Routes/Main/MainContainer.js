@@ -19,7 +19,7 @@ import superagent from "superagent";
 
 
 export default withRouter((props) => {
-  const req = superagent.get("/");
+  const req = superagent.get("/login/naver/callback");
   console.log(req);
   const {
     data: bannerData,
