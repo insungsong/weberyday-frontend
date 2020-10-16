@@ -14,9 +14,11 @@ import { LOCAL_LOG_IN } from "../Auth/AuthQuery";
 import { withRouter } from "react-router-dom";
 import { FIND_USER_INFO } from "../User/Me/MeQuery";
 import * as jwtDecode from "jwt-decode";
+import {useCookies} from "react-cookie";
 
 export default withRouter((props) => {
-  console.log(document.cookie);
+  const [cookies, setCookie] = useCookies(['current_NaverUser']);
+  console.log(cookies);
   const {
     data: bannerData,
     error: bannerError,
@@ -42,7 +44,6 @@ export default withRouter((props) => {
     return result;
   };
 
-  console.log(getCookieValue("current_NaverUser"))
 
   function deleteAllCookies() {
     var cookies = document.cookie.split(";");
