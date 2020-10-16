@@ -17,8 +17,7 @@ import * as jwtDecode from "jwt-decode";
 import network from "network";
 
 export default withRouter((props) => {
-  console.log(network);
-
+  
   const {
     data: bannerData,
     error: bannerError,
