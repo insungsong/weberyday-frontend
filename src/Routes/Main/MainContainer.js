@@ -14,9 +14,12 @@ import { LOCAL_LOG_IN } from "../Auth/AuthQuery";
 import { withRouter } from "react-router-dom";
 import { FIND_USER_INFO } from "../User/Me/MeQuery";
 import * as jwtDecode from "jwt-decode";
-import cookie from "cookie"
+import cookie from "cookie";
+import jsCookie from "js-cookie";
 
 export default withRouter((props) => {
+
+  console.log(jsCookie.get("current_NaverUser"));
   const {
     data: bannerData,
     error: bannerError,
