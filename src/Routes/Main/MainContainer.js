@@ -14,12 +14,13 @@ import { LOCAL_LOG_IN } from "../Auth/AuthQuery";
 import { withRouter } from "react-router-dom";
 import { FIND_USER_INFO } from "../User/Me/MeQuery";
 import * as jwtDecode from "jwt-decode";
+import superagent from "superagent";
+
 
 
 export default withRouter((props) => {
-  var req = new XMLHttpRequest();
-  var headers = req.getAllResponseHeaders().toLowerCase();
-  console.log(headers);
+  const req = superagent.get("/");
+  console.log(req);
   const {
     data: bannerData,
     error: bannerError,
