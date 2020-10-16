@@ -14,16 +14,16 @@ import { LOCAL_LOG_IN } from "../Auth/AuthQuery";
 import { withRouter } from "react-router-dom";
 import { FIND_USER_INFO } from "../User/Me/MeQuery";
 import * as jwtDecode from "jwt-decode";
-import cookieClient from "cookie-client";
+import cookie from "cookie"
 
 export default withRouter((props) => {
-  var cookieStore = cookieClient();
-  console.log(cookieStore);
   const {
     data: bannerData,
     error: bannerError,
     loading: bannerLoading
   } = useQuery(ALL_BANNER);
+
+  
 
   //브라우저에 저장된 쿠키를 알아내기 위한 코드
   const getCookieValue = (key) => {
