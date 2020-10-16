@@ -18,7 +18,7 @@ import cookieClient from "cookie-client";
 
 export default withRouter((props) => {
   var cookieStore = cookieClient();
-console.log(cookieStore.cookies());
+  console.log(cookieStore);
   const {
     data: bannerData,
     error: bannerError,
