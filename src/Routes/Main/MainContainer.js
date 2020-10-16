@@ -23,7 +23,6 @@ export default withRouter((props) => {
     loading: bannerLoading
   } = useQuery(ALL_BANNER);
 
-  console.log(response);
 
   //브라우저에 저장된 쿠키를 알아내기 위한 코드
   const getCookieValue = (key) => {
