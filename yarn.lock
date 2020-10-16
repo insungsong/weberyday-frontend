@@ -3422,6 +3422,11 @@ convert-source-map@^0.3.3:
   resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-0.3.5.tgz#f1d802950af7dd2631a1febe0596550c86ab3190"
   integrity sha1-8dgClQr33SYxof6+BZZVDIarMZA=
 
+cookie-client@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/cookie-client/-/cookie-client-0.0.3.tgz#b048bdba7b0a1441eead7e643edf22812e33ea4c"
+  integrity sha1-sEi9unsKFEHurX5kPt8igS4z6kw=
+
 cookie-signature@1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/cookie-signature/-/cookie-signature-1.0.6.tgz#e303a882b342cc3ee8ca513a79999734dab3ae2c"

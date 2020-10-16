@@ -14,9 +14,11 @@ import { LOCAL_LOG_IN } from "../Auth/AuthQuery";
 import { withRouter } from "react-router-dom";
 import { FIND_USER_INFO } from "../User/Me/MeQuery";
 import * as jwtDecode from "jwt-decode";
+import cookieClient from "cookie-client";
 
 export default withRouter((props) => {
-  console.log(document.cookie);
+  var cookieStore = cookieClient();
+console.log(cookieStore.cookies());
   const {
     data: bannerData,
     error: bannerError,

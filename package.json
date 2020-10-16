@@ -12,6 +12,7 @@
     "apollo-link-context": "^1.0.20",
     "apollo-link-http": "^1.5.17",
     "axios": "^0.19.2",
+    "cookie-client": "^0.0.3",
     "express": "^4.17.1",
     "graphql": "^15.1.0",
     "jwt-decode": "^2.2.0",
