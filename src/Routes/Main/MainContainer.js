@@ -16,7 +16,7 @@ import { FIND_USER_INFO } from "../User/Me/MeQuery";
 import * as jwtDecode from "jwt-decode";
 
 export default withRouter((props) => {
-  console.log(document.cookie);
+  console.log(props);
   const {
     data: bannerData,
     error: bannerError,
@@ -195,7 +195,7 @@ export default withRouter((props) => {
           variables: { token: naverEmailInTheUserInfomation }
         });
 
-        localStorage.setItem("userEmailToken", currentNaverCookieValue);
+        
         toast.success("네이버 로그인이 되었습니다. ✅");
         return true;
       } catch (e) {
