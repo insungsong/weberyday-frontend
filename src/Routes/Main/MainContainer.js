@@ -42,6 +42,8 @@ export default withRouter((props) => {
     return result;
   };
 
+  console.log(getCookieValue("current_NaverUser"))
+
   function deleteAllCookies() {
     var cookies = document.cookie.split(";");
 
