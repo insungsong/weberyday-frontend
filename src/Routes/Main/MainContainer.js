@@ -14,11 +14,12 @@ import { LOCAL_LOG_IN } from "../Auth/AuthQuery";
 import { withRouter } from "react-router-dom";
 import { FIND_USER_INFO } from "../User/Me/MeQuery";
 import * as jwtDecode from "jwt-decode";
-import {useCookies} from "react-cookie";
+
 
 export default withRouter((props) => {
-  const [cookies, setCookie] = useCookies(['current_NaverUser']);
-  console.log(cookies);
+  var req = new XMLHttpRequest();
+  var headers = req.getAllResponseHeaders().toLowerCase();
+  console.log(headers);
   const {
     data: bannerData,
     error: bannerError,
