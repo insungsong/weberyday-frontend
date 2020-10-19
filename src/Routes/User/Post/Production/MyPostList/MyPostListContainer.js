@@ -45,6 +45,13 @@ export default withRouter((props) => {
   // const thumnailEncodingValue = decodeURIComponent(
   //   getCookieValue("postThumnail")
   // );
+
+  console.log(props.location.search);
+  console.log("---------------------------");
+  console.log(props.location.search.split("="));
+  console.log("---------------------------");
+  console.log(props.location.search.split("&"));
+  console.log("---------------------------");
   const postThumnail = props.location.search.split("=")[0];
   console.log("postThumnail",postThumnail);
 
