@@ -70,7 +70,7 @@ export default withRouter((props) => {
   // const s3PostThumnailIdEncodingValue = decodeURIComponent(
   //   getCookieValue("s3PostThumnailId")
   //   );
-  const s3PostThumnailId = "";
+  let s3PostThumnailId = "";
   if(props.location.search.split("&")[2] !== undefined && props.location.search.split("&")[2].split("=")[1] !== undefined){
     s3PostThumnailId = props.location.search.split("&")[2].split("=")[1];
   }
