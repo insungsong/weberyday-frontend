@@ -4,6 +4,7 @@ import { useQuery, useMutation } from "react-apollo-hooks";
 import { FIND_USER_INFO } from "../../../Me/MeQuery";
 import { UPLOAD_POST } from "../PostUpload/PostUploadQuery";
 import Loader from "../../../../../Components/Loader";
+import { withRouter } from "react-router-dom";
 
 export default withRouter((props) => {
   const { data, loading, error, refetch } = useQuery(FIND_USER_INFO);
