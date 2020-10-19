@@ -47,30 +47,34 @@ export default withRouter((props) => {
   // );
   console.log(props.location.search.split("&"));
   console.log("---------------------------");
-  console.log(props.location.search.split("&")[0].split("=")[1]);
-  console.log(props.location.search.split("&")[1].split("=")[1]);
-  console.log(props.location.search.split("&")[2].split("=")[1]);
-  console.log(props.location.search.split("&")[3].split("=")[1]);
+  // console.log(props.location.search.split("&")[0].split("=")[1]);
+  // console.log(props.location.search.split("&")[1].split("=")[1]);
+  // console.log(props.location.search.split("&")[2].split("=")[1]);
+  // console.log(props.location.search.split("&")[3].split("=")[1]);
   
-  const postThumnail = props.location.search.split("&")[0].split("=")[1];
+  const beforePostThumnail = props.location.search.split("&")[0];
+  const postThumnail = beforePostThumnail.split("=")[1];
   console.log("postThumnail",postThumnail);
 
   // const backgroundImgEncodingValue = decodeURIComponent(
   //   getCookieValue("postBackgroundImg")
   // );
-  const postBackgroundImg = props.location.search.split("&")[1].split("=")[1];
+  const beforePostBackgroundImg = props.location.search.split("&")[1];
+  const postBackgroundImg = beforePostBackgroundImg.split("=")[1];
   console.log("postBackgroundImg",postBackgroundImg);
   
   // const s3PostThumnailIdEncodingValue = decodeURIComponent(
   //   getCookieValue("s3PostThumnailId")
   //   );
-  const s3PostThumnailId = props.location.search.split("&")[2].split("=")[1];
+  const beforeS3PostThumnaildId = props.location.search.split("&")[2];
+  const s3PostThumnailId = beforeS3PostThumnaildId.split("=")[1];
   console.log("s3PostThumnailId",s3PostThumnailId);
 
   // const s3PostBackgroundImgIdEncodingValue = decodeURIComponent(
   //   getCookieValue("s3PostBackgroundImgId")
   // );
-  const s3PostBackgroundImgId = props.location.search.split("&")[3].split("=")[1];
+  const beforeS3PostBackgroundImgId = props.location.search.split("&")[3];
+  const s3PostBackgroundImgId = beforeS3PostBackgroundImgId.split("=")[1];
   console.log("s3PostBackgroundImgId",s3PostBackgroundImgId);
 
   const [uploadPostMutation] = useMutation(UPLOAD_POST, {
