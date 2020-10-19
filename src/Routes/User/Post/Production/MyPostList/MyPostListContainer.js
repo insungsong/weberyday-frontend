@@ -45,18 +45,11 @@ export default withRouter((props) => {
   // const thumnailEncodingValue = decodeURIComponent(
   //   getCookieValue("postThumnail")
   // );
-  console.log(props.location.search.split("&"));
-  console.log("---------------------------");
-  // console.log(props.location.search.split("&")[0].split("=")[1]);
-  // console.log(props.location.search.split("&")[1].split("=")[1]);
-  // console.log(props.location.search.split("&")[2].split("=")[1]);
-  // console.log(props.location.search.split("&")[3].split("=")[1]);
   
   let postThumnail = "";
   if(props.location.search.split("&")[0] !== undefined && props.location.search.split("&")[0].split("=")[1] !== undefined){
     postThumnail = props.location.search.split("&")[0].split("=")[1];
   }
-  console.log("postThumnail",postThumnail);
 
   // const backgroundImgEncodingValue = decodeURIComponent(
   //   getCookieValue("postBackgroundImg")
@@ -65,7 +58,6 @@ export default withRouter((props) => {
   if(props.location.search.split("&")[1] !== undefined && props.location.search.split("&")[1].split("=")[1] !== undefined){
     postBackgroundImg =  props.location.search.split("&")[1].split("=")[1];
   }
-  console.log("postBackgroundImg",postBackgroundImg);
   
   // const s3PostThumnailIdEncodingValue = decodeURIComponent(
   //   getCookieValue("s3PostThumnailId")
@@ -74,7 +66,6 @@ export default withRouter((props) => {
   if(props.location.search.split("&")[2] !== undefined && props.location.search.split("&")[2].split("=")[1] !== undefined){
     s3PostThumnailId = props.location.search.split("&")[2].split("=")[1];
   }
-  console.log("s3PostThumnailId",s3PostThumnailId);
 
   // const s3PostBackgroundImgIdEncodingValue = decodeURIComponent(
   //   getCookieValue("s3PostBackgroundImgId")
@@ -83,7 +74,6 @@ export default withRouter((props) => {
   if(props.location.search.split("&")[3]!== undefined && props.location.search.split("&")[3].split("=")[1] !== undefined){
     s3PostBackgroundImgId = props.location.search.split("&")[3].split("=")[1];
   }   
-  console.log("s3PostBackgroundImgId",s3PostBackgroundImgId);
 
   const [uploadPostMutation] = useMutation(UPLOAD_POST, {
     variables: {

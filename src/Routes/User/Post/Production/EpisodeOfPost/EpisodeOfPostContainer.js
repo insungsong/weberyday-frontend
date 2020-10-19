@@ -51,47 +51,80 @@ export default withRouter((props) => {
     }
   }
 
+  //url의 형태에 따라 변화하는 값 만들기
+  const isPostThumnailFirst = props.location.search.split("=")[0]; 
+  let postThumnail = "";
+  let s3PostThumnailId = "";
+  let postBackgroundImg = "";
+  let s3PostBackgroundImgId = "";
+
   //인코딩이 깨져서 디코딩해주는 것
   //작품 페이지를 update하는 문
   const thumbnailImgEncodingValue = () => {
-    if (getCookieValue("postThumnail") === "") {
+    if (postThumnail === "") {
       return decodeURIComponent(getCookieValue("dbPostThumbnail"));
     } else {
-      return decodeURIComponent(getCookieValue("postThumnail"));
+      return postThumnail;
     }
   };
 
   const backgroundImgFileEncodingValue = () => {
-    if (getCookieValue("postBackgroundImg") === "") {
+    if (postBackgroundImg === "") {
       return decodeURIComponent(getCookieValue("dbPostBackgroundImage"));
     } else {
-      return decodeURIComponent(getCookieValue("postBackgroundImg"));
+      return postBackgroundImg;
     }
   };
 
   const s3PostThumnailIdEncodingValue = () => {
     if (
       //여기 if문 안에 있는 것은, localhost5000에서 넘어온 쿠키에 들어있는 정보를 말한다.
-      getCookieValue("s3PostThumnailId") === ""
+      s3PostThumnailId === ""
     ) {
       //만약 localhost5000 넘어온 값이 없다면 해당 prisma db에 들어있는 내용을 다시 새로운 쿠키에 넣음
       return getCookieValue("s3DbThumbnail");
     } else {
       // localhost5000에서 얻어온 새로운 값이 있다면 그 값을 return 함
-      return decodeURIComponent(getCookieValue("s3PostThumnailId"));
+      return s3PostThumnailId;
     }
   };
 
   const s3PostBackgroundImgIdEncodingValue = () => {
     if (
       //여기 if문 안에 있는 것은, localhost5000에서 넘어온 쿠키에 들어있는 정보를 말한다.
-      getCookieValue("s3PostBackgroundImgId") === ""
+      s3PostBackgroundImgId === ""
     ) {
       return getCookieValue("s3DbBackgroundImage");
     } else {
-      return decodeURIComponent(getCookieValue("s3PostBackgroundImgId"));
+      return s3PostBackgroundImgId;
     }
   };
+
+
+  //배경이미지 또는 썸네일 둘중 하나만 바꿀 경우의 if문
+  if(props.location.search.split("&").length === 2){
+    if(isPostThumnailFirst === "?postThumnail"){
+      if(props.location.search.split("&")[0] !== undefined && props.location.search.split("&")[0].split("=")[1] !== undefined){
+        postThumnail = props.location.search.split("&")[0].split("=")[1];
+        s3PostThumnailId = props.location.search.split("&")[1].split("=")[1];
+      }
+    }else{
+      if(props.location.search.split("&")[0] !== undefined && props.location.search.split("&")[0].split("=")[1] !== undefined){
+        postBackgroundImg = props.location.search.split("&")[0].split("=")[1];
+        s3PostBackgroundImgId = props.location.search.split("&")[1].split("=")[1];
+      }
+    }
+  //url과 썸네일을 둘다 바꿀 경우
+  }else{
+    if(props.location.search.split("&")[0] !== undefined && props.location.search.split("&")[0].split("=")[1] !== undefined){
+      postThumnail = props.location.search.split("&")[0].split("=")[1];
+      postBackgroundImg = props.location.search.split("&")[1].split("=")[1];
+      s3PostThumnailId = props.location.search.split("&")[2].split("=")[1];
+      s3PostBackgroundImgId = props.location.search.split("&")[3].split("=")[1];
+    }
+  }
+
+  
 
   //에피소드를 upload하는 문
   const episodeImgEncodingValue = decodeURIComponent(
