@@ -101,6 +101,8 @@ export default withRouter((props) => {
   };
 
 
+  console.log(props.location.search.split("&"));
+  console.log(props.location.search.split("&").length);
   //배경이미지 또는 썸네일 둘중 하나만 바꿀 경우의 if문
   if(props.location.search.split("&").length === 2){
     if(isPostThumnailFirst === "?postThumnail"){
@@ -120,7 +122,9 @@ export default withRouter((props) => {
       postThumnail = props.location.search.split("&")[0].split("=")[1];
       postBackgroundImg = props.location.search.split("&")[1].split("=")[1];
       s3PostThumnailId = props.location.search.split("&")[2].split("=")[1];
-      s3PostBackgroundImgId = props.location.search.split("&")[3].split("=")[1];
+      if(props.location.search.split("&")[3] !== undefined && props.location.search.split("&")[3].split("=")[1]){
+        s3PostBackgroundImgId = props.location.search.split("&")[3].split("=")[1];
+      }
     }
   }
 
