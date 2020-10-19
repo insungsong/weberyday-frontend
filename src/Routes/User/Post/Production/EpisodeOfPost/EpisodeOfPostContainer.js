@@ -122,7 +122,9 @@ export default withRouter((props) => {
     if(props.location.search.split("&")[0] !== undefined && props.location.search.split("&")[0].split("=")[1] !== undefined){
       postThumnail = props.location.search.split("&")[0].split("=")[1];
       postBackgroundImg = props.location.search.split("&")[1].split("=")[1];
-      s3PostThumnailId = props.location.search.split("&")[2].split("=")[1];
+      if(props.location.search.split("&")[2] !== undefined && props.location.search.split("&")[2].split("=")[1]){
+        s3PostThumnailId = props.location.search.split("&")[2].split("=")[1];
+      }
       if(props.location.search.split("&")[3] !== undefined && props.location.search.split("&")[3].split("=")[1]){
         s3PostBackgroundImgId = props.location.search.split("&")[3].split("=")[1];
       }
