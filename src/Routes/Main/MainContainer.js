@@ -143,34 +143,35 @@ console.log(props);
 
   const kakaoLoginFunc = async () => {
     //카카오 로그인
-    if (getCookieValue("current_kakaoUser")) {
-      const currentKakaoEmail = decodeURIComponent(
-        getCookieValue("current_kakaoUser")
-      );
-      let currentKaKaoCookieValue = currentKakaoEmail;
+    let currentSocialNetworkName = props.location.search.split("=")[0];
+    let currentKaKaoUserEmail = props.location.search.split("=")[1];
+    if (props.location.search.split("=")[1] !== undefined && currentSocialNetworkName === "?current_kakaoUser") {
+      props.location.search = "";
       try {
         //deleteAllCookies();
         const {
           data: { kakaoEmailInTheUserInfomation }
         } = await KakaoEmailInTheUserInformationDBMutation({
           variables: {
-            email: currentKaKaoCookieValue
+            email: currentKaKaoUserEmail
           }
         });
         await localLogInMutation({
           variables: { token: kakaoEmailInTheUserInfomation }
         });
 
-        localStorage.setItem("userEmailToken", currentKaKaoCookieValue);
+        localStorage.setItem("userEmailToken", currentKaKaoUserEmail);
         toast.success("카카오 로그인이 되었습니다. ✅");
         return true;
       } catch (e) {
-        //deleteAllCookies();
+        props.location.search = "";
         toast.error(
           "해당 카카오 이메일은 weberyday에 등록된 이메일 또는 탈퇴 계정 이메일입니다 웨브리데이 로그인을 이용해주세요 😁"
         );
+
+        //무한렌더를 막기위한 url변경
+        props.history.push("/");
         return false;
-      }
     }
   };
 
@@ -206,7 +207,7 @@ console.log(props);
       } catch (e) {
         props.location.search = "";
         toast.error(
-          "해당 페이스북 이메일은 weberyday에 등록된 이메일 또는 탈퇴 계정 이메일입니다 웨브리데이 로그인을 이용해주세요 😁"
+          "해당 네이버 이메일은 weberyday에 등록된 이메일 또는 탈퇴 계정 이메일입니다 웨브리데이 로그인을 이용해주세요 😁"
         );
 
         //무한렌더를 막기위한 url변경
