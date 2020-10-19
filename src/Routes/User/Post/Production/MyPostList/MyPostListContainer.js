@@ -46,21 +46,25 @@ export default withRouter((props) => {
   //   getCookieValue("postThumnail")
   // );
   const postThumnail = props.location.search.split("=")[0];
+  console.log("postThumnail",postThumnail);
 
   // const backgroundImgEncodingValue = decodeURIComponent(
   //   getCookieValue("postBackgroundImg")
   // );
   const postBackgroundImg = props.location.search.split("=")[1];
+  console.log("postBackgroundImg",postBackgroundImg);
   
   // const s3PostThumnailIdEncodingValue = decodeURIComponent(
   //   getCookieValue("s3PostThumnailId")
   //   );
   const s3PostThumnailId = props.location.search.split("=")[2];
+  console.log("s3PostThumnailId",s3PostThumnailId);
 
   // const s3PostBackgroundImgIdEncodingValue = decodeURIComponent(
   //   getCookieValue("s3PostBackgroundImgId")
   // );
   const s3PostBackgroundImgId = props.location.search.split("=")[3];
+  console.log("s3PostBackgroundImgId",s3PostBackgroundImgId);
 
   const [uploadPostMutation] = useMutation(UPLOAD_POST, {
     variables: {
