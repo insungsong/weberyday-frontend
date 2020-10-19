@@ -14,9 +14,6 @@ import { LOCAL_LOG_IN } from "../Auth/AuthQuery";
 import { withRouter } from "react-router-dom";
 import { FIND_USER_INFO } from "../User/Me/MeQuery";
 import * as jwtDecode from "jwt-decode";
-import superagent from "superagent";
-
-
 
 export default withRouter((props) => {
   const {
