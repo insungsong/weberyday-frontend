@@ -213,7 +213,7 @@ console.log(props);
   //페이스북 로그인
   const facebookLoginFunc = async () => {
     let currentFacebookUserEmail = props.location.search.split("=")[1];
-    if (props.location.search.split("=")[1] !== undefined) {
+    if (props.location.search.split("=")[1] !== undefined )  {
       props.location.search = "";
       console.log("currentFacebookUserEmail", currentFacebookUserEmail);
       try {
@@ -249,7 +249,7 @@ console.log(props);
     }
   };
 
-  facebookLoginFunc();
+ // facebookLoginFunc();
 
   return (
     <>
