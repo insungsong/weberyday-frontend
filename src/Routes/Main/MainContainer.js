@@ -16,6 +16,7 @@ import { FIND_USER_INFO } from "../User/Me/MeQuery";
 import * as jwtDecode from "jwt-decode";
 
 export default withRouter((props) => {
+console.log("start");
   const {
     data: bannerData,
     error: bannerError,
@@ -177,7 +178,10 @@ export default withRouter((props) => {
 
   //네이버 로그인
   const naverLoginFunc = async () => {
-  console.log(props);
+    if (getCookieValue("current_NaverUser")) {
+      const currentNaverEmail = decodeURIComponent(
+        getCookieValue("current_NaverUser")
+      );
       let currentNaverCookieValue = currentNaverEmail;
       try {
         //deleteAllCookies();
@@ -202,6 +206,7 @@ export default withRouter((props) => {
         );
         return false;
       }
+    }
   };
   naverLoginFunc();
   //페이스북 로그인
