@@ -16,8 +16,6 @@ import { FIND_USER_INFO } from "../User/Me/MeQuery";
 import * as jwtDecode from "jwt-decode";
 
 export default withRouter((props) => {
-console.log("start");
-console.log(props);
   const {
     data: bannerData,
     error: bannerError,

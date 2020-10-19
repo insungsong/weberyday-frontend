@@ -5,7 +5,7 @@ import { FIND_USER_INFO } from "../../../Me/MeQuery";
 import { UPLOAD_POST } from "../PostUpload/PostUploadQuery";
 import Loader from "../../../../../Components/Loader";
 
-export default ({}) => {
+export default withRouter((props) => {
   const { data, loading, error, refetch } = useQuery(FIND_USER_INFO);
 
   const [filter, setFilter] = useState("");
@@ -41,30 +41,34 @@ export default ({}) => {
   }
 
   //인코딩이 깨져서 디코딩해주는 것
-  const thumnailEncodingValue = decodeURIComponent(
-    getCookieValue("postThumnail")
-  );
+  // const thumnailEncodingValue = decodeURIComponent(
+  //   getCookieValue("postThumnail")
+  // );
+  const postThumnail = props.location.search.split("=")[0];
 
-  const backgroundImgEncodingValue = decodeURIComponent(
-    getCookieValue("postBackgroundImg")
-  );
+  // const backgroundImgEncodingValue = decodeURIComponent(
+  //   getCookieValue("postBackgroundImg")
+  // );
+  const postBackgroundImg = props.location.search.split("=")[1];
+  
+  // const s3PostThumnailIdEncodingValue = decodeURIComponent(
+  //   getCookieValue("s3PostThumnailId")
+  //   );
+  const s3PostThumnailId = props.location.search.split("=")[2];
 
-  const s3PostThumnailIdEncodingValue = decodeURIComponent(
-    getCookieValue("s3PostThumnailId")
-  );
-
-  const s3PostBackgroundImgIdEncodingValue = decodeURIComponent(
-    getCookieValue("s3PostBackgroundImgId")
-  );
+  // const s3PostBackgroundImgIdEncodingValue = decodeURIComponent(
+  //   getCookieValue("s3PostBackgroundImgId")
+  // );
+  const s3PostBackgroundImgId = props.location.search.split("=")[3];
 
   const [uploadPostMutation] = useMutation(UPLOAD_POST, {
     variables: {
       title: getCookieValue("postTitle"),
       description: getCookieValue("postDescription"),
-      thumbnail: thumnailEncodingValue,
-      backgroundImage: backgroundImgEncodingValue,
-      s3ThumbnailId: s3PostThumnailIdEncodingValue,
-      s3BackgroundImageId: s3PostBackgroundImgIdEncodingValue,
+      thumbnail: postThumnail,
+      backgroundImage: postBackgroundImg,
+      s3ThumbnailId: s3PostThumnailId,
+      s3BackgroundImageId: s3PostBackgroundImgId,
       category: getCookieValue("postGenre"),
       broadcast: getCookieValue("postBroadcast") === "true",
       uploadDay: getCookieValue("postUpload").split(",")
@@ -87,12 +91,12 @@ export default ({}) => {
   if (
     getCookieValue("postTitle") &&
     getCookieValue("postDescription") &&
-    getCookieValue("postThumnail") &&
-    getCookieValue("postBackgroundImg") &&
-    getCookieValue("filterCookie") === "true"
+    getCookieValue("filterCookie") === "true" &&
+    props.location.search.split("=")[1] !== undefined 
   ) {
+    //무한 렌더를 막기위해
+    props.location.search = "";
     document.cookie = `filterCookie=${false};max-age=1`;
-
     uploadPostMutation();
   }
   deleteAllCookies();
@@ -102,4 +106,4 @@ export default ({}) => {
   ) : (
     <MyPostListPresenter postData={data} error={error} refetch={refetch} />
   );
-};
+});
