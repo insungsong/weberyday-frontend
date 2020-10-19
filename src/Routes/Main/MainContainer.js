@@ -172,6 +172,7 @@ console.log(props);
         //무한렌더를 막기위한 url변경
         props.history.push("/");
         return false;
+      }
     }
   };
 
