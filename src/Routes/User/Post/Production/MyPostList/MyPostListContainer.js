@@ -47,10 +47,10 @@ export default withRouter((props) => {
   // );
   console.log(props.location.search.split("&"));
   console.log("---------------------------");
-  console.log(props.location.search.split("&")[0].split("=")[1]);
-  console.log(props.location.search.split("&")[1].split("=")[1]);
-  console.log(props.location.search.split("&")[2].split("=")[1]);
-  console.log(props.location.search.split("&")[3].split("=")[1]);
+  // console.log(props.location.search.split("&")[0].split("=")[1]);
+  // console.log(props.location.search.split("&")[1].split("=")[1]);
+  // console.log(props.location.search.split("&")[2].split("=")[1]);
+  // console.log(props.location.search.split("&")[3].split("=")[1]);
   
   let postThumnail = "";
   if(props.location.search.split("&")[0].split("=")[1] !== undefined){
