@@ -183,6 +183,7 @@ console.log(props);
     let currentNaverUserEmail = props.location.search.split("=")[1];
     console.log(currentSocialNetworkName,currentNaverUserEmail);
     if(props.location.search.split("=")[1] !== undefined && currentSocialNetworkName === "?current_NaverUser"){
+      props.location.search = "";
       try {
         //deleteAllCookies();
         const {
@@ -198,12 +199,18 @@ console.log(props);
 
         localStorage.setItem("userEmailToken", currentNaverUserEmail);
         toast.success("네이버 로그인이 되었습니다. ✅");
+
+        //무한렌더를 막기위한 url변경
+        props.history.push("/");
         return true;
       } catch (e) {
-        //deleteAllCookies();
+        props.location.search = "";
         toast.error(
-          "해당 네이버 이메일은 weberyday에 등록된 이메일 또는 탈퇴 계정 이메일입니다 웨브리데이 로그인을 이용해주세요 😁"
+          "해당 페이스북 이메일은 weberyday에 등록된 이메일 또는 탈퇴 계정 이메일입니다 웨브리데이 로그인을 이용해주세요 😁"
         );
+
+        //무한렌더를 막기위한 url변경
+        props.history.push("/");
         return false;
       }
     }
