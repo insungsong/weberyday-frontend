@@ -53,7 +53,7 @@ export default withRouter((props) => {
   // console.log(props.location.search.split("&")[3].split("=")[1]);
   
   let postThumnail = "";
-  if(props.location.search.split("&")[0].split("=")[1] !== undefined){
+  if(props.location.search.split("&")[0] !== undefined && props.location.search.split("&")[0].split("=")[1] !== undefined){
     postThumnail = props.location.search.split("&")[0].split("=")[1];
   }
   console.log("postThumnail",postThumnail);
@@ -62,7 +62,7 @@ export default withRouter((props) => {
   //   getCookieValue("postBackgroundImg")
   // );
   let postBackgroundImg = "";
-  if(props.location.search.split("&")[1].split("=")[1] !== undefined){
+  if(props.location.search.split("&")[1] !== undefined && props.location.search.split("&")[1].split("=")[1] !== undefined){
     postBackgroundImg =  props.location.search.split("&")[1].split("=")[1];
   }
   console.log("postBackgroundImg",postBackgroundImg);
@@ -71,7 +71,7 @@ export default withRouter((props) => {
   //   getCookieValue("s3PostThumnailId")
   //   );
   const s3PostThumnailId = "";
-  if(props.location.search.split("&")[2].split("=")[1] !== undefined){
+  if(props.location.search.split("&")[2] !== undefined && props.location.search.split("&")[2].split("=")[1] !== undefined){
     s3PostThumnailId = props.location.search.split("&")[2].split("=")[1];
   }
   console.log("s3PostThumnailId",s3PostThumnailId);
@@ -80,7 +80,7 @@ export default withRouter((props) => {
   //   getCookieValue("s3PostBackgroundImgId")
   // );
   let s3PostBackgroundImgId = "";
-  if(props.location.search.split("&")[3].split("=")[1] !== undefined){
+  if(props.location.search.split("&")[3]!== undefined && props.location.search.split("&")[3].split("=")[1] !== undefined){
     s3PostBackgroundImgId = props.location.search.split("&")[3].split("=")[1];
   }   
   console.log("s3PostBackgroundImgId",s3PostBackgroundImgId);
