@@ -182,25 +182,21 @@ console.log(props);
     let currentSocialNetworkName = props.location.search.split("=")[0];
     let currentNaverUserEmail = props.location.search.split("=")[1];
     console.log(currentSocialNetworkName,currentNaverUserEmail);
-    if (getCookieValue("current_NaverUser")) {
-      const currentNaverEmail = decodeURIComponent(
-        getCookieValue("current_NaverUser")
-      );
-      let currentNaverCookieValue = currentNaverEmail;
+    if(props.location.search.split("=")[1] !== undefined && currentSocialNetworkName === "?current_NaverUser"){
       try {
         //deleteAllCookies();
         const {
           data: { naverEmailInTheUserInfomation }
         } = await naverEmailInTheUserInformationDBMutation({
           variables: {
-            email: currentNaverCookieValue
+            email: currentNaverUserEmail
           }
         });
         await localLogInMutation({
           variables: { token: naverEmailInTheUserInfomation }
         });
 
-        localStorage.setItem("userEmailToken", currentNaverCookieValue);
+        localStorage.setItem("userEmailToken", currentNaverUserEmail);
         toast.success("네이버 로그인이 되었습니다. ✅");
         return true;
       } catch (e) {
