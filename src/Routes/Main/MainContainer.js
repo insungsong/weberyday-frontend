@@ -19,6 +19,8 @@ import superagent from "superagent";
 
 
 export default withRouter((props) => {
+superagent.get("https://weberyday-test.netlify.app/#/").then(console.log);
+
   const {
     data: bannerData,
     error: bannerError,
