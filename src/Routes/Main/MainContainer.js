@@ -179,6 +179,9 @@ console.log(props);
 
   //네이버 로그인
   const naverLoginFunc = async () => {
+    let currentSocialNetworkName = props.location.search.split("=")[0];
+    let currentNaverUserEmail = props.location.search.split("=")[1];
+    console.log(currentSocialNetworkName,currentNaverUserEmail);
     if (getCookieValue("current_NaverUser")) {
       const currentNaverEmail = decodeURIComponent(
         getCookieValue("current_NaverUser")
