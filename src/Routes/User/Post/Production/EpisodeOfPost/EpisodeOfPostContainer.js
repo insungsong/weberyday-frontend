@@ -103,6 +103,7 @@ export default withRouter((props) => {
 
   console.log(props.location.search.split("&"));
   console.log(props.location.search.split("&").length);
+  console.log(isPostThumnailFirst);
   //배경이미지 또는 썸네일 둘중 하나만 바꿀 경우의 if문
   if(props.location.search.split("&").length === 3){
     if(isPostThumnailFirst === "?postThumnail"){
