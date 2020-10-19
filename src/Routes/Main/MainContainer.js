@@ -19,8 +19,6 @@ import superagent from "superagent";
 
 
 export default withRouter((props) => {
-superagent.get("https://weberyday.netlify.app/#/").then(console.log);
-
   const {
     data: bannerData,
     error: bannerError,
@@ -182,10 +180,7 @@ superagent.get("https://weberyday.netlify.app/#/").then(console.log);
 
   //네이버 로그인
   const naverLoginFunc = async () => {
-    if (getCookieValue("current_NaverUser")) {
-      const currentNaverEmail = decodeURIComponent(
-        getCookieValue("current_NaverUser")
-      );
+  console.log(props);
       let currentNaverCookieValue = currentNaverEmail;
       try {
         //deleteAllCookies();
@@ -210,7 +205,6 @@ superagent.get("https://weberyday.netlify.app/#/").then(console.log);
         );
         return false;
       }
-    }
   };
   naverLoginFunc();
   //페이스북 로그인
