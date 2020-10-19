@@ -45,32 +45,32 @@ export default withRouter((props) => {
   // const thumnailEncodingValue = decodeURIComponent(
   //   getCookieValue("postThumnail")
   // );
-
-  console.log(props.location.search);
-  console.log("---------------------------");
-  console.log(props.location.search.split("="));
-  console.log("---------------------------");
   console.log(props.location.search.split("&"));
   console.log("---------------------------");
-  const postThumnail = props.location.search.split("=")[0];
+  console.log(props.location.search.split("&")[0].split("=")[1]);
+  console.log(props.location.search.split("&")[1].split("=")[1]);
+  console.log(props.location.search.split("&")[2].split("=")[1]);
+  console.log(props.location.search.split("&")[3].split("=")[1]);
+  
+  const postThumnail = props.location.search.split("&")[0].split("=")[1];
   console.log("postThumnail",postThumnail);
 
   // const backgroundImgEncodingValue = decodeURIComponent(
   //   getCookieValue("postBackgroundImg")
   // );
-  const postBackgroundImg = props.location.search.split("=")[1];
+  const postBackgroundImg = props.location.search.split("&")[1].split("=")[1];
   console.log("postBackgroundImg",postBackgroundImg);
   
   // const s3PostThumnailIdEncodingValue = decodeURIComponent(
   //   getCookieValue("s3PostThumnailId")
   //   );
-  const s3PostThumnailId = props.location.search.split("=")[2];
+  const s3PostThumnailId = props.location.search.split("&")[2].split("=")[1];
   console.log("s3PostThumnailId",s3PostThumnailId);
 
   // const s3PostBackgroundImgIdEncodingValue = decodeURIComponent(
   //   getCookieValue("s3PostBackgroundImgId")
   // );
-  const s3PostBackgroundImgId = props.location.search.split("=")[3];
+  const s3PostBackgroundImgId = props.location.search.split("&")[3].split("=")[1];
   console.log("s3PostBackgroundImgId",s3PostBackgroundImgId);
 
   const [uploadPostMutation] = useMutation(UPLOAD_POST, {
