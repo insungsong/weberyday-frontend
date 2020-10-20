@@ -9,6 +9,7 @@ import Loader from "../../../../../Components/Loader";
 import { toast } from "react-toastify";
 
 export default withRouter((props) => {
+  console.log(props);
   const postId = props.match.params.id;
   const [filter, setFilter] = useState("");
   const [render, setRender] = useState("");
@@ -52,7 +53,7 @@ export default withRouter((props) => {
   }
 
   //url의 형태에 따라 변화하는 값 만들기
-  const isPostThumnailFirst = props.location.search.split("=")[0]; 
+  const isPostThumnailFirst = props.location.search.split("?")[2].split("=")[0]; 
   let postThumnail = "";
   let s3PostThumnailId = "";
   let postBackgroundImg = "";
@@ -106,7 +107,7 @@ export default withRouter((props) => {
   console.log(isPostThumnailFirst);
   //배경이미지 또는 썸네일 둘중 하나만 바꿀 경우의 if문
   if(props.location.search.split("&").length === 3){
-    if(isPostThumnailFirst === "?s3Thumbnail"){
+    if(isPostThumnailFirst === "postThumnail"){
       if(props.location.search.split("&")[0] !== undefined && props.location.search.split("&")[0].split("=")[1] !== undefined){
         postThumnail = props.location.search.split("&")[0].split("=")[1];
         s3PostThumnailId = props.location.search.split("&")[1].split("=")[1];
