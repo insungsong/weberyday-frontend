@@ -531,7 +531,7 @@ export default ({
                     style={{ width: "30vh", cursor: "pointer" }}
                     onClick={async () => {
                       await deletePostMutation();
-                      window.location.href = "/myPostList";
+                      window.location.href = "/#/myPostList";
                     }}
                   >
                     작품 삭제
