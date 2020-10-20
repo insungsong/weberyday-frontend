@@ -9,7 +9,6 @@ import Loader from "../../../../../Components/Loader";
 import { toast } from "react-toastify";
 
 export default withRouter((props) => {
-  console.log(props);
   const postId = props.match.params.id;
   const [filter, setFilter] = useState("");
   const [render, setRender] = useState("");
@@ -53,6 +52,7 @@ export default withRouter((props) => {
   }
 
   //url의 형태에 따라 변화하는 값 만들기
+
   const isPostThumnailFirst = props.location.search.split("?")[2].split("=")[0]; 
   let postThumnail = "";
   let s3PostThumnailId = "";
