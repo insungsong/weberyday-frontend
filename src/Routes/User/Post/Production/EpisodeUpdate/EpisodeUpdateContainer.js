@@ -54,6 +54,7 @@ export default withRouter((props) => {
 
   const onSubmit = async (e) => {
     if (e === "noChangeBoth") {
+      console.log("들어와??");
       await editEpisodeMutation({
         variables: {
           episodeId,
@@ -204,23 +205,23 @@ export default withRouter((props) => {
       {loading ? (
         <Loader />
       ) : (
-        <EpisodeUpdatePresenter
-          episodeId={episodeId}
-          postId={postId}
-          episodeTitle={episodeTitle}
-          episodeDescription={episodeDescription}
-          imgBase64={imgBase64}
-          setImgBase64={setImgBase64}
-          episodeThumbnail={episodeThumbnail}
-          videoBase64={videoBase64}
-          setVideoBase64={setVideoBase64}
-          episodeVideoFile={episodeVideoFile}
-          data={data}
-          loading={loading}
-          refetch={refetch}
-          onSubmit={onSubmit}
-        />
-      )}
+          <EpisodeUpdatePresenter
+            episodeId={episodeId}
+            postId={postId}
+            episodeTitle={episodeTitle}
+            episodeDescription={episodeDescription}
+            imgBase64={imgBase64}
+            setImgBase64={setImgBase64}
+            episodeThumbnail={episodeThumbnail}
+            videoBase64={videoBase64}
+            setVideoBase64={setVideoBase64}
+            episodeVideoFile={episodeVideoFile}
+            data={data}
+            loading={loading}
+            refetch={refetch}
+            onSubmit={onSubmit}
+          />
+        )}
     </>
   );
 });

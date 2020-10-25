@@ -197,7 +197,7 @@ export default ({
   ) {
     isTrue = true;
   }
-  const actionUrl = `https://weberyday-fileupload-backend.herokuapp.com/UploadEpisode/${postId}`;
+  const actionUrl = `https://weberyday-fileupload-backend.herokuapp.com/uploadEpisode/${postId}`;
   return (
     <Container>
       {upload === "loading" ? (
@@ -207,8 +207,8 @@ export default ({
           </OpendSendBox>
         </OpenSendLoading>
       ) : (
-        ""
-      )}
+          ""
+        )}
       <MainTitle>회차등록</MainTitle>
       <TitleBox>
         <Title>제목</Title>
