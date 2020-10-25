@@ -137,15 +137,28 @@ export default withRouter((props) => {
   let s3VideoFile = "";
 
   //배경이미지 또는 썸네일 둘중 하나만 바꿀 경우의 if문
-
-  if (isEpisodeImgFile === "?episodeImgFile") {
-    if (props.location.search.split("&")[0].split("=")[1] !== undefined && props.location.search.split("&")[1].split("=")[1] !== undefined && props.location.search.split("&")[2].split("=")[1] !== undefined && props.location.search.split("&")[3].split("=")[1] !== undefined) {
+  if (props.location.search.split("&").length === 2) {
+    if (isPostThumnailFirst === "?videoFile") {
+      if (props.location.search.split("&")[0] !== undefined && props.location.search.split("&")[0].split("=")[1] !== undefined) {
+        videoFile = props.location.search.split("&")[0].split("=")[1];
+        s3VideoFile = props.location.search.split("&")[1].split("=")[1];
+      }
+    } else {
+      if (props.location.search.split("&")[0] !== undefined && props.location.search.split("&")[0].split("=")[1] !== undefined) {
+        episodeImgFile = props.location.search.split("&")[0].split("=")[1];
+        s3EpisodeImgFile = props.location.search.split("&")[1].split("=")[1];
+      }
+    }
+    //url과 썸네일을 둘다 바꿀 경우
+  } else {
+    if (props.location.search.split("&")[0] !== undefined && props.location.search.split("&")[0].split("=")[1] !== undefined && props.location.search.split("&")[1].split("=")[1] !== undefined && props.location.search.split("&")[2].split("=")[1] !== undefined && props.location.search.split("&")[3].split("=")[1] !== undefined) {
       episodeImgFile = props.location.search.split("&")[0].split("=")[1];
       videoFile = props.location.search.split("&")[1].split("=")[1];
       s3EpisodeImgFile = props.location.search.split("&")[2].split("=")[1];
-      s3VideoFile = props.location.search.split("&")[2].split("=")[1];
+      s3VideoFile = props.location.search.split("&")[3].split("=")[1]
     }
   }
+
 
 
   //에피소드를 upload하는 문

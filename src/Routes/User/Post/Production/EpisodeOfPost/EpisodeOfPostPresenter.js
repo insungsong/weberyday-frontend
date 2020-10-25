@@ -142,83 +142,83 @@ export default ({ oneOfPost, loading, refetch, render, setRender }) => {
       {loading && oneOfPost === undefined ? (
         <Loader />
       ) : (
-        <Container>
-          <BannerBox>
-            <img style={{ width: "100%" }} src={postBackgroundImage} />
-          </BannerBox>
-          <ContentBox>
-            <EpisodeBox>
-              {postEpisodes.map((episode, index) => (
-                <Episode key={episode + index}>
-                  <ImageBox>
-                    <img style={{ width: "100%" }} src={episode.thumbnail} />
-                  </ImageBox>
-                  <EpisodeDescription>
-                    <Title>{episode.title}</Title>
-                    <UploadDay>{episode.createdAt.slice(0, 10)}</UploadDay>
-                  </EpisodeDescription>
-                  <ModifyButtonFormBox>
-                    <Link
-                      onClick={() => setTimeout(() => window.location.reload())}
-                      to={`/episodeUpdate/${episode.id}`}
-                      key={index}
-                    >
-                      <ModifyButton>
-                        <p>수정</p>
-                      </ModifyButton>
-                    </Link>
-                  </ModifyButtonFormBox>
-                </Episode>
-              ))}
-              <Episode style={{ justifyContent: "center" }}>
-                <Link
-                  to={`/episodeUpload/${postId}`}
-                  style={{ color: "inherit", textDecoration: "inherit" }}
-                >
-                  <EpisodeDescription
-                    style={{
-                      padding: "30px 10px"
-                    }}
+          <Container>
+            <BannerBox>
+              <img style={{ width: "100%" }} src={postBackgroundImage} />
+            </BannerBox>
+            <ContentBox>
+              <EpisodeBox>
+                {postEpisodes.map((episode, index) => (
+                  <Episode key={episode + index}>
+                    <ImageBox>
+                      <img style={{ width: "100%" }} src={episode.thumbnail} />
+                    </ImageBox>
+                    <EpisodeDescription>
+                      <Title>{episode.title}</Title>
+                      <UploadDay>{episode.createdAt.slice(0, 10)}</UploadDay>
+                    </EpisodeDescription>
+                    <ModifyButtonFormBox>
+                      <Link
+                        onClick={() => setTimeout(() => window.location.reload())}
+                        to={`/episodeUpdate/${episode.id}`}
+                        key={index}
+                      >
+                        <ModifyButton>
+                          <p>수정</p>
+                        </ModifyButton>
+                      </Link>
+                    </ModifyButtonFormBox>
+                  </Episode>
+                ))}
+                <Episode style={{ justifyContent: "center" }}>
+                  <Link
+                    to={`/episodeUpload/${postId}`}
+                    style={{ color: "inherit", textDecoration: "inherit" }}
                   >
-                    <Title style={{ fontWeight: "bold" }}>
-                      새로운 회차를 등록하세요 ➕
-                    </Title>
-                  </EpisodeDescription>
-                </Link>
-              </Episode>
-            </EpisodeBox>
-            <DescriptionBox>
-              <Description>
-                <Title>작품정보 수정</Title>
-                {oneOfPost && oneOfPost.oneOfPost !== undefined ? (
-                  <Link to={`/myPostUpdate/${postId}`}>
-                    <PostTitle
+                    <EpisodeDescription
                       style={{
-                        fontWeight: "bold",
-                        color: "#4996c4",
-                        textDecoration: "inherit"
+                        padding: "30px 10px"
                       }}
                     >
-                      바로 가기
-                    </PostTitle>
+                      <Title style={{ fontWeight: "bold" }}>
+                        새로운 회차를 등록하세요 ➕
+                    </Title>
+                    </EpisodeDescription>
                   </Link>
-                ) : (
-                  <p>바로 가기</p>
-                )}
-              </Description>
-              <Description>
-                <Title>줄거리</Title>
-                {postDescription}
-              </Description>
+                </Episode>
+              </EpisodeBox>
+              <DescriptionBox>
+                <Description>
+                  <Title>작품정보 수정</Title>
+                  {oneOfPost && oneOfPost.oneOfPost !== undefined ? (
+                    <Link to={`/myPostUpdate/${postId}`}>
+                      <PostTitle
+                        style={{
+                          fontWeight: "bold",
+                          color: "#4996c4",
+                          textDecoration: "inherit"
+                        }}
+                      >
+                        바로 가기
+                    </PostTitle>
+                    </Link>
+                  ) : (
+                      <p>바로 가기</p>
+                    )}
+                </Description>
+                <Description>
+                  <Title>줄거리</Title>
+                  {postDescription}
+                </Description>
 
-              <Category>
-                <Title>장르</Title>
-                {postCategory.genre}
-              </Category>
-            </DescriptionBox>
-          </ContentBox>
-        </Container>
-      )}
+                <Category>
+                  <Title>장르</Title>
+                  {postCategory.genre}
+                </Category>
+              </DescriptionBox>
+            </ContentBox>
+          </Container>
+        )}
     </>
   );
 };
