@@ -249,4 +249,5 @@ export default withRouter((props) => {
           )}
       </>
     );
-  });
+  }
+});
