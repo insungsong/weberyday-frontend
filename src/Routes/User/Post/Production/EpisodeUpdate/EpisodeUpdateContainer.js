@@ -63,7 +63,7 @@ export default withRouter((props) => {
   const onSubmit = async (e) => {
     if (e === "noChangeBoth") {
       try {
-        const a = await editEpisodeMutation({
+        await editEpisodeMutation({
           variables: {
             episodeId,
             title: episodeTitle.value,
@@ -75,9 +75,8 @@ export default withRouter((props) => {
             actions: "EDIT"
           }
         });
-        alert("a", a);
+
       } catch (e) {
-        console.log("에러?");
         console.log(e);
       }
     }
@@ -210,8 +209,8 @@ export default withRouter((props) => {
       });
     }
   };
-  asynAction();
-  deleteAllCookies();
+  // asynAction();
+  // deleteAllCookies();
 
   return (
     <>
