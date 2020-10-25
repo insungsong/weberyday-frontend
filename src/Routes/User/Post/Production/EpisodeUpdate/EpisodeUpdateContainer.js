@@ -15,6 +15,7 @@ export default withRouter((props) => {
   const episodeThumbnail = useInput("");
   const episodeVideoFile = useInput("");
 
+
   const { data, loading, error, refetch } = useQuery(SEARCH_EPISODE, {
     variables: {
       episodeId
@@ -52,9 +53,15 @@ export default withRouter((props) => {
     dbS3FileId = data.searchEpisode.s3FileId;
   }
 
+  console.log("episodeId", episodeId);
+  console.log("episodeTitle.value", episodeTitle.value);
+  console.log("episodeDescription.value", episodeDescription.value);
+  console.log("episodeVideoFile.value", episodeVideoFile.value);
+  console.log("dbS3ThumbnailId", dbS3ThumbnailId);
+  console.log("dbS3FileId", dbS3FileId);
+
   const onSubmit = async (e) => {
     if (e === "noChangeBoth") {
-      console.log("들어와??");
       await editEpisodeMutation({
         variables: {
           episodeId,
