@@ -135,10 +135,11 @@ export default withRouter((props) => {
   let videoFile = "";
   let s3EpisodeImgFile = "";
   let s3VideoFile = "";
+  console.log(videoFile);
 
   //배경이미지 또는 썸네일 둘중 하나만 바꿀 경우의 if문
   if (props.location.search.split("&").length === 2) {
-    if (isPostThumnailFirst === "?videoFile") {
+    if (isEpisodeImgFile === "?videoFile") {
       if (props.location.search.split("&")[0] !== undefined && props.location.search.split("&")[0].split("=")[1] !== undefined) {
         videoFile = props.location.search.split("&")[0].split("=")[1];
         s3VideoFile = props.location.search.split("&")[1].split("=")[1];
