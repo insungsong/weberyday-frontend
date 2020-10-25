@@ -62,23 +62,19 @@ export default withRouter((props) => {
 
   const onSubmit = async (e) => {
     if (e === "noChangeBoth") {
-      try {
-        await editEpisodeMutation({
-          variables: {
-            episodeId,
-            title: episodeTitle.value,
-            description: episodeDescription.value,
-            thumbnail: episodeThumbnail.value,
-            file: episodeVideoFile.value,
-            s3ThumbnailId: dbS3ThumbnailId,
-            s3FileId: dbS3FileId,
-            actions: "EDIT"
-          }
-        });
-
-      } catch (e) {
-        console.log(e);
-      }
+      console.log("noChangeBoth")
+      await editEpisodeMutation({
+        variables: {
+          episodeId,
+          title: episodeTitle.value,
+          description: episodeDescription.value,
+          thumbnail: episodeThumbnail.value,
+          file: episodeVideoFile.value,
+          s3ThumbnailId: dbS3ThumbnailId,
+          s3FileId: dbS3FileId,
+          actions: "EDIT"
+        }
+      });
     }
     if (e === "changeBoth") {
       document.cookie = `episodeTitle=${episodeTitle.value}`;
