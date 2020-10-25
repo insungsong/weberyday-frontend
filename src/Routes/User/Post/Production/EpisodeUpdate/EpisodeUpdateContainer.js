@@ -221,7 +221,7 @@ export default withRouter((props) => {
           thumbnail: s3ThumbNailUrl,
 
           //file: videoFileEncodingValue() 해당 부분을 쓰면 에러가 안날떄도 있지만 이전의 url값이 저장된다.
-          file: s3VideoFileUrl,
+          file: videoFile,
           s3ThumbnailId: s3EpisodeImgEncodingValue(),
           s3FileId: s3VideoFileEncodingValue(),
           actions: "EDIT"
