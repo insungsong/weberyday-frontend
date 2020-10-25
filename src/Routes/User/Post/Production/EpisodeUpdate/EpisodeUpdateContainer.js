@@ -63,7 +63,7 @@ export default withRouter((props) => {
   const onSubmit = async (e) => {
     if (e === "noChangeBoth") {
       try {
-        await editEpisodeMutation({
+        const a = await editEpisodeMutation({
           variables: {
             episodeId,
             title: episodeTitle.value,
@@ -75,6 +75,7 @@ export default withRouter((props) => {
             actions: "EDIT"
           }
         });
+        console.log("a", a);
       } catch (e) {
         console.log("에러?");
         console.log(e);
@@ -138,20 +139,20 @@ export default withRouter((props) => {
 
   const episodeImgEncodingValue = () => {
     if (getCookieValue("episodeImgFile") === "") {
-      console.log("episodeImgEncodingValue", "1");
+
       return decodeURIComponent(getCookieValue("dbEpisodeThumbnail"));
     } else {
-      console.log("episodeImgEncodingValue", "2");
+
       return decodeURIComponent(getCookieValue("episodeImgFile"));
     }
   };
 
   const videoFileEncodingValue = () => {
     if (getCookieValue("videoFile") === "") {
-      console.log("videoFileEncodingValue", "1");
+
       return decodeURIComponent(getCookieValue("dbEpisodeVideoFile"));
     } else {
-      console.log("videoFileEncodingValue", "2");
+
       return decodeURIComponent(getCookieValue("videoFile"));
     }
   };
