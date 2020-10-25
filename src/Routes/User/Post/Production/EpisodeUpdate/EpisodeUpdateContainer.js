@@ -133,12 +133,12 @@ export default withRouter((props) => {
 
   console.log("props.location.search length 2", props.location.search.split("&").length);
   console.log("isEpisodeImgFile", isEpisodeImgFile)
-  if (isEpisodeImgFile === "videoFile") {
+  if (isEpisodeImgFile === "?videoFile") {
     if (props.location.search.split("&")[0].split("=")[1] !== undefined && props.location.search.split("&")[1].split("=")[1] !== undefined) {
       videoFile = props.location.search.split("&")[0].split("=")[1];
       s3FileId = props.location.search.split("&")[1].split("=")[1];
     }
-  } else if (isEpisodeImgFile === "episodeImgFile" && props.location.search.split("&").length === 2) {
+  } else if (isEpisodeImgFile === "?episodeImgFile" && props.location.search.split("&").length === 2) {
     if (props.location.search.split("&")[0].split("=")[1] !== undefined && props.location.search.split("&")[1].split("=")[1] !== undefined) {
 
       episodeImgFile = props.location.search.split("&")[0].split("=")[1];
