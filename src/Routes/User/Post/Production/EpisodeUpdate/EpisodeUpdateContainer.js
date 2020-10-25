@@ -75,7 +75,7 @@ export default withRouter((props) => {
             actions: "EDIT"
           }
         });
-        console.log("a", a);
+        alert("a", a);
       } catch (e) {
         console.log("에러?");
         console.log(e);
