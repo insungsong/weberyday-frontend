@@ -32,7 +32,6 @@ const Container = styled.div`
 `;
 
 export default () => {
-  console.log("test");
   const {
     data: findUserInfoData,
     loading: findUserInfoLoading,

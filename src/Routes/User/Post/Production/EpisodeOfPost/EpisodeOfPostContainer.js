@@ -52,7 +52,7 @@ export default withRouter((props) => {
   }
 
   //url의 형태에 따라 변화하는 값 만들기
-  const isPostThumnailFirst = props.location.search.split("=")[0]; 
+  const isPostThumnailFirst = props.location.search.split("=")[0];
   let postThumnail = "";
   let s3PostThumnailId = "";
   let postBackgroundImg = "";
@@ -101,54 +101,103 @@ export default withRouter((props) => {
   };
 
 
-  console.log(props.location.search.split("&"));
-  console.log(props.location.search.split("&").length);
-  console.log(isPostThumnailFirst);
   //배경이미지 또는 썸네일 둘중 하나만 바꿀 경우의 if문
-  if(props.location.search.split("&").length === 2){
-    if(isPostThumnailFirst === "?postThumnail"){
-      if(props.location.search.split("&")[0] !== undefined && props.location.search.split("&")[0].split("=")[1] !== undefined){
+  if (props.location.search.split("&").length === 2) {
+    if (isPostThumnailFirst === "?postThumnail") {
+      if (props.location.search.split("&")[0] !== undefined && props.location.search.split("&")[0].split("=")[1] !== undefined) {
         postThumnail = props.location.search.split("&")[0].split("=")[1];
         s3PostThumnailId = props.location.search.split("&")[1].split("=")[1];
       }
-    }else{
-      if(props.location.search.split("&")[0] !== undefined && props.location.search.split("&")[0].split("=")[1] !== undefined){
+    } else {
+      if (props.location.search.split("&")[0] !== undefined && props.location.search.split("&")[0].split("=")[1] !== undefined) {
         postBackgroundImg = props.location.search.split("&")[0].split("=")[1];
         s3PostBackgroundImgId = props.location.search.split("&")[1].split("=")[1];
       }
     }
-  //url과 썸네일을 둘다 바꿀 경우
-  }else{
-    if(props.location.search.split("&")[0] !== undefined && props.location.search.split("&")[0].split("=")[1] !== undefined){
+    //url과 썸네일을 둘다 바꿀 경우
+  } else {
+    if (props.location.search.split("&")[0] !== undefined && props.location.search.split("&")[0].split("=")[1] !== undefined) {
       postThumnail = props.location.search.split("&")[0].split("=")[1];
       postBackgroundImg = props.location.search.split("&")[1].split("=")[1];
-      if(props.location.search.split("&")[2] !== undefined && props.location.search.split("&")[2].split("=")[1]){
+      if (props.location.search.split("&")[2] !== undefined && props.location.search.split("&")[2].split("=")[1]) {
         s3PostThumnailId = props.location.search.split("&")[2].split("=")[1];
       }
-      if(props.location.search.split("&")[3] !== undefined && props.location.search.split("&")[3].split("=")[1]){
+      if (props.location.search.split("&")[3] !== undefined && props.location.search.split("&")[3].split("=")[1]) {
         s3PostBackgroundImgId = props.location.search.split("&")[3].split("=")[1];
       }
     }
   }
 
-  
+
+
+  const isEpisodeImgFile = props.location.search.split("=")[0];
+  let episodeImgFile = "";
+  let videoFile = "";
+  let s3EpisodeImgFile = "";
+  let s3VideoFile = "";
+
+  console.log("isEpisodeImgFile", isEpisodeImgFile);
+  console.log(props.location.search.split("&"));
+  console.log(props.location.search.split("&").length);
+
+  //배경이미지 또는 썸네일 둘중 하나만 바꿀 경우의 if문
+  if (props.location.search.split("&").length === 4) {
+    if (isEpisodeImgFile === "?episodeImgFile") {
+      if (props.location.search.split("&")[0].split("=")[1] !== undefined && props.location.search.split("&")[1].split("=")[1] !== undefined && props.location.search.split("&")[2].split("=")[1] !== undefined && props.location.search.split("&")[3].split("=")[1] !== undefined) {
+        episodeImgFile = props.location.search.split("&")[0].split("=")[1];
+        videoFile = props.location.search.split("&")[1].split("=")[1];
+        s3EpisodeImgFile = props.location.search.split("&")[2].split("=")[1];
+        s3VideoFile = props.location.search.split("&")[2].split("=")[1];
+      }
+    }
+  }
 
   //에피소드를 upload하는 문
-  const episodeImgEncodingValue = decodeURIComponent(
-    getCookieValue("episodeImgFile")
-  );
+  const episodeImgEncodingValue = () => {
+    if (episodeImgFile === "") {
+      return decodeURIComponent(
+        getCookieValue("episodeImgFile")
+      );
+    } else {
+      return episodeImgFile;
+    }
+  };
 
-  const videoFileEncodingValue = decodeURIComponent(
-    getCookieValue("videoFile")
-  );
+  const videoFileEncodingValue = () => {
+    if (videoFile === "") {
+      return decodeURIComponent(
+        getCookieValue("videoFile")
+      );
+    } else {
+      return videoFile;
+    }
+
+  }
   //이부분은 s3에서 생성된 정보를 가지고 와서,
-  const s3EpisodeImgEncodingValue = decodeURIComponent(
-    getCookieValue("s3EpisodeImgFile")
-  );
+  const s3EpisodeImgEncodingValue = () => {
+    if (s3EpisodeImgFile === "") {
+      return decodeURIComponent(
+        getCookieValue("s3EpisodeImgFile")
+      );
+    } else {
+      return s3EpisodeImgFile
+    }
+  }
 
-  const s3VideoFileEncodingValue = decodeURIComponent(
-    getCookieValue("s3VideoFile")
-  );
+
+  const s3VideoFileEncodingValue = () => {
+    if (s3VideoFile === "") {
+      return decodeURIComponent(
+        getCookieValue("s3VideoFile")
+      );
+    } else {
+      return s3VideoFile
+    }
+  }
+
+
+
+
 
   //MyPostListUpdateContainer.js와 연결된 코드
   //s3로 내용들을 보내 업데이트 해야하는 경우
@@ -174,10 +223,10 @@ export default withRouter((props) => {
       postId: getCookieValue("postId"),
       title: getCookieValue("EpisodeTitle"),
       description: getCookieValue("EpisodeDescription"),
-      thumbnail: episodeImgEncodingValue,
-      file: videoFileEncodingValue,
-      s3ThumbnailId: s3EpisodeImgEncodingValue,
-      s3FileId: s3VideoFileEncodingValue
+      thumbnail: episodeImgEncodingValue(),
+      file: videoFileEncodingValue(),
+      s3ThumbnailId: s3EpisodeImgEncodingValue(),
+      s3FileId: s3VideoFileEncodingValue()
     }
   });
 
@@ -249,14 +298,15 @@ export default withRouter((props) => {
       {loading ? (
         <Loader />
       ) : (
-        <EpisodeOfPostPresenter
-          oneOfPost={data}
-          loading={loading}
-          render={render}
-          setRender={setRender}
-          refetch={refetch}
-        />
-      )}
+          <EpisodeOfPostPresenter
+            oneOfPost={data}
+            loading={loading}
+            render={render}
+            setRender={setRender}
+            refetch={refetch}
+          />
+        )}
     </>
   );
 });
+

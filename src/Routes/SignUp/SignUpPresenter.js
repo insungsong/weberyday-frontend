@@ -230,7 +230,7 @@ export default ({
     }
   }, [state]);
 
-  useEffect(() => {}, [birthdayInfo.fakeBirthday]);
+  useEffect(() => { }, [birthdayInfo.fakeBirthday]);
   //이메일로 회원가입 버튼을 disable => false 를 해주기위함
   //TO DO: 이부분을 지금은 하나라도 입력하면 disabled가 false가 되도록하지만 실제 완성할때는, 정규식으로 비밀번호를 거른것이 true라면 disabled할 수 있도록 해야함
   var secondCheckDisable = true;
@@ -407,27 +407,27 @@ export default ({
                 {secretCodeIsExist ? (
                   setState("signUpForm")
                 ) : (
-                  <CheckButton
-                    onClick={() => {
-                      onSubmit();
-                      setState("certification&&SendSecret");
-                    }}
-                  >
-                    다음
-                  </CheckButton>
-                )}
+                    <CheckButton
+                      onClick={() => {
+                        onSubmit();
+                        setState("certification&&SendSecret");
+                      }}
+                    >
+                      다음
+                    </CheckButton>
+                  )}
               </>
             ) : (
-              <CheckButton
-                disabled={emailIsTrue}
-                onClick={async () => {
-                  const isTrue = await onSubmit();
-                  setSendSecret(isTrue);
-                }}
-              >
-                이메일 발송
-              </CheckButton>
-            )}
+                <CheckButton
+                  disabled={emailIsTrue}
+                  onClick={async () => {
+                    const isTrue = await onSubmit();
+                    setSendSecret(isTrue);
+                  }}
+                >
+                  이메일 발송
+                </CheckButton>
+              )}
           </CertificationForm>
         </SigupFilterBox>
       )}
@@ -458,27 +458,27 @@ export default ({
                 {secretCodeIsExist ? (
                   setState("signUpForm")
                 ) : (
-                  <CheckButton
-                    onClick={() => {
-                      onSubmit();
-                      setState("certification");
-                    }}
-                  >
-                    다음
-                  </CheckButton>
-                )}
+                    <CheckButton
+                      onClick={() => {
+                        onSubmit();
+                        setState("certification");
+                      }}
+                    >
+                      다음
+                    </CheckButton>
+                  )}
               </>
             ) : (
-              <CheckButton
-                disabled={emailIsTrue}
-                onClick={() => {
-                  onSubmit();
-                  setSendSecret(true);
-                }}
-              >
-                이메일 발송
-              </CheckButton>
-            )}
+                <CheckButton
+                  disabled={emailIsTrue}
+                  onClick={() => {
+                    onSubmit();
+                    setSendSecret(true);
+                  }}
+                >
+                  이메일 발송
+                </CheckButton>
+              )}
           </CertificationForm>
         </SigupFilterBox>
       )}
@@ -640,29 +640,29 @@ export default ({
                 이메일로 회원가입
               </CheckButton>
             ) : (
-              <CheckButton
-                disabled={secondCheckDisable}
-                style={{ height: "10vh" }}
-                onClick={async () => {
-                  if (
-                    birthdayInfo.birthday === "" ||
-                    birthdayInfo.birthday === "0" ||
-                    birthdayInfo.birthday === "00" ||
-                    birthdayInfo.birthday === "000"
-                  ) {
-                  } else if (birthdayInfo.birthday.length !== 8) {
-                    toast.error(
-                      "생년월일 기입란을 정확히 채우시거나 비워주십쇼 😎"
-                    );
-                    return;
-                  }
-                  onSubmit();
-                  setState("welcomePage");
-                }}
-              >
-                이메일로 회원가입
-              </CheckButton>
-            )}
+                <CheckButton
+                  disabled={secondCheckDisable}
+                  style={{ height: "10vh" }}
+                  onClick={async () => {
+                    if (
+                      birthdayInfo.birthday === "" ||
+                      birthdayInfo.birthday === "0" ||
+                      birthdayInfo.birthday === "00" ||
+                      birthdayInfo.birthday === "000"
+                    ) {
+                    } else if (birthdayInfo.birthday.length !== 8) {
+                      toast.error(
+                        "생년월일 기입란을 정확히 채우시거나 비워주십쇼 😎"
+                      );
+                      return;
+                    }
+                    onSubmit();
+                    setState("welcomePage");
+                  }}
+                >
+                  이메일로 회원가입
+                </CheckButton>
+              )}
           </CertificationForm>
         </>
       )}
