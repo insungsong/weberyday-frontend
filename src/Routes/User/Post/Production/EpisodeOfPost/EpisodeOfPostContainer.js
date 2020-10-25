@@ -141,16 +141,17 @@ export default withRouter((props) => {
   console.log(props.location.search.split("&").length);
 
   //배경이미지 또는 썸네일 둘중 하나만 바꿀 경우의 if문
-  if (props.location.search.split("&").length === 4) {
-    if (isEpisodeImgFile === "?episodeImgFile") {
-      if (props.location.search.split("&")[0].split("=")[1] !== undefined && props.location.search.split("&")[1].split("=")[1] !== undefined && props.location.search.split("&")[2].split("=")[1] !== undefined && props.location.search.split("&")[3].split("=")[1] !== undefined) {
-        episodeImgFile = props.location.search.split("&")[0].split("=")[1];
-        videoFile = props.location.search.split("&")[1].split("=")[1];
-        s3EpisodeImgFile = props.location.search.split("&")[2].split("=")[1];
-        s3VideoFile = props.location.search.split("&")[2].split("=")[1];
-      }
+
+  if (isEpisodeImgFile === "?episodeImgFile") {
+    if (props.location.search.split("&")[0].split("=")[1] !== undefined && props.location.search.split("&")[1].split("=")[1] !== undefined && props.location.search.split("&")[2].split("=")[1] !== undefined && props.location.search.split("&")[3].split("=")[1] !== undefined) {
+      console.log("lalla");
+      episodeImgFile = props.location.search.split("&")[0].split("=")[1];
+      videoFile = props.location.search.split("&")[1].split("=")[1];
+      s3EpisodeImgFile = props.location.search.split("&")[2].split("=")[1];
+      s3VideoFile = props.location.search.split("&")[2].split("=")[1];
     }
   }
+
 
   //에피소드를 upload하는 문
   const episodeImgEncodingValue = () => {
