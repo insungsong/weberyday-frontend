@@ -211,8 +211,8 @@ export default withRouter((props) => {
           onSubmit={onSubmit}
         />
       ) : (
-        <Loader />
-      )}
+          <Loader />
+        )}
     </>
   );
 });
