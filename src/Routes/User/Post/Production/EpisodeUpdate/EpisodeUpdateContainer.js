@@ -132,6 +132,7 @@ export default withRouter((props) => {
   let s3FileId = "";
 
   console.log("props.location.search length 2", props.location.search.split("&").length);
+  console.log("isEpisodeImgFile", isEpisodeImgFile)
   if (isEpisodeImgFile === "videoFile") {
     if (props.location.search.split("&")[0].split("=")[1] !== undefined && props.location.search.split("&")[1].split("=")[1] !== undefined) {
       videoFile = props.location.search.split("&")[0].split("=")[1];
