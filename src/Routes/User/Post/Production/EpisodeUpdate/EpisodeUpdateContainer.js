@@ -146,6 +146,12 @@ export default withRouter((props) => {
     }
   } else {
     if (props.location.search.split("&").length === 4 && props.location.search.split("&")[0] !== undefined && props.location.search.split("&")[0].split("=")[1] !== undefined && props.location.search.split("&")[1].split("=")[1] !== undefined && props.location.search.split("&")[2].split("=")[1] !== undefined && props.location.search.split("&")[3].split("=")[1] !== undefined) {
+      console.log(
+        episodeImgFile,
+        videoFile,
+        s3ThumbnailId,
+        s3FileId,
+      )
       episodeImgFile = props.location.search.split("&")[0].split("=")[1];
       videoFile = props.location.search.split("&")[1].split("=")[1];
       s3ThumbnailId = props.location.search.split("&")[2].split("=")[1];
