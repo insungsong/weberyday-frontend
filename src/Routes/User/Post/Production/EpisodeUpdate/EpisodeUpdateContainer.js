@@ -145,20 +145,20 @@ export default withRouter((props) => {
       s3ThumbnailId = props.location.search.split("&")[1].split("=")[1];
     }
   } else {
-    console.log(
-      episodeImgFile,
-      videoFile,
-      s3ThumbnailId,
-      s3FileId,
-    )
-    episodeImgFile = props.location.search.split("&")[0].split("=")[1];
-    videoFile = props.location.search.split("&")[1].split("=")[1];
-    s3ThumbnailId = props.location.search.split("&")[2].split("=")[1];
-    s3FileId = props.location.search.split("&")[3].split("=")[1];
+    if (props.location.search.split("&")[0].split("=")[1] !== undefined && props.location.search.split("&")[1].split("=")[1] !== undefined && props.location.search.split("&")[2].split("=")[1] !== undefined && props.location.search.split("&")[3].split("=")[1] !== undefined) {
+      console.log("lalalallalal");
+      console.log(
+        episodeImgFile,
+        videoFile,
+        s3ThumbnailId,
+        s3FileId,
+      )
+      episodeImgFile = props.location.search.split("&")[0].split("=")[1];
+      videoFile = props.location.search.split("&")[1].split("=")[1];
+      s3ThumbnailId = props.location.search.split("&")[2].split("=")[1];
+      s3FileId = props.location.search.split("&")[3].split("=")[1];
+    }
   }
-
-
-
 
   const episodeImgEncodingValue = () => {
     if (episodeImgFile === "") {
