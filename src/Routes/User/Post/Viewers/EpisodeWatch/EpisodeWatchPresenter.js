@@ -378,8 +378,8 @@ export default ({
           </ReportBox>
         </OpenReport>
       ) : (
-        ""
-      )}
+          ""
+        )}
       <VideoBox>
         <Video
           id="currentVideo"
@@ -468,7 +468,7 @@ export default ({
                       key={episode.id + index}
                       onClick={() => {
                         setFakeLikeCountFilter("Yes");
-                        window.location.href = `/episodeWatch/${episode.id}`;
+                        window.location.href = `/#/episodeWatch/${episode.id}`;
                       }}
                     >
                       <EpisodeThumbnial src={episode.thumbnail} />
@@ -493,8 +493,8 @@ export default ({
           </NextButton>
         </EpisodeListBox>
       ) : (
-        <Loader />
-      )}
+          <Loader />
+        )}
       <CommentBox>
         <Title>댓글</Title>
         <InputCommentBox>
@@ -511,41 +511,41 @@ export default ({
         <CommentViewBox id="fakeComment">
           {fakeCommentBucket && fakeCommentBucket[0].length !== 0
             ? fakeCommentBucket.map((fake, index) => {
-                if (
-                  filterFakeComment[fakeCommentBucket.length - (index + 1)] ===
-                  episodeId
-                ) {
-                  try {
-                    return (
-                      <Comment>
-                        <TextBox>
-                          <Writer>
-                            {localStorage
-                              .getItem("userEmailToken")
-                              .substring(0, 4)}
+              if (
+                filterFakeComment[fakeCommentBucket.length - (index + 1)] ===
+                episodeId
+              ) {
+                try {
+                  return (
+                    <Comment>
+                      <TextBox>
+                        <Writer>
+                          {localStorage
+                            .getItem("userEmailToken")
+                            .substring(0, 4)}
                             *****
                           </Writer>
-                          <CommentValue>
-                            {
-                              fakeCommentBucket[
-                                fakeCommentBucket.length - (index + 1)
-                              ]
-                            }
-                          </CommentValue>
-                          <InputDate>{realTime}</InputDate>
-                        </TextBox>
-                      </Comment>
-                    );
-                  } catch (e) {
-                    localStorage.removeItem("userEmailToken");
-                    localStorage.removeItem("token");
+                        <CommentValue>
+                          {
+                            fakeCommentBucket[
+                            fakeCommentBucket.length - (index + 1)
+                            ]
+                          }
+                        </CommentValue>
+                        <InputDate>{realTime}</InputDate>
+                      </TextBox>
+                    </Comment>
+                  );
+                } catch (e) {
+                  localStorage.removeItem("userEmailToken");
+                  localStorage.removeItem("token");
 
-                    setTimeout(() => {
-                      window.location.href = "/";
-                    }, [1500]);
-                  }
+                  setTimeout(() => {
+                    window.location.href = "/";
+                  }, [1500]);
                 }
-              })
+              }
+            })
             : ""}
 
           {commentList.map((value, index) => {
@@ -568,78 +568,78 @@ export default ({
                       </Writer>
                       {changeLayout === "Basic" ? (
                         commentValueBox ===
-                        commentList[commentList.length - (index + 1)].id ? (
-                          <CommentValue>
-                            {
-                              (commentList[
-                                commentList.length - (index + 1)
-                              ].text = text.value)
-                            }
-                          </CommentValue>
-                        ) : (
-                          <CommentValue>
-                            {commentList[commentList.length - (index + 1)].text}
-                          </CommentValue>
-                        )
-                      ) : (
-                        <>
-                          {commentModifyId ===
                           commentList[commentList.length - (index + 1)].id ? (
-                            <>
-                              <InputComment {...text} />
-                              <ButtonBox>
-                                <CommentPush
-                                  onClick={(e) => {
-                                    toast.info("해당 댓글이 수정되었습니다.");
-                                    setChangeLayout("Basic");
-                                    setCommentChangeValue(false);
-                                    setCommentValueBox(
-                                      commentList[
-                                        commentList.length - (index + 1)
-                                      ].id
-                                    );
-                                    onSubmit(
-                                      "modifyComment",
-                                      commentList[
-                                        commentList.length - (index + 1)
-                                      ].id
-                                    );
-                                  }}
-                                >
-                                  변경
-                                </CommentPush>
-                                <CommentPush
-                                  style={{ backgroundColor: "red" }}
-                                  onClick={(e) => {
-                                    setChangeLayout("Basic");
-                                  }}
-                                >
-                                  취소
-                                </CommentPush>
-                              </ButtonBox>
-                            </>
-                          ) : (
                             <CommentValue>
                               {
-                                commentList[commentList.length - (index + 1)]
-                                  .text
+                                (commentList[
+                                  commentList.length - (index + 1)
+                                ].text = text.value)
                               }
-                              <EraserBox
-                                onClick={async (e) => {
-                                  await onSubmit(
-                                    "deleteComment",
-                                    commentList[
-                                      commentList.length - (index + 1)
-                                    ].id
-                                  );
-                                }}
-                              >
-                                <Eraser />
-                              </EraserBox>
                             </CommentValue>
-                          )}
-                        </>
-                      )}
+                          ) : (
+                            <CommentValue>
+                              {commentList[commentList.length - (index + 1)].text}
+                            </CommentValue>
+                          )
+                      ) : (
+                          <>
+                            {commentModifyId ===
+                              commentList[commentList.length - (index + 1)].id ? (
+                                <>
+                                  <InputComment {...text} />
+                                  <ButtonBox>
+                                    <CommentPush
+                                      onClick={(e) => {
+                                        toast.info("해당 댓글이 수정되었습니다.");
+                                        setChangeLayout("Basic");
+                                        setCommentChangeValue(false);
+                                        setCommentValueBox(
+                                          commentList[
+                                            commentList.length - (index + 1)
+                                          ].id
+                                        );
+                                        onSubmit(
+                                          "modifyComment",
+                                          commentList[
+                                            commentList.length - (index + 1)
+                                          ].id
+                                        );
+                                      }}
+                                    >
+                                      변경
+                                </CommentPush>
+                                    <CommentPush
+                                      style={{ backgroundColor: "red" }}
+                                      onClick={(e) => {
+                                        setChangeLayout("Basic");
+                                      }}
+                                    >
+                                      취소
+                                </CommentPush>
+                                  </ButtonBox>
+                                </>
+                              ) : (
+                                <CommentValue>
+                                  {
+                                    commentList[commentList.length - (index + 1)]
+                                      .text
+                                  }
+                                  <EraserBox
+                                    onClick={async (e) => {
+                                      await onSubmit(
+                                        "deleteComment",
+                                        commentList[
+                                          commentList.length - (index + 1)
+                                        ].id
+                                      );
+                                    }}
+                                  >
+                                    <Eraser />
+                                  </EraserBox>
+                                </CommentValue>
+                              )}
+                          </>
+                        )}
 
                       <InputDate>
                         {commentList[
@@ -677,11 +677,11 @@ export default ({
                             fakeLikeList.map((dbLike, cindex) => {
                               if (
                                 commentIdList[
-                                  commentIdList.length - (index + 1)
+                                commentIdList.length - (index + 1)
                                 ] === dbLike &&
                                 fakeLikeList.includes(
                                   commentIdList[
-                                    commentIdList.length - (index + 1)
+                                  commentIdList.length - (index + 1)
                                   ]
                                 )
                               ) {
@@ -695,7 +695,7 @@ export default ({
                                 fakeLikeList.length - 1 === cindex &&
                                 !fakeLikeList.includes(
                                   commentIdList[
-                                    commentIdList.length - (index + 1)
+                                  commentIdList.length - (index + 1)
                                   ]
                                 )
                               ) {
@@ -703,16 +703,16 @@ export default ({
                               }
                             })
                           ) : (
-                            <Like key={index} />
-                          )}
+                              <Like key={index} />
+                            )}
                         </LinkeButton>
                         <LikeCount>
                           {fakeLikeCountArr[commentIdList.length - (index + 1)]
                             .value === 0
                             ? ""
                             : fakeLikeCountArr[
-                                commentIdList.length - (index + 1)
-                              ].value}
+                              commentIdList.length - (index + 1)
+                            ].value}
                         </LikeCount>
                         <UnlikeButton
                           onClick={() => {
@@ -726,11 +726,11 @@ export default ({
                             fakeUnLikeList.map((dbLike, cindex) => {
                               if (
                                 commentIdList[
-                                  commentIdList.length - (index + 1)
+                                commentIdList.length - (index + 1)
                                 ] === dbLike &&
                                 fakeUnLikeList.includes(
                                   commentIdList[
-                                    commentIdList.length - (index + 1)
+                                  commentIdList.length - (index + 1)
                                   ]
                                 )
                               ) {
@@ -739,7 +739,7 @@ export default ({
                                 fakeUnLikeList.length - 1 === cindex &&
                                 !fakeUnLikeList.includes(
                                   commentIdList[
-                                    commentIdList.length - (index + 1)
+                                  commentIdList.length - (index + 1)
                                   ]
                                 )
                               ) {
@@ -747,48 +747,48 @@ export default ({
                               }
                             })
                           ) : (
-                            <Unlike />
-                          )}
+                              <Unlike />
+                            )}
                         </UnlikeButton>
                         {commentList[commentList.length - (index + 1)].user
                           .email === localStorage.getItem("userEmailToken") ? (
-                          <>
-                            <EraserBox
-                              onClick={async (e) => {
-                                toast.info("해당 댓글이 삭제되었습니다.");
-                                setDeleteCommentValueBox(
-                                  commentList[commentList.length - (index + 1)]
-                                    .id
-                                );
+                            <>
+                              <EraserBox
+                                onClick={async (e) => {
+                                  toast.info("해당 댓글이 삭제되었습니다.");
+                                  setDeleteCommentValueBox(
+                                    commentList[commentList.length - (index + 1)]
+                                      .id
+                                  );
 
-                                await onSubmit(
-                                  "deleteComment",
-                                  commentList[commentList.length - (index + 1)]
-                                    .id
-                                );
-                              }}
-                            >
-                              <Eraser />
-                            </EraserBox>
-                            <EraserBox
-                              onClick={(e) => {
-                                setChangeLayout("Modify");
-                                text.setValue(
-                                  commentList[commentList.length - (index + 1)]
-                                    .text
-                                );
-                                setCommentModifyId(
-                                  commentList[commentList.length - (index + 1)]
-                                    .id
-                                );
-                              }}
-                            >
-                              <FixIcon />
-                            </EraserBox>
-                          </>
-                        ) : (
-                          ""
-                        )}
+                                  await onSubmit(
+                                    "deleteComment",
+                                    commentList[commentList.length - (index + 1)]
+                                      .id
+                                  );
+                                }}
+                              >
+                                <Eraser />
+                              </EraserBox>
+                              <EraserBox
+                                onClick={(e) => {
+                                  setChangeLayout("Modify");
+                                  text.setValue(
+                                    commentList[commentList.length - (index + 1)]
+                                      .text
+                                  );
+                                  setCommentModifyId(
+                                    commentList[commentList.length - (index + 1)]
+                                      .id
+                                  );
+                                }}
+                              >
+                                <FixIcon />
+                              </EraserBox>
+                            </>
+                          ) : (
+                            ""
+                          )}
                       </ButtonBox>
                     </TextBox>
                     <Report>
